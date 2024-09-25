@@ -2,12 +2,11 @@ import pandas as pd
 import numpy as np
 # import os 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
-from sklearn import datasets
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
 
 
 # read file
@@ -61,26 +60,19 @@ print("Categorical variables:")
 print(object_cols)
 print('No. of. categorical features: ', len(object_cols))
 
-# convert categorical data into binary vectors. This maps the values to integer values. By using OneHotEncoder, 
-# apply OneHotEncoding
-OH_encoder = OneHotEncoder(sparse_output = False, handle_unknown='ignore')
-OH_cols = pd.DataFrame(OH_encoder.fit_transform(df[object_cols]))
-OH_cols.index = df.index
-OH_cols.columns = OH_encoder.get_feature_names_out()
 df_final = df.drop(object_cols, axis=1)
 df_final = pd.concat([df_final, OH_cols], axis=1)
 
 X = df_final.drop(['Price'], axis = 1)
 Y = df_final['Price']
 
-# Split the training set into 
-# training and validation set
-X_train, X_test, Y_train, Y_test = train_test_split(
-  X, Y, train_size=0.8, test_size=0.2, random_state=0)
-# # Standardize the features
-# scaler = StandardScaler()
-# X_train_scaled = scaler.fit_transform(X_train)
-# X_test_scaled = scaler.transform(X_test)
+# Split the training set into training and validation set
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+
+# Standardize the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
 model_LR = LinearRegression()
 model_LR.fit(X_train, Y_train)
