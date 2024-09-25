@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 import seaborn as sns
 
-df = pd.read_csv("prices.csv")
+df = pd.read_csv("Datasets/melb_data (snapshot).csv")
 
 df.dropna(inplace=True)
 
