@@ -51,7 +51,7 @@ sns.heatmap(
   linewidths = 2,
   annot = True)
 plt.title('Correlation Matrix Heatmap')
-# plt.show()
+plt.show()
 
 
 s = (df.dtypes == 'object')
@@ -61,7 +61,6 @@ print(object_cols)
 print('No. of. categorical features: ', len(object_cols))
 
 df_final = df.drop(object_cols, axis=1)
-df_final = pd.concat([df_final, OH_cols], axis=1)
 
 X = df_final.drop(['Price'], axis = 1)
 Y = df_final['Price']
