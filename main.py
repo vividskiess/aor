@@ -27,7 +27,7 @@ df["Postcode"] = df["Postcode"].astype('category')
 
 # Shows missing values
 sns.heatmap(df.isnull(), yticklabels = False, cmap = 'viridis')
-plt.show()
+# plt.show()
 
 # drop columns where alot of data is missing
 df = df.drop(['Bedroom2', 'Landsize', 'BuildingArea', 'YearBuilt'], axis=1)
@@ -39,7 +39,7 @@ df.dropna(subset=["Price"], inplace=True)
 df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = True )
 
 # remove outliers where rooms were over 10
-df.drop(df[(df['Rooms'] > 12)])
+df.drop(df[(df['Rooms'] > 10)].index, inplace = True)
 
 # print(df.describe().T)
 
@@ -56,7 +56,7 @@ df.drop(df[(df['Rooms'] > 12)])
 sns.displot(df['Price'], color ='b')
 plt.axvline(x = df['Price'].mean(), color='b', linestyle='--', linewidth=2)
 plt.title('Sales')
-# plt.show()
+plt.show()
 
 # Bar plot showing distribution of houses
 region_count = df['Regionname'].value_counts()
@@ -65,11 +65,11 @@ sns.barplot(region_count, alpha = 0.8)
 plt.title("Houses distribution in regions")
 plt.xlabel('Region')
 plt.ylabel('Number of houses')
-# plt.show()
+plt.show()
 
 # Pricing based on distance
 sns.lmplot(x="Distance", y="Price", data=df, x_estimator=np.mean);
-# plt.show()
+plt.show()
 
 # Scatter plot
 plt.figure(figsize=(14, 12))
@@ -78,7 +78,7 @@ plt.title('Scatter Plot of Average Rooms vs. House Price')
 plt.xlabel('Average Number of Rooms per Household (AveRooms)')
 plt.ylabel('House Price (in $100,000)')
 plt.grid(True)
-# plt.show()
+plt.show()
 
 # Correlation matrix 
 numerical_dataset = df.select_dtypes(include=['number'])
@@ -91,7 +91,7 @@ sns.heatmap(
   linewidths = 2,
   annot = True)
 plt.title('Correlation Matrix Heatmap')
-# plt.show()
+plt.show()
 
 
 
