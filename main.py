@@ -8,16 +8,13 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 
-
 # read file
 filePath = './Datasets/melb_data (snapshot).csv'
 df = pd.read_csv(filePath)
 df.drop_duplicates(inplace=True)
-# print(df.head(5))
 
 # count null values
 print(df.isnull().sum().sort_values(ascending = False))
-# print('\n')
 
 
 # change object data types to category 
@@ -27,31 +24,33 @@ df[objdtype_cols] = df[objdtype_cols].astype('category')
 df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
 # convert postcode from data to category
 df["Postcode"] = df["Postcode"].astype('category')
-# print(df.describe().T)
 
 # Shows missing values
 sns.heatmap(df.isnull(), yticklabels = False, cmap = 'viridis')
 plt.show()
 
+# drop columns where alot of data is missing
 df = df.drop(['Bedroom2', 'Landsize', 'BuildingArea', 'YearBuilt'], axis=1)
-# print(df.describe().T)
 
 # remove null values
 df.dropna(subset=["Price"], inplace=True)
-# df['Price'] = df['Price'].fillna(df['Price'].mean())
 
-# print(cleaneddf.isnull().sum())
-# print('\n')
+# remove outliers where prices were less than $100,000 or more than $7,000,000
+df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = True )
+
+# remove outliers where rooms were over 10
+df.drop(df[(df['Rooms'] > 12)])
+
+# print(df.describe().T)
 
 
-
-plt.rcParams['figure.figsize'] = (14,4)
-plt.rcParams['axes.edgecolor'] = 'black'
-plt.rcParams['axes.linewidth'] = 1.5
-plt.rcParams['figure.frameon'] = True
-plt.rcParams['axes.spines.top'] = False
-plt.rcParams['axes.spines.right'] = False
-plt.rcParams["font.family"] = "monospace"
+# plt.rcParams['figure.figsize'] = (14,4)
+# plt.rcParams['axes.edgecolor'] = 'black'
+# plt.rcParams['axes.linewidth'] = 1.5
+# plt.rcParams['figure.frameon'] = True
+# plt.rcParams['axes.spines.top'] = False
+# plt.rcParams['axes.spines.right'] = False
+# plt.rcParams["font.family"] = "monospace"
 
 # Distribution graph of house prices vs number of houses
 sns.displot(df['Price'], color ='b')
