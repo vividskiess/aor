@@ -39,6 +39,14 @@ plt.xlabel('Distance from the CBD')
 plt.ylabel('House Price')
 plt.title('Three House Bedroom Prices based on distance from CBD')
 plt.show()
+# Shows the scatter plot and the regression. 
+plt.figure()
+plt.scatter(X_test, Y_test)
+plt.plot(X_test, Y_pred, color='blue', linewidth=3, label='Predicted values')
+plt.xlabel('Distance from the CBD')
+plt.ylabel('House Price')
+plt.title('Three House Bedroom Prices based on distance from CBD')
+plt.show()
 
 # Measures the average squared difference between actual and predicted values. Lower MSE = better fit
 print('Mean Squared Error: %.2f' % mean_squared_error(Y_test, Y_pred))

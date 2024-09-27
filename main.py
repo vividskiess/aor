@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-# import os 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
@@ -8,95 +7,116 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 
-# read file
+# Reads data from the CSV file and puts it into data variable.
 filePath = './Datasets/melb_data (snapshot).csv'
 df = pd.read_csv(filePath)
+
+# Drops the duplicates in the data.
 df.drop_duplicates(inplace=True)
 
-# count null values
-print(df.isnull().sum().sort_values(ascending = False))
-
-
-# change object data types to category 
+# Converts the columns using the object type into a category type.
 objdtype_cols = df.select_dtypes(["object"]).columns
-df[objdtype_cols] = df[objdtype_cols].astype('category')
-# convert data from category to datetime 
+df[objdtype_cols] = df[objdtype_cols].astype('category') 
+
+# Convert the date type from category to datetime.
 df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
-# convert postcode from data to category
+
+# Convert the postcode type from data to category. 
 df["Postcode"] = df["Postcode"].astype('category')
 
-# Shows missing values
-sns.heatmap(df.isnull(), yticklabels = False, cmap = 'viridis')
-plt.show()
-
-# drop columns where alot of data is missing
+# drop columns where alot of data is missing TODO: Might have to change this code for the training? 
 df = df.drop(['Bedroom2', 'Landsize', 'BuildingArea', 'YearBuilt'], axis=1)
 
-# remove null values
+# Removes rows where there is no price. 
 df.dropna(subset=["Price"], inplace=True)
 
-# remove outliers where prices were less than $100,000 or more than $7,000,000
-df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = True )
+# Removes outliers where prices were less than $100,000 or more than $7,000,000.
+df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = True)
 
-# remove outliers where rooms were over 10
-df.drop(df[(df['Rooms'] > 12)])
+# Removes outliers where the rooms amount of the house are over 10
+df.drop(df[(df['Rooms'] > 10)].index, inplace = True)
 
-# print(df.describe().T)
+# Adds styling to the plot. 
+plt.rcParams['figure.figsize'] = (14,4)
+plt.rcParams['axes.edgecolor'] = 'black'
+plt.rcParams['axes.linewidth'] = 1.5
+plt.rcParams['figure.frameon'] = True
+plt.rcParams['axes.spines.top'] = False
+plt.rcParams['axes.spines.right'] = False
+plt.rcParams["font.family"] = "monospace"
+
+# Creates a distribution graph of number of houses vs house prices. 
+def distrubution_house_prices(): 
+	sns.displot(df['Price'], color ='b')
+	plt.axvline(x = df['Price'].mean(), color='r', linestyle='--', linewidth=2)
+	plt.xlabel('House Prices')
+	plt.ylabel('Number of Houses')
+	plt.title('Distrubution of Houses Prices')
+	plt.show()
+
+# Creates a new bar plot showing the distribution of houses across regions. 
+def bar_house_region():
+	region_count = df['Regionname'].value_counts()
+	sns.barplot(region_count, alpha = 0.8)
+	plt.title("Houses distribution in regions")
+	plt.xlabel('Region')
+	plt.ylabel('Number of houses')
+	plt.show()
+
+# Creates a graph that shows prices to distance from the CBD. It uses a model to predict the trajectory of the prices.
+def scatter_distance_price():
+	X = df[['Distance']]
+	Y = df['Price']
+
+	# Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+	X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+
+	# Create a linear regression model that creates a fit that best represents the data using the trained data. 
+	model = LinearRegression()
+	model.fit(X_train, Y_train)
+
+	# The future trajectory of the data is then prdeicted using the tested variables. 
+	Y_pred = model.predict(X_test)
+
+	# Shows the scatter plot and the regression. 
+	plt.figure()
+	plt.scatter(X_test, Y_test)
+	plt.plot(X_test, Y_pred, color='blue', linewidth=3, label='Predicted values')
+	plt.xlabel('Distance from the CBD')
+	plt.ylabel('House Price')
+	plt.title('House Prices Based on theDistance from the CBD')
+	plt.show()
+
+# Creates a scatter plot that shows the house prices based on the average room amount.
+def scatter_room_price():
+	plt.figure(figsize=(14, 12))
+	plt.scatter(df['Rooms'], df['Price'], alpha=0.6, color='b')
+	plt.title('Scatter Plot of Average Rooms vs. House Price')
+	plt.xlabel('Average Number of Rooms per Household')
+	plt.ylabel('House Price (in $100,000)')
+	plt.grid(True)
+	plt.show()
+
+# Creates a correlation matrix that shows the correlation between the data.  
+def correlation_data():
+	numerical_dataset = df.select_dtypes(include=['number'])
+	plt.figure(figsize=(12, 6))
+	sns.heatmap(
+		numerical_dataset.corr(),
+	    cmap = 'BrBG',
+	    fmt = '.2f',
+	    linewidths = 2,
+	    annot = True
+	)
+	plt.title('Correlation Matrix Heat Map')
+	plt.show()
 
 
-# plt.rcParams['figure.figsize'] = (14,4)
-# plt.rcParams['axes.edgecolor'] = 'black'
-# plt.rcParams['axes.linewidth'] = 1.5
-# plt.rcParams['figure.frameon'] = True
-# plt.rcParams['axes.spines.top'] = False
-# plt.rcParams['axes.spines.right'] = False
-# plt.rcParams["font.family"] = "monospace"
-
-# Distribution graph of house prices vs number of houses
-sns.displot(df['Price'], color ='b')
-plt.axvline(x = df['Price'].mean(), color='b', linestyle='--', linewidth=2)
-plt.title('Sales')
-# plt.show()
-
-# Bar plot showing distribution of houses
-region_count = df['Regionname'].value_counts()
-# plt.figure(figsize = (10, 5))
-sns.barplot(region_count, alpha = 0.8)
-plt.title("Houses distribution in regions")
-plt.xlabel('Region')
-plt.ylabel('Number of houses')
-# plt.show()
-
-# Pricing based on distance
-sns.lmplot(x="Distance", y="Price", data=df, x_estimator=np.mean);
-# plt.show()
-
-# Scatter plot
-plt.figure(figsize=(14, 12))
-plt.scatter(df['Rooms'], df['Price'], alpha=0.6, color='b')
-plt.title('Scatter Plot of Average Rooms vs. House Price')
-plt.xlabel('Average Number of Rooms per Household (AveRooms)')
-plt.ylabel('House Price (in $100,000)')
-plt.grid(True)
-# plt.show()
-
-# Correlation matrix 
-numerical_dataset = df.select_dtypes(include=['number'])
-plt.figure(figsize=(12, 6))
-corr_matrix = numerical_dataset.corr()
-sns.heatmap(
-  numerical_dataset.corr(),
-  cmap = 'BrBG',
-  fmt = '.2f',
-  linewidths = 2,
-  annot = True)
-plt.title('Correlation Matrix Heatmap')
-# plt.show()
+scatter_distance_price()
 
 
 
-
-# model training
+# # model training
 # s = (df.dtypes == 'object')
 # object_cols = list(s[s].index)
 # print("Categorical variables:")
@@ -105,7 +125,8 @@ plt.title('Correlation Matrix Heatmap')
 
 # df_final = df.drop(object_cols, axis=1)
 
-# X = df_final.drop(['Price'], axis = 1)
+# # X = df_final.drop(['Price'], axis = 1)
+# X = df_final[['Price']]
 # Y = df_final['Price']
 
 # # Split the training set into training and validation set
