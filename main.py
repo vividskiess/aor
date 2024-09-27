@@ -10,24 +10,40 @@ from sklearn.preprocessing import StandardScaler
 
 
 # read file
-filePath = './Datasets/MELBOURNE_HOUSE_PRICES_LESS (full).csv'
+filePath = './Datasets/melb_data (snapshot).csv'
 df = pd.read_csv(filePath)
 df.drop_duplicates(inplace=True)
 # print(df.head(5))
 
 # count null values
-# print(df.isnull().sum().sort_values(ascending = False))
+print(df.isnull().sum().sort_values(ascending = False))
 # print('\n')
 
+
+# change object data types to category 
+objdtype_cols = df.select_dtypes(["object"]).columns
+df[objdtype_cols] = df[objdtype_cols].astype('category')
+# convert data from category to datetime 
+df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
+# convert postcode from data to category
+df["Postcode"] = df["Postcode"].astype('category')
+# print(df.describe().T)
+
+# Shows missing values
+sns.heatmap(df.isnull(), yticklabels = False, cmap = 'viridis')
+plt.show()
+
+df = df.drop(['Bedroom2', 'Landsize', 'BuildingArea', 'YearBuilt'], axis=1)
+# print(df.describe().T)
+
 # remove null values
-cleaned_dataset = df[df['Price'].notnull()]
+df.dropna(subset=["Price"], inplace=True)
+# df['Price'] = df['Price'].fillna(df['Price'].mean())
+
 # print(cleaneddf.isnull().sum())
 # print('\n')
 
-# df['Price'] = df['Price'].fillna(df['Price'].mean())
 
-# cleaned_dataset = df.dropna()
-df = cleaned_dataset.copy()
 
 plt.rcParams['figure.figsize'] = (14,4)
 plt.rcParams['axes.edgecolor'] = 'black'
@@ -43,14 +59,18 @@ plt.axvline(x = df['Price'].mean(), color='b', linestyle='--', linewidth=2)
 plt.title('Sales')
 # plt.show()
 
-# Bar plot
+# Bar plot showing distribution of houses
 region_count = df['Regionname'].value_counts()
 # plt.figure(figsize = (10, 5))
 sns.barplot(region_count, alpha = 0.8)
 plt.title("Houses distribution in regions")
 plt.xlabel('Region')
 plt.ylabel('Number of houses')
-plt.show()
+# plt.show()
+
+# Pricing based on distance
+sns.lmplot(x="Distance", y="Price", data=df, x_estimator=np.mean);
+# plt.show()
 
 # Scatter plot
 plt.figure(figsize=(14, 12))
@@ -78,28 +98,28 @@ plt.title('Correlation Matrix Heatmap')
 
 
 # model training
-s = (df.dtypes == 'object')
-object_cols = list(s[s].index)
-print("Categorical variables:")
-print(object_cols)
-print('No. of. categorical features: ', len(object_cols))
+# s = (df.dtypes == 'object')
+# object_cols = list(s[s].index)
+# print("Categorical variables:")
+# print(object_cols)
+# print('No. of. categorical features: ', len(object_cols))
 
-df_final = df.drop(object_cols, axis=1)
+# df_final = df.drop(object_cols, axis=1)
 
-X = df_final.drop(['Price'], axis = 1)
-Y = df_final['Price']
+# X = df_final.drop(['Price'], axis = 1)
+# Y = df_final['Price']
 
-# Split the training set into training and validation set
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+# # Split the training set into training and validation set
+# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
 
-# Standardize the features
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+# # Standardize the features
+# scaler = StandardScaler()
+# X_train_scaled = scaler.fit_transform(X_train)
+# X_test_scaled = scaler.transform(X_test)
 
-model_LR = LinearRegression()
-model_LR.fit(X_train, Y_train)
-Y_pred = model_LR.predict(X_test)
+# model_LR = LinearRegression()
+# model_LR.fit(X_train, Y_train)
+# Y_pred = model_LR.predict(X_test)
 
-print('Mean Squared Error: %.2f' % mean_squared_error(Y_test, Y_pred))
-print('R^2 Score: %.2f' % r2_score(Y_test, Y_pred))
+# print('Mean Squared Error: %.2f' % mean_squared_error(Y_test, Y_pred))
+# print('R^2 Score: %.2f' % r2_score(Y_test, Y_pred))
