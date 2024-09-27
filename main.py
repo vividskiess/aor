@@ -20,17 +20,39 @@ df.drop_duplicates(inplace=True)
 # print('\n')
 
 # remove null values
-# cleaneddf = df[df['Price'].notnull()]
+cleaned_dataset = df[df['Price'].notnull()]
 # print(cleaneddf.isnull().sum())
 # print('\n')
 
-df['Price'] = df['Price'].fillna(df['Price'].mean())
+# df['Price'] = df['Price'].fillna(df['Price'].mean())
 
-cleaned_dataset = df.dropna()
+# cleaned_dataset = df.dropna()
 df = cleaned_dataset.copy()
 
-# print(df['Regionname'].unique())
+plt.rcParams['figure.figsize'] = (14,4)
+plt.rcParams['axes.edgecolor'] = 'black'
+plt.rcParams['axes.linewidth'] = 1.5
+plt.rcParams['figure.frameon'] = True
+plt.rcParams['axes.spines.top'] = False
+plt.rcParams['axes.spines.right'] = False
+plt.rcParams["font.family"] = "monospace"
 
+# Distribution graph of house prices vs number of houses
+sns.displot(df['Price'], color ='b')
+plt.axvline(x = df['Price'].mean(), color='b', linestyle='--', linewidth=2)
+plt.title('Sales')
+# plt.show()
+
+# Bar plot
+region_count = df['Regionname'].value_counts()
+# plt.figure(figsize = (10, 5))
+sns.barplot(region_count, alpha = 0.8)
+plt.title("Houses distribution in regions")
+plt.xlabel('Region')
+plt.ylabel('Number of houses')
+plt.show()
+
+# Scatter plot
 plt.figure(figsize=(14, 12))
 plt.scatter(df['Rooms'], df['Price'], alpha=0.6, color='b')
 plt.title('Scatter Plot of Average Rooms vs. House Price')
@@ -39,8 +61,7 @@ plt.ylabel('House Price (in $100,000)')
 plt.grid(True)
 # plt.show()
 
-
-# creates correlation matrix 
+# Correlation matrix 
 numerical_dataset = df.select_dtypes(include=['number'])
 plt.figure(figsize=(12, 6))
 corr_matrix = numerical_dataset.corr()
@@ -51,9 +72,12 @@ sns.heatmap(
   linewidths = 2,
   annot = True)
 plt.title('Correlation Matrix Heatmap')
-plt.show()
+# plt.show()
 
 
+
+
+# model training
 s = (df.dtypes == 'object')
 object_cols = list(s[s].index)
 print("Categorical variables:")
