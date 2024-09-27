@@ -7,16 +7,19 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 
-# Reads data from the CSV file and puts it into data variable.
-filePath = './Datasets/melb_data (snapshot).csv'
-df = pd.read_csv(filePath)
+# Reads data from both CSV file and puts it into variables.
+first_dataset = pd.read_csv('./Datasets/melb_data (snapshot).csv')
+second_dataset = pd.read_csv('./Datasets/Melbourne_housing_FULL.csv')
+
+# Combines both datasets into one data frame variable. 
+df = pd.concat([first_dataset, second_dataset])
 
 # Drops the duplicates in the data.
 df.drop_duplicates(inplace=True)
 
 # Converts the columns using the object type into a category type.
-objdtype_cols = df.select_dtypes(["object"]).columns
-df[objdtype_cols] = df[objdtype_cols].astype('category') 
+object_type_cols = df.select_dtypes(["object"]).columns
+df[object_type_cols] = df[object_type_cols].astype('category') 
 
 # Convert the date type from category to datetime.
 df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
@@ -27,8 +30,8 @@ df["Postcode"] = df["Postcode"].astype('category')
 # drop columns where alot of data is missing TODO: Might have to change this code for the training? 
 df = df.drop(['Bedroom2', 'Landsize', 'BuildingArea', 'YearBuilt'], axis=1)
 
-# Removes rows where there is no price. 
-df.dropna(subset=["Price"], inplace=True)
+# Removes rows where there is values. 
+df.dropna(inplace=True)
 
 # Removes outliers where prices were less than $100,000 or more than $7,000,000.
 df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = True)
@@ -80,17 +83,17 @@ def scatter_distance_price():
 
 	# Shows the scatter plot and the regression. 
 	plt.figure()
-	plt.scatter(X_test, Y_test)
+	plt.scatter(X_test, Y_test, alpha=0.5)
 	plt.plot(X_test, Y_pred, color='blue', linewidth=3, label='Predicted values')
 	plt.xlabel('Distance from the CBD')
 	plt.ylabel('House Price')
-	plt.title('House Prices Based on theDistance from the CBD')
+	plt.title('House Prices Based on the Distance from the CBD')
 	plt.show()
 
 # Creates a scatter plot that shows the house prices based on the average room amount.
 def scatter_room_price():
 	plt.figure(figsize=(14, 12))
-	plt.scatter(df['Rooms'], df['Price'], alpha=0.6, color='b')
+	plt.scatter(df['Rooms'], df['Price'], alpha=0.5, color='b')
 	plt.title('Scatter Plot of Average Rooms vs. House Price')
 	plt.xlabel('Average Number of Rooms per Household')
 	plt.ylabel('House Price (in $100,000)')
@@ -112,34 +115,8 @@ def correlation_data():
 	plt.show()
 
 
-scatter_distance_price()
-
-
-
-# # model training
-# s = (df.dtypes == 'object')
-# object_cols = list(s[s].index)
-# print("Categorical variables:")
-# print(object_cols)
-# print('No. of. categorical features: ', len(object_cols))
-
-# df_final = df.drop(object_cols, axis=1)
-
-# # X = df_final.drop(['Price'], axis = 1)
-# X = df_final[['Price']]
-# Y = df_final['Price']
-
-# # Split the training set into training and validation set
-# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
-
-# # Standardize the features
-# scaler = StandardScaler()
-# X_train_scaled = scaler.fit_transform(X_train)
-# X_test_scaled = scaler.transform(X_test)
-
-# model_LR = LinearRegression()
-# model_LR.fit(X_train, Y_train)
-# Y_pred = model_LR.predict(X_test)
-
-# print('Mean Squared Error: %.2f' % mean_squared_error(Y_test, Y_pred))
-# print('R^2 Score: %.2f' % r2_score(Y_test, Y_pred))
+# distrubution_house_prices()
+# bar_house_region()
+# scatter_distance_price()
+# scatter_room_price()
+# correlation_data()
