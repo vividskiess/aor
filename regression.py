@@ -1,3 +1,4 @@
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from data_processing import get_data
@@ -39,3 +40,21 @@ def train_room_price():
 
     # Returns the test values for the Price and Rooms columns, and Price Prediciton Value 
     return price_x_test, rooms_y_test, rooms_y_predictions
+
+# Evaluates the regression model using Mean Squared Error and R^2 Score. 
+# Mean Squared Error: Calculates the average squared difference between actual and predicted values
+# R^2 Score: Measures the relationship between linear model and the dependent variables. A score closer to 1 suggest that model explain most of its variances.
+def evaluate_regression():
+    x_test, y_test, y_prediction = train_distance_price()
+
+    print('Evaluating Linear Regression of Distance vs Price')
+    print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
+    print('- R^2 Score: %.2f\n' % r2_score(y_test, y_prediction))
+
+    x_test, y_test, y_prediction = train_room_price()
+
+    print('Evaluating Linear Regression of Room vs Price')
+    print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
+    print('- R^2 Score: %.2f' % r2_score(y_test, y_prediction))
+
+evaluate_regression()

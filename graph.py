@@ -22,6 +22,7 @@ def distrubution_house_prices():
 	plt.xlabel('House Prices')
 	plt.ylabel('Number of Houses')
 	plt.title('Distrubution of Average Houses Prices')
+	
 	plt.show()
 	
 # Creates a new bar plot showing the distribution of houses across regions. 
@@ -31,12 +32,14 @@ def bar_house_region():
 	plt.title("Houses distribution in regions")
 	plt.xlabel('Region')
 	plt.ylabel('Number of houses')
+
 	plt.show()
 
 # Creates a correlation matrix that shows the correlation between the data.  
 def correlation_data():
 	numerical_dataset = df.select_dtypes(include=['number'])
 	plt.figure(figsize=(12, 6))
+	plt.title('Correlation Matrix Heat Map')
 	sns.heatmap(
 		numerical_dataset.corr(),
 	    cmap = 'BrBG',
@@ -44,7 +47,7 @@ def correlation_data():
 	    linewidths = 2,
 	    annot = True
 	)
-	plt.title('Correlation Matrix Heat Map')
+	
 	plt.show()
 
 # Creates a scatter plot, that clusters groups of houses that have similar landsizes.
@@ -67,7 +70,6 @@ def scatter_landsize_location():
     plt.ylabel('Clusters')
     plt.grid(True)
 
-	# Shows both of the graphs.
     plt.show()
 
 # Creates a scatter plot, that clusters groups of houses based on the amount of houses.
@@ -95,6 +97,7 @@ def scatter_distance_price():
 	plt.xlabel('Distance from the CBD')
 	plt.ylabel('House Price')
 	plt.title('House Prices vs Distance from the CBD')
+
 	plt.show()
 
 # Creates a scatter plot that shows the house prices based on the average room amount.
@@ -109,6 +112,7 @@ def scatter_room_price():
 	plt.xlabel('House Price (in $1,000,000)')
 	plt.ylabel('Number of Rooms per Household')
 	plt.grid(True)
+	
 	plt.show()
 
 

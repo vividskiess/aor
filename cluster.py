@@ -1,3 +1,4 @@
+from sklearn.metrics import silhouette_score, v_measure_score
 from data_processing import get_data
 from sklearn.cluster import KMeans
 
@@ -31,3 +32,21 @@ def train_school_cluster():
 	
 	# Returns the the school count and cluster column.
 	return school_count_X
+
+# Evaluates the KMeans Model using Silhouette Score + V-Measure Score.
+# Silhouette Score: Ranges from -1 to 1, where a higher score indicates that the data point is well-clustered
+# V-Measure Score: Ranges from 0 to 1, higher scores equals more valid cluster.
+def evaluate_kmeans():
+	x = train_landsize_cluster()
+
+	# Evaluating the clusters for land size. 
+	print('Evaluating Clusters for Land Size')
+	print('- Silhouette Score: %.2f' % silhouette_score(x, x["Cluster"]))
+	print('- V-Measure Score: %.2f\n' % v_measure_score(x["Landsize"], x["Cluster"]))
+    
+	x = train_school_cluster()
+
+	# Evaluating the clusters for school count within postcode. 
+	print('Evaluating Clusters for School Count')
+	print('- Silhouette Score: %.2f' % silhouette_score(x, x["Cluster"]))
+	print('- V-Measure Score: %.2f' % v_measure_score(x["SchoolCount"], x["Cluster"]))

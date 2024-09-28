@@ -2,9 +2,9 @@ import pandas as pd
 
 def get_data():
     # Reads data from the three CSV files and puts it into these variables.
-    first_housing_dataset = pd.read_csv('Datasets/housing_market_1.csv')
-    second_housing_dataset = pd.read_csv('Datasets/housing_market_2.csv')
-    school_dataset = pd.read_csv('Datasets/victoria-schools-2018.csv')
+    first_housing_dataset = pd.read_csv('Datasets/housing_market_1.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
+    second_housing_dataset = pd.read_csv('Datasets/housing_market_2.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
+    school_dataset = pd.read_csv('Datasets/victoria-schools-2018.csv', usecols=['Address_Postcode'])
 
     # Combines both datasets into one data frame variable. 
     df = pd.concat([first_housing_dataset, second_housing_dataset])
@@ -28,14 +28,8 @@ def get_data():
     object_type_cols = df.select_dtypes(["object"]).columns
     df[object_type_cols] = df[object_type_cols].astype('category') 
 
-    # Convert the date type from category to datetime.
-    df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
-
     # Convert the postcode type from data to category. 
     df["Postcode"] = df["Postcode"].astype('category')
-
-    # drop columns where alot of data is missing TODO: Might have to change this code for the training? 
-    df.drop(['Bedroom2', 'BuildingArea', 'YearBuilt'], axis=1, inplace = True)
 
     # Removes houses with landsizes outside of the range of 0 - 10000  
     df.drop(df[(df['Landsize'] < 0) | (df['Landsize'] > 10000)].index, inplace = True)
