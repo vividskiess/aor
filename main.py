@@ -8,6 +8,7 @@ from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 import numpy as np
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Reads data from both CSV file and puts it into variables.
 first_dataset = pd.read_csv('./Datasets/melb_data (snapshot).csv')
@@ -100,15 +101,7 @@ def scatter_room_price():
 	X = df[['Price']]
 	Y = df['Rooms']
 
-	# Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
-	X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
 
-	# Create a linear regression model that creates a fit that best represents the data using the trained data. 
-	model = LinearRegression()
-	model.fit(X_train, Y_train)
-
-	# The future trajectory of the data is then prdeicted using the tested variables. 
-	Y_pred = model.predict(X_test)
 
 	plt.figure(figsize=(12, 10))
 	plt.scatter(X_test, Y_test, alpha=0.5, color='blue')
@@ -163,10 +156,40 @@ def scatter_landsize_location():
 
 	# Shows both of the graphs.
 	plt.show()
-
 # distrubution_house_prices()
 # bar_house_region()
 # scatter_distance_price()
 # scatter_room_price()
 # correlation_data()
 # scatter_landsize_location()
+
+# model training
+s = (df.dtypes == 'object')
+object_cols = list(s[s].index)
+print("Categorical variables:")
+print(object_cols)
+print('No. of. categorical features: ', len(object_cols))
+
+df_final = df.drop(object_cols, axis=1)
+
+X = df_final.drop(['Price'], axis = 1)
+Y = df_final['Price']
+
+# Split the training set into training and validation set
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+
+# Create and train the linear regression model
+model = LinearRegression()
+model.fit(X_train, Y_train)
+
+# Predict the results on the test set
+Y_pred = model.predict(X_test)
+
+# Print model performance
+print('Mean Squared Error: %.2f' % mean_squared_error(Y_test, Y_pred))
+print('R^2 Score: %.2f' % r2_score(Y_test, Y_pred))
+
+# Standardize the features
+# scaler = StandardScaler()
+# X_train_scaled = scaler.fit_transform(X_train)
+# X_test_scaled = scaler.transform(X_test)
