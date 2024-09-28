@@ -29,6 +29,13 @@ df['SchoolCount'].fillna(0)
 
 # Drops the address postcode column from the schools dataste as its no longer needed.
 df.drop(columns='Address_Postcode', inplace=True)
+=======
+# Reads data from both CSV file and puts it into variables.
+first_dataset = pd.read_csv('/Datasets/melb_data (snapshot).csv')
+second_dataset = pd.read_csv('/Datasets/Melbourne_housing_FULL.csv')
+
+# Combines both datasets into one data frame variable. 
+df = pd.concat([first_dataset, second_dataset])
 
 # Drops the duplicates in the data.
 df.drop_duplicates(inplace=True)
@@ -80,3 +87,6 @@ plt.ylabel('Lattitude')
 plt.colorbar(label='Color Groups of Land Size')
 
 plt.show()
+
+schools_df = pd.read_csv('/Datasets/victoria-schools-2018.csv')
+

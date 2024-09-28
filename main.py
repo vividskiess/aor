@@ -8,6 +8,7 @@ from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 import numpy as np
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Reads data from both CSV file and puts it into variables.
 first_dataset = pd.read_csv('./Datasets/melb_data (snapshot).csv')
@@ -15,13 +16,14 @@ second_dataset = pd.read_csv('./Datasets/Melbourne_housing_FULL.csv')
 
 # Combines both datasets into one data frame variable. 
 df = pd.concat([first_dataset, second_dataset])
+df = first_dataset
 
 # Drops the duplicates in the data.
 df.drop_duplicates(inplace=True)
 
 # Converts the columns using the object type into a category type.
 object_type_cols = df.select_dtypes(["object"]).columns
-df[object_type_cols] = df[object_type_cols].astype('category') 
+# df[object_type_cols] = df[object_type_cols].astype('category') 
 
 # Convert the date type from category to datetime.
 df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
@@ -61,7 +63,6 @@ def distrubution_house_prices():
 	plt.ylabel('Number of Houses')
 	plt.title('Distrubution of Average Houses Prices')
 	plt.show()
-
 # Creates a new bar plot showing the distribution of houses across regions. 
 def bar_house_region():
 	region_count = df['Regionname'].value_counts()
@@ -71,49 +72,82 @@ def bar_house_region():
 	plt.ylabel('Number of houses')
 	plt.show()
 
+# Machine Learning for scatter_distance_price()
+X = df[['Distance']]
+Y = df['Price']
+
+# Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+
+# Create a linear regression model that creates a fit that best represents the data using the trained data. 
+model = LinearRegression()
+model.fit(X_train, Y_train)
+
+# The future trajectory of the data is then prdeicted using the tested variables. 
+Y_pred = model.predict(X_test)
+
 # Creates a graph that shows prices to distance from the CBD. It uses a model to predict the trajectory of the prices.
 def scatter_distance_price():
-	X = df[['Distance']]
-	Y = df['Price']
+	# X = df[['Distance']]
+	# Y = df['Price']
 
-	# Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
-	X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+	# # Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+	# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
 
-	# Create a linear regression model that creates a fit that best represents the data using the trained data. 
-	model = LinearRegression()
-	model.fit(X_train, Y_train)
+	# # Create a linear regression model that creates a fit that best represents the data using the trained data. 
+	# model = LinearRegression()
+	# model.fit(X_train, Y_train)
 
-	# The future trajectory of the data is then prdeicted using the tested variables. 
-	Y_pred = model.predict(X_test)
+	# # The future trajectory of the data is then prdeicted using the tested variables. 
+	# Y_pred = model.predict(X_test)
 
 	# Shows the scatter plot and the regression. 
 	plt.figure()
-	plt.scatter(X_test, Y_test, alpha=0.5)
-	plt.plot(X_test, Y_pred, color='blue', linewidth=3, label='Predicted values')
+	# plt.scatter(X_test, Y_test, alpha=0.5)
+	# plt.plot(X_test, Y_pred, color='blue', linewidth=3, label='Predicted values')
+	plt.scatter(df[['Distance']], df['Price'], alpha=0.5)
+	plt.plot(df[['Distance']], df['Price'], color='blue', linewidth=3, label='Predicted values')
 	plt.xlabel('Distance from the CBD')
 	plt.ylabel('House Price')
 	plt.title('House Prices Based on the Distance from the CBD')
 	plt.show()
 
+# Machine Learning for scatter_room_price()
+X = df[['Price']]
+Y = df['Rooms']
+
+# Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+
+# Create a linear regression model that creates a fit that best represents the data using the trained data. 
+model = LinearRegression()
+model.fit(X_train, Y_train)
+
+# The future trajectory of the data is then prdeicted using the tested variables. 
+Y_pred = model.predict(X_test)
+
+
 # Creates a scatter plot that shows the house prices based on the average room amount.
 def scatter_room_price():
-	X = df[['Price']]
-	Y = df['Rooms']
+	# X = df[['Price']]
+	# Y = df['Rooms']
 
-	# Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
-	X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
 
-	# Create a linear regression model that creates a fit that best represents the data using the trained data. 
-	model = LinearRegression()
-	model.fit(X_train, Y_train)
+	# # Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+	# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
 
-	# The future trajectory of the data is then prdeicted using the tested variables. 
-	Y_pred = model.predict(X_test)
+	# # Create a linear regression model that creates a fit that best represents the data using the trained data. 
+	# model = LinearRegression()
+	# model.fit(X_train, Y_train)
+
+	# # The future trajectory of the data is then prdeicted using the tested variables. 
+	# Y_pred = model.predict(X_test)
 
 	plt.figure(figsize=(12, 10))
-	plt.scatter(X_test, Y_test, alpha=0.5, color='blue')
-	plt.plot(X_test, Y_pred, color='red', linewidth=3, label='Predicted values')
-
+	# plt.scatter(X_test, Y_test, alpha=0.5, color='blue')
+	# plt.plot(X_test, Y_pred, color='red', linewidth=3, label='Predicted values')
+	plt.scatter(df[['Price']], df['Rooms'], alpha=0.5, color='blue')
+	plt.plot(df[['Price']], df['Rooms'], color='red', linewidth=3, label='Predicted values')
 	plt.title('Scatter Plot of Average Rooms vs. House Price')
 	plt.xlabel('House Price (in $1,000,000)')
 	plt.ylabel('Number of Rooms per Household')
@@ -134,39 +168,81 @@ def correlation_data():
 	plt.title('Correlation Matrix Heat Map')
 	plt.show()
 
+# Machine learning for scatter_landsize_location()
+X = df.loc[:, ["Landsize"]]
+
+# Creates a KMeans model that groups data. 
+model = KMeans(n_clusters=10, random_state=10)
+model.fit(X)
+
+# Clusters the houses into 8 groups based on the land size of the house. 
+X["Cluster"] = model.predict(X)
+
 # Creates a scatter plot, that clusters groups of houses that have similar landsizes.
 def scatter_landsize_location(): 
-	X = df.loc[:, ["Landsize"]]
+	# X = df.loc[:, ["Landsize"]]
 
-	# Creates a KMeans model that groups data. 
-	model = KMeans(n_clusters=10, random_state=10)
-	model.fit(X)
+	# # Creates a KMeans model that groups data. 
+	# model = KMeans(n_clusters=10, random_state=10)
+	# model.fit(X)
 
-	# Clusters the houses into 8 groups based on the land size of the house. 
-	X["Cluster"] = model.predict(X)
+	# # Clusters the houses into 8 groups based on the land size of the house. 
+	# X["Cluster"] = model.predict(X)
 
 	# Creates a scatter plot that shows the location of houses, along with a color that shows the grouping of each house. 
 	plt.figure(figsize=(10, 6))
-	plt.scatter(df['Longtitude'], df['Lattitude'], c=X["Cluster"], cmap='viridis', edgecolors='white', linewidth=0.3)
+	plt.scatter(df['Longtitude'], df['Lattitude'], edgecolors='white', linewidth=0.3)
+	# plt.scatter(df['Longtitude'], df['Lattitude'], c=X["Cluster"], cmap='viridis', edgecolors='white', linewidth=0.3)
 	plt.title('Scatter Plot of Houses, Grouped by Land Sizes')
 	plt.xlabel('Longtitude')
 	plt.ylabel('Lattitude')
 	plt.colorbar(label='Color Groups of Land Size')
 
 	# Creates a scatter plot that shows the clusters along with the landsize. 
-	plt.figure(figsize=(8, 6))
-	plt.scatter(X['Landsize'], X['Cluster'], c=X["Cluster"], cmap='viridis', edgecolors='white', linewidth=0.3, s=100)
-	plt.title('Scatter Plot of Landsize to Group of Houses')
-	plt.xlabel('Land Size')
-	plt.ylabel('Clusters')
-	plt.grid(True)
+	# plt.figure(figsize=(8, 6))
+	# plt.scatter(X['Landsize'], X['Cluster'], c=X["Cluster"], cmap='viridis', edgecolors='white', linewidth=0.3, s=100)
+	# plt.title('Scatter Plot of Landsize to Group of Houses')
+	# plt.xlabel('Land Size')
+	# plt.ylabel('Clusters')
+	# plt.grid(True)
 
 	# Shows both of the graphs.
 	plt.show()
-
 # distrubution_house_prices()
 # bar_house_region()
 # scatter_distance_price()
 # scatter_room_price()
 # correlation_data()
 # scatter_landsize_location()
+
+# model training
+s = (df.dtypes == 'object')
+object_cols = list(s[s].index)
+print("Categorical variables:")
+print(object_cols)
+print('No. of. categorical features: ', len(object_cols))
+
+df_final = df.drop(object_cols, axis=1)
+
+X = df_final.drop(['Price'], axis = 1)
+Y = df_final['Price']
+
+# Split the training set into training and validation set
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, train_size=0.8, test_size=0.2, random_state=0)
+
+# Create and train the linear regression model
+model = LinearRegression()
+model.fit(X_train, Y_train)
+
+# Predict the results on the test set
+Y_pred = model.predict(X_test)
+
+# Print model performance
+print('Mean Squared Error: %.2f' % mean_squared_error(Y_test, Y_pred))
+print('R^2 Score: %.2f' % r2_score(Y_test, Y_pred))
+
+# Standardize the features
+# scaler = StandardScaler()
+# X_train_scaled = scaler.fit_transform(X_train)
+# X_test_scaled = scaler.transform(X_test)
+# amount of schools in location? 
