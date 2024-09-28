@@ -1,10 +1,10 @@
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from data_processing import get_data
+import pandas as pd  
 
 # Associates a variable with the processed data. 
-df = get_data()
+df = pd.read_csv('datasets/processed/processed_housing_market.csv')
 
 # Trains distance and price on a linear regression model so that the relation between them can be understood. 
 def train_distance_price():
@@ -56,5 +56,3 @@ def evaluate_regression():
     print('Evaluating Linear Regression of Room vs Price')
     print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
     print('- R^2 Score: %.2f' % r2_score(y_test, y_prediction))
-
-evaluate_regression()

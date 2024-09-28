@@ -1,10 +1,11 @@
-from cluster import train_landsize_cluster, train_school_cluster
-from regression import train_distance_price, train_room_price
-from data_processing import get_data
+from models.cluster import train_landsize_cluster, train_school_cluster
+from models.regression import train_distance_price, train_room_price
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd  
 
-df = get_data()
+# Associates a variable with the processed data. 
+df = pd.read_csv('datasets/processed/processed_housing_market.csv')
 
 # Adds styling to the plot. 
 plt.rcParams['figure.figsize'] = (14,4)
