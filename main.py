@@ -16,13 +16,14 @@ second_dataset = pd.read_csv('./Datasets/Melbourne_housing_FULL.csv')
 
 # Combines both datasets into one data frame variable. 
 df = pd.concat([first_dataset, second_dataset])
+df = first_dataset
 
 # Drops the duplicates in the data.
 df.drop_duplicates(inplace=True)
 
 # Converts the columns using the object type into a category type.
 object_type_cols = df.select_dtypes(["object"]).columns
-df[object_type_cols] = df[object_type_cols].astype('category') 
+# df[object_type_cols] = df[object_type_cols].astype('category') 
 
 # Convert the date type from category to datetime.
 df['Date'] =  pd.to_datetime(df['Date'], format='%d/%m/%Y')
@@ -166,7 +167,6 @@ def correlation_data():
 	)
 	plt.title('Correlation Matrix Heat Map')
 	plt.show()
-
 
 # Machine learning for scatter_landsize_location()
 X = df.loc[:, ["Landsize"]]
