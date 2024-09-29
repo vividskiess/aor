@@ -73,7 +73,6 @@ def scatter_landsize_location():
 
     plt.show()
 
-# Creates a scatter plot, that clusters groups of houses based on the amount of houses.
 # Creates a scatter plot, that clusters groups of houses based on the amount of schools.
 def scatter_school_location():
     x = train_school_cluster()
@@ -123,6 +122,6 @@ def scatter_room_price():
 # bar_house_region()
 # correlation_data()
 scatter_landsize_location()
-scatter_school_location()
+# scatter_school_location()
 # scatter_distance_price()
-# scatter_room_price()
+scatter_room_price()
