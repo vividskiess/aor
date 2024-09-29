@@ -56,3 +56,6 @@ def evaluate_regression():
     print('Evaluating Linear Regression of Room vs Price')
     print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
     print('- R^2 Score: %.2f' % r2_score(y_test, y_prediction))
+
+# To evaluate the linear regression, uncomment the code below:
+# evaluate_regression()

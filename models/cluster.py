@@ -50,3 +50,6 @@ def evaluate_kmeans():
 	print('Evaluating Clusters for School Count')
 	print('- Silhouette Score: %.2f' % silhouette_score(x, x["Cluster"]))
 	print('- V-Measure Score: %.2f' % v_measure_score(x["SchoolCount"], x["Cluster"]))
+
+# To evaluate the KMeans, uncomment the code below:
+# evaluate_kmeans()

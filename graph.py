@@ -117,11 +117,11 @@ def scatter_room_price():
 	plt.show()
 
 
-
-distrubution_house_prices()
-bar_house_region()
-correlation_data()
+# To see the graphs, uncomment the code below:
+# distrubution_house_prices()
+# bar_house_region()
+# correlation_data()
 scatter_landsize_location()
 scatter_school_location()
-scatter_distance_price()
-scatter_room_price()
+# scatter_distance_price()
+# scatter_room_price()
