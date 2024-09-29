@@ -96,6 +96,129 @@ df.drop(df[(df['Rooms'] > 10)].index, inplace = True)
 ```python
 df.to_csv('datasets/processed/processed_housing_market.csv', index=False)
 ```
+
+
+## models/cluster.py
+Contains cluster models that are used in the graphs. 
+
+### - Trains the model to cluster data based on the land size. 
+```python
+# Trains the data using the land size of an area, to cluster groups of houses with similar land sizes.
+def train_landsize_cluster():
+	landsize_x = df.loc[:, ["Landsize"]]
+
+	# Creates a KMeans model that groups data. 
+	model = KMeans(n_clusters=10, random_state=10)
+	model.fit(landsize_x)
+
+	# Clusters the houses into 8 groups based on the land size of the house. 
+	landsize_x["Cluster"] = model.predict(landsize_x)
+
+	# Returns the the landsize count and cluster column.
+	return landsize_x
+```
+### - Trains the model to cluster data based on the schools within the postcode.
+```python
+# Trains the data using the school count of an area, to cluster groups of houses with similar school counts.
+def train_school_cluster():
+	school_count_X = df.loc[:, ["SchoolCount"]]
+
+	# Creates a KMeans model that groups data. 
+	model = KMeans(n_clusters=10, random_state=10)
+	model.fit(school_count_X)
+
+	# Clusters the houses into 8 groups based on the land size of the house. 
+	school_count_X["Cluster"] = model.predict(school_count_X)
+	
+	# Returns the the school count and cluster column.
+	return school_count_X
+```
+
+### - Evaluates the cluster model using Silhouette Score and V-Measure Score.
+```python
+# Evaluates the KMeans Model using Silhouette Score + V-Measure Score.
+# Silhouette Score: Ranges from -1 to 1, where a higher score indicates that the data point is well-clustered
+# V-Measure Score: Ranges from 0 to 1, higher scores equals more valid cluster.
+def evaluate_kmeans():
+	x = train_landsize_cluster()
+
+	# Evaluating the clusters for land size. 
+	print('Evaluating Clusters for Land Size')
+	print('- Silhouette Score: %.2f' % silhouette_score(x, x["Cluster"]))
+	print('- V-Measure Score: %.2f\n' % v_measure_score(x["Landsize"], x["Cluster"]))
+    
+	x = train_school_cluster()
+
+	# Evaluating the clusters for school count within postcode. 
+	print('Evaluating Clusters for School Count')
+	print('- Silhouette Score: %.2f' % silhouette_score(x, x["Cluster"]))
+	print('- V-Measure Score: %.2f' % v_measure_score(x["SchoolCount"], x["Cluster"]))
+
+```
+
+## models/regression.py
+
+### - Trains the model based on distance from CBD and house price.  
+```python
+# Trains distance and price on a linear regression model so that the relation between them can be understood. 
+def train_distance_price():
+    distance_x = df[['Distance']]
+    price_y = df['Price']
+
+    # Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+    distance_x_train, distance_x_test, price_y_train, price_y_test = train_test_split(distance_x, price_y, train_size=0.8, test_size=0.2, random_state=0)
+
+    # Create a linear regression model that creates a fit that best represents the data using the trained data. 
+    model = LinearRegression()
+    model.fit(distance_x_train, price_y_train)
+
+    # The future trajectory of the data is then prdeicted using the tested variables. 
+    price_y_prediction = model.predict(distance_x_test)
+
+    return distance_x_test, price_y_test, price_y_prediction
+
+```
+
+### - Trains the model based on rooms and house price.  
+```python
+# Trains price and room on a linear regression model so that the relation between them can be understood. 
+def train_room_price():
+    price_x = df[['Price']]
+    rooms_y = df['Rooms']
+
+    # Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+    price_x_train, price_x_test, rooms_y_train, rooms_y_test = train_test_split(price_x, rooms_y, train_size=0.8, test_size=0.2, random_state=0)
+
+    # Create a linear regression model that creates a fit that best represents the data using the trained data. 
+    model = LinearRegression()
+    model.fit(price_x_train, rooms_y_train)
+
+    # The future trajectory of the data is then prdeicted using the tested variables. 
+    rooms_y_predictions = model.predict(price_x_test)
+
+    # Returns the test values for the Price and Rooms columns, and Price Prediciton Value 
+    return price_x_test, rooms_y_test, rooms_y_predictions
+```
+
+### - Evaluates the linear regression model using Mean Squared Error and R^2 Score. 
+```
+# Evaluates the regression model using Mean Squared Error and R^2 Score. 
+# Mean Squared Error: Calculates the average squared difference between actual and predicted values
+# R^2 Score: Measures the relationship between linear model and the dependent variables. A score closer to 1 suggest that model explain most of its variances.
+def evaluate_regression():
+    x_test, y_test, y_prediction = train_distance_price()
+
+    print('Evaluating Linear Regression of Distance vs Price')
+    print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
+    print('- R^2 Score: %.2f\n' % r2_score(y_test, y_prediction))
+
+    x_test, y_test, y_prediction = train_room_price()
+
+    print('Evaluating Linear Regression of Room vs Price')
+    print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
+    print('- R^2 Score: %.2f' % r2_score(y_test, y_prediction))
+```
+
 ## graph.py
 Contains code that is responsible for data visualization that analyze relationships between data. Code relating to graphs are grouped into its own respective functions.
 
