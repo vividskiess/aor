@@ -1,8 +1,8 @@
 # COS30049 Assignment 2
 This project contains files, and code necessary for machine learning.
 
-## Team memberss: 
-**Bennett, Jack, Danny**
+## Team members: 
+**Bennett Biju Mathew, Chee Chen Guo, Danny Cao**
 
 
 
@@ -35,7 +35,7 @@ pip install numpy
 ```
 
 ## data_processing.py
-This file contains code that handles cleaning & processing datasets to be used later.
+This file contains code that handles cleaning & processing datasets. This will be used later. 
 ### - Reading datasets from .csv type files
 ```python
 import pandas as pd  
@@ -97,9 +97,9 @@ df.drop(df[(df['Rooms'] > 10)].index, inplace = True)
 df.to_csv('datasets/processed/processed_housing_market.csv', index=False)
 ```
 ## graph.py
-Contains code that is responsible for data visualization analyzing relationships between data, code relating to graphs are grouped into its own respective functions
+Contains code that is responsible for data visualization that analyze relationships between data. Code relating to graphs are grouped into its own respective functions.
 
-### - Import libraries and processed dataset, assign dataset to a varaible and add styling for chrats.
+### - Import libraries and processed dataset, assign dataset to a variable and add styling for charts.
 ```python
 from models.cluster import train_landsize_cluster, train_school_cluster
 from models.regression import train_distance_price, train_room_price
@@ -163,9 +163,9 @@ def correlation_data():
 	plt.show()
 ```
 
-### - Scatterplot that forms clusters of houses together with similar landsize.
+### - Scatter plot that forms clusters of houses together with similar land size.
 ```python
-# Creates a scatter plot, that clusters groups of houses that have similar landsizes.
+# Creates a scatter plot, that clusters groups of houses that have similar land sizes.
 def scatter_landsize_location(): 
     x = train_landsize_cluster()
     
@@ -187,9 +187,9 @@ def scatter_landsize_location():
 
     plt.show()
 ```
-### - Scatterplot that clusters groups of houses base
+### - Scatter plot that clusters groups of houses based on schools
 ```python
-# Creates a scatter plot, that clusters groups of houses based on the amount of houses.
+# Creates a scatter plot, that clusters groups of houses based on schools.
 def scatter_school_location():
     x = train_school_cluster()
 
@@ -203,7 +203,7 @@ def scatter_school_location():
 
     plt.show()
 ```
-### - Scatterplot that shows prices vs distance from the CBD
+### - Scatter plot that shows prices vs distance from the CBD
 ```python
 # Creates a graph that shows prices to distance from the CBD. It uses a model to predict the trajectory of the prices.
 def scatter_distance_price():
@@ -220,7 +220,7 @@ def scatter_distance_price():
 	plt.show()
 ```
 
-### - Scatterplot that shows house prices vs the room number amount
+### - Scatter plot that shows house prices vs the room number amount
 ```python
 # Creates a scatter plot that shows the house prices based on the average room amount.
 def scatter_room_price():
