@@ -8,30 +8,66 @@ This project contains files, and code necessary for machine learning.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install necessary dependencies.
+Prerequisites
+- Python 3.12
+- Anaconda
 
+### Create the .conda enviroment
+```python
+conda create --name <fill-env-name>
+```
+Press "y" to proceed. 
 
-## How to run the code:
-Install all dependencies:
-- pandas 
+### Install all of the dependencies
 ```bash
 pip install pandas
-```
-- sklearn
-```bash
 pip install scikit-learn
-```
-- seaborn
-```bash
 pip install seaborn
-```
-- matplotlib
-```bash
 pip install matplotlib
-```
-- numpy
-```bash
 pip install numpy
+```
+
+## Running the code
+### Running graph.py
+Go to graph.py and uncomment the functions of the graphs you want to see: 
+```python
+# To see the graphs, uncomment the code below:
+# distrubution_house_prices()
+# bar_house_region()
+# correlation_data()
+# scatter_landsize_location()
+scatter_school_location()
+# scatter_distance_price()
+scatter_room_price()
+```
+
+Navigate into the project files and run the graph.py file:
+```bash
+python graph.py 
+```
+
+### Running cluster.py
+Go to graph.py and uncomment the evaluate_kmeans() function: 
+```python
+# To evaluate the KMeans, uncomment the code below:
+evaluate_kmeans()
+```
+
+Navigate into the project files and run the graph.py file:
+```bash
+python models/cluster.py 
+```
+
+### Running regression.py
+Go to graph.py and uncomment the evaluate_kmeans() function: 
+```python
+# To evaluate the linear regression, uncomment the code below:
+evaluate_regression()
+```
+
+Navigate into the project files and run the graph.py file:
+```bash
+python models/regression.py 
 ```
 
 ## data_processing.py
@@ -157,6 +193,7 @@ def evaluate_kmeans():
 ```
 
 ## models/regression.py
+Contains regressions models that are used in the graphs.
 
 ### - Trains the model based on distance from CBD and house price.  
 ```python
