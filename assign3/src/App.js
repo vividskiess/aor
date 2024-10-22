@@ -34,6 +34,8 @@ function App() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  const pages = ['Home', 'Infographics', 'Property', 'Suburb Analytics', 'Suburb Profile']
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -73,7 +75,7 @@ function App() {
 
   const drawerContent = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-       <List>
+      <List>
         <ListItem button component={Link} to="/">
           <ListItemIcon><HomeIcon /></ListItemIcon>
           <ListItemText primary="Home" />
@@ -99,7 +101,13 @@ function App() {
 
   return (
     
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: darkMode ? 'grey.900' : 'background.default', color: darkMode ? 'common.white' : 'common.black' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      minHeight: '100vh', 
+      bgcolor: darkMode ? 'grey.900' : 'background.default', 
+      color: darkMode ? 'common.white' : 'common.black' 
+      }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
@@ -109,7 +117,7 @@ function App() {
             Enhanced MUI React Page
           </Typography>
              {/* Add About Button in the AppBar */}
-             <Button color="inherit" component={Link} to="/about">About</Button>
+            <Button color="inherit" component={Link} to="/about">About</Button>
           <Button color="inherit" onClick={handleDialogOpen}>Contact</Button>
         </Toolbar>
       </AppBar>
