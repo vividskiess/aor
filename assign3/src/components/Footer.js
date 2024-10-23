@@ -1,31 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
-import { SitemarkIcon } from './SitemarkIcon';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-      {'Copyright © '}
-      <Link color="text.secondary" href="https://mui.com/">
-        Sitemark
-      </Link>
-      &nbsp;
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
 
 export const Footer = () => {
   return (
@@ -36,15 +19,25 @@ export const Footer = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: { xs: 4, sm: 8 },
-          py: { xs: 8, sm: 10 },
+          gap: { xs: 3, sm: 6 },
+          py: { xs: 6, sm: 8 },
+          px: { xs: 8, sm: 10 },
           textAlign: { sm: 'center', md: 'left' },
 					background: 'linear-gradient(225deg, rgba(2,26,86,1) 0%, rgba(0,0,0,1) 30%)',
 					color: 'white',
           minWidth: '100%'
         }}
       >
-      <Box sx= {{ display: 'flex', width: '100%', justifyContent: 'flex-start', alignItems: 'center' }}>
+      <Box sx= {{ 
+        display: 'flex', 
+        width: '100%', 
+        justifyContent: 'flex-start', 
+        alignItems: 'center',
+        pb: 3,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        borderOpacity: 0.5
+        }}
+        >
         <Typography
           variant="h4"
           noWrap
@@ -76,7 +69,7 @@ export const Footer = () => {
           reality
         </Typography>
       </Box>
-      <Divider />
+
         <Box
           sx={{
             display: 'flex',
@@ -89,7 +82,7 @@ export const Footer = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 4,
+              gap: 2,
               minWidth: { xs: '100%', sm: '60%' },
             }}
           >
@@ -137,7 +130,7 @@ export const Footer = () => {
               gap: 1,
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+            <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
               Product
             </Typography>
             <Link color="inherit" variant="body2" href="#">
@@ -163,7 +156,7 @@ export const Footer = () => {
               gap: 1,
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+            <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
               Company
             </Typography>
             <Link color="inherit" variant="body2" href="#">
@@ -183,7 +176,7 @@ export const Footer = () => {
               gap: 1,
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+            <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
               Legal
             </Typography>
             <Link color="inherit" variant="body2" href="#">

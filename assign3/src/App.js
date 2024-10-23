@@ -16,6 +16,7 @@ import {
 
 import { Navbar } from './components/Navbar.js';
 import { Footer } from './components/Footer.js';
+import { Index } from './pages/Index.js';
 // About page component
 function About() {
   return (
@@ -133,6 +134,7 @@ function App() {
       }}>
 
       <Navbar />
+      <Index />
       <Footer />
     </Box>
   );
