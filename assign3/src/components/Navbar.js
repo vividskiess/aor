@@ -1,47 +1,26 @@
 import React, { useState } from 'react';
-import AdbIcon from '@mui/icons-material/Adb';
-import {
-	AppBar, Toolbar, Typography, Container, Grid, Card, CardContent, Button, Box,
-	Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, TextField,
-	Switch, Snackbar, Alert, Fab, Dialog, DialogTitle, DialogContent, DialogContentText,
-	DialogActions, CircularProgress, LinearProgress, Chip, Avatar, Divider, Menu, MenuItem, Tooltip
-	} from '@mui/material';
-import {
-	Menu as MenuIcon,
-	Home as HomeIcon,
-	Info as InfoIcon,
-	Mail as MailIcon,
-	Add as AddIcon,
-	} from '@mui/icons-material';
+import HouseIcon from '@mui/icons-material/House';
+import {  AppBar, Toolbar, Typography, Container, Button, Box } from '@mui/material';
+
 
 export const Navbar = () => {
 	const [anchorElNav, setAnchorElNav] = useState(null);
-	const [anchorElUser, setAnchorElUser] = useState(null);
-
 	const pages = ['Home', 'Infographics', 'Property', 'Suburb Analytics', 'Suburb Profile']
-	const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
-	};
-	const handleOpenUserMenu = (event) => {
-		setAnchorElUser(event.currentTarget);
 	};
 	
 	const handleCloseNavMenu = () => {
 		setAnchorElNav(null);
 	};
 	
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
 return (
 	<>
-		{/* NAVBAR */}
-		<AppBar position="static">
+		<AppBar position="static" sx={{ background: 'linear-gradient(45deg, rgba(2,26,86,1) 0%, rgba(0,0,0,1) 55%)' }} >
 		<Container maxWidth="xl">
 			<Toolbar disableGutters>
-				<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+				<HouseIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 				<Typography
 					variant="h6"
 					noWrap
@@ -52,111 +31,28 @@ return (
 						display: { xs: 'none', md: 'flex' },
 						fontFamily: 'monospace',
 						fontWeight: 700,
-						letterSpacing: '.3rem',
+						letterSpacing: '.05rem',
 						color: 'inherit',
 						textDecoration: 'none',
 					}}
 				>
-					LOGO
+					Alpha Omega Realtors.
 				</Typography>
-
-				<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-					<IconButton
-						size="large"
-						aria-label="account of current user"
-						aria-controls="menu-appbar"
-						aria-haspopup="true"
-						onClick={handleOpenNavMenu}
-						color="inherit"
-					>
-						<MenuIcon />
-					</IconButton>
-					<Menu
-						id="menu-appbar"
-						anchorEl={anchorElNav}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'left',
-						}}
-						keepMounted
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'left',
-						}}
-						open={Boolean(anchorElNav)}
-						onClose={handleCloseNavMenu}
-						sx={{ display: { xs: 'block', md: 'none' } }}
-					>
-						{pages.map((page) => (
-							<MenuItem key={page} onClick={handleCloseNavMenu}>
-								<Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-							</MenuItem>
-						))}
-					</Menu>
-				</Box>
-				<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-				<Typography
-					variant="h5"
-					noWrap
-					component="a"
-					href="#app-bar-with-responsive-menu"
-					sx={{
-						mr: 2,
-						display: { xs: 'flex', md: 'none' },
-						flexGrow: 1,
-						fontFamily: 'monospace',
-						fontWeight: 700,
-						letterSpacing: '.3rem',
-						color: 'inherit',
-						textDecoration: 'none',
-					}}
-				>
-					LOGO
-				</Typography>
-				<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+				<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
 					{pages.map((page) => (
 						<Button
 							key={page}
 							onClick={handleCloseNavMenu}
-							sx={{ my: 2, color: 'white', display: 'block' }}
+							sx={{ my: 2, color: 'white', display: 'block', fontWeight: 'bold' }}
 						>
 							{page}
 						</Button>
 					))}
 				</Box>
-				<Box sx={{ flexGrow: 0 }}>
-					<Tooltip title="Open settings">
-						<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-							<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-						</IconButton>
-					</Tooltip>
-					<Menu
-						sx={{ mt: '45px' }}
-						id="menu-appbar"
-						anchorEl={anchorElUser}
-						anchorOrigin={{
-							vertical: 'top',
-							horizontal: 'right',
-						}}
-						keepMounted
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'right',
-						}}
-						open={Boolean(anchorElUser)}
-						onClose={handleCloseUserMenu}
-					>
-						{settings.map((setting) => (
-							<MenuItem key={setting} onClick={handleCloseUserMenu}>
-								<Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-							</MenuItem>
-						))}
-					</Menu>
-				</Box>
+
 			</Toolbar>
 		</Container>
 	</AppBar>
 	</>
-
 	)
 }
