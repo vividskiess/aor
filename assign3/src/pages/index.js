@@ -204,8 +204,8 @@ export const Index = () => {
 						sx={{
 							display: 'flex',
 							px: 2,
-							py: 5,
-							gap: 3
+							py: 1,
+							gap: 4
 						}}
 					>
 						{
@@ -214,8 +214,8 @@ export const Index = () => {
 									<Box sx={{ 
 										display: 'flex', 
 										alignItems: 'center', 
-										borderRight: '1px solid black',
-										py: 5,
+										borderRight: '1px solid rgba(151, 151, 151, 0.4)',
+										py: 4,
 										pr: 10
 										}} 
 										id={i}
@@ -297,8 +297,7 @@ export const Index = () => {
 															width: '33%',
 															gap: 1,
 															py: 2,
-															pr: 4,
-															pl: 4
+															pl: 6
 														}}
 													>
 														<BathtubIcon />
@@ -313,7 +312,7 @@ export const Index = () => {
 															width: '33%',
 															gap: 1,
 															py: 2,
-															pl: 4
+															pl: 6
 														}}
 													>
 														<GarageIcon />
