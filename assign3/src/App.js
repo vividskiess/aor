@@ -16,7 +16,7 @@ import {
 
 import { Navbar } from './components/Navbar.js';
 import { Footer } from './components/Footer.js';
-import { Index } from './pages/Index.js';
+import { Index } from './pages/index.js';
 // About page component
 function About() {
   return (
