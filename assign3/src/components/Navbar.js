@@ -13,8 +13,12 @@ export default function Navbar() {
 	]
 	
 return (
-	<>
-		<AppBar position="static" sx={{ background: 'linear-gradient(45deg, rgba(2,26,86,1) 0%, rgba(0,0,0,1) 55%)' }} >
+	<AppBar 
+		position="fixed" 
+		sx={{ 
+			background: 'linear-gradient(45deg, rgba(2,26,86,1) 0%, rgba(0,0,0,1) 55%)' 
+		}} 
+	>
 		<Container maxWidth="xl">
 			<Toolbar disableGutters>
 				<HouseIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -55,6 +59,5 @@ return (
 			</Toolbar>
 		</Container>
 	</AppBar>
-	</>
 	)
 }
