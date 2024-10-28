@@ -9,7 +9,7 @@ import BathtubIcon from '@mui/icons-material/Bathtub';
 import GarageIcon from '@mui/icons-material/Garage';
 import smallPlaceholder from '../assets/smallPlaceholder.png'
 
-export const Index = () => {
+export default function Home () {
 	const findYourNextPlaceToLive = [ 'Looking for', 'Location', 'Property Type', 'Price' ]
 	const card = [
 		{

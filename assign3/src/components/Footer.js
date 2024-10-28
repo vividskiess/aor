@@ -10,7 +10,7 @@ import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 
-export const Footer = () => {
+export default function Footer() {
   return (
     <>
       <Divider />
@@ -69,7 +69,6 @@ export const Footer = () => {
           reality
         </Typography>
       </Box>
-
         <Box
           sx={{
             display: 'flex',

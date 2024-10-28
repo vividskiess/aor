@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import HouseIcon from '@mui/icons-material/House';
 import {  AppBar, Toolbar, Typography, Container, Button, Box } from '@mui/material';
+import { Link } from 'react-router-dom'
 
-
-export const Navbar = () => {
-	const [anchorElNav, setAnchorElNav] = useState(null);
-	const pages = ['Home', 'Infographics', 'Property', 'Suburb Analytics', 'Suburb Profile']
-
-	const handleOpenNavMenu = (event) => {
-		setAnchorElNav(event.currentTarget);
-	};
-	
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
-	};
+export default function Navbar() {
+	const pages = [
+		{ name: 'Home', link: '/' },
+		{ name: 'Infographics', link: '/Infographics'},
+		{ name: 'Property', link: '/Property' },
+		{ name: 'Suburb Analytics',  link: '/SuburbAnalytics' },
+		{ name: 'Suburb Profile', link: '/SuburbProfile' }, 
+	]
 	
 return (
 	<>
@@ -40,16 +37,21 @@ return (
 				</Typography>
 				<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
 					{pages.map((page) => (
-						<Button
-							key={page}
-							onClick={handleCloseNavMenu}
-							sx={{ my: 2, color: 'white', display: 'block', fontWeight: 'bold' }}
-						>
-							{page}
-						</Button>
+						<Link style={{ textDecoration: 'none' }} to={page.link}>
+							<Button
+								key={page.name}
+								sx={{ 
+									my: 2, 
+									color: 'white', 
+									display: 'block', 
+									fontWeight: 'bold' 
+								}}
+							>
+								{ page.name }
+							</Button>
+						</Link>
 					))}
 				</Box>
-
 			</Toolbar>
 		</Container>
 	</AppBar>
