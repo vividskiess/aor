@@ -45,25 +45,26 @@ export default function Home () {
 	]
 	
 	return (
-		<Container disableGutters sx = {{ minWidth: '100%' }}>
+		<Container disableGutters sx = {{ flexGrow: 1, m: 0, minWidth: '100%' }}>
 			<Box
 				sx = {{
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'space-between',
+					alignItems: { xs: 'center', md: 'flex-start' },
 					pt: 12,
 					pb: 0.05,
-					px: 10, 
+					px: { sm: 5, md: 10 },
 					background:`linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%), url(${banner})`,
 					backgroundRepeat: "no-repeat",
 					backgroundSize: "cover",
 					backgroundPosition: 'center',
 					height: '800px',
-					minWidth: '100%',
+					flexGrow: 1,
 					color: 'white'
 				}}
 			>
-				<Box sx = {{ width: 300 }}>
+				<Box sx = {{ width: { xs: '300px', md: '350px', lg: '650px' } }}>
 				<div>
 					<Typography
 						variant="body"
@@ -72,7 +73,7 @@ export default function Home () {
 							fontWeight: 700,
 							color: 'inherit',
 							textDecoration: 'none',
-							fontSize: 36
+							fontSize: { xs: 26, sm: 26, md: 36 }
 						}}
 					>
 						Beautiful homes made for you
@@ -83,7 +84,6 @@ export default function Home () {
 					</Typography>
 				</Box>
 				<Box 
-					// add hover 
 					sx= {{ 
 						display: 'flex', 
 						alignItems: 'center',
@@ -91,7 +91,7 @@ export default function Home () {
 						height: 40,
 						py: 5,
 						px: 3,
-						mx: 10,
+						width: '100%'
 						}}
 				>
 					<Typography
@@ -110,35 +110,40 @@ export default function Home () {
 					<ArrowRightAltIcon sx={{ fontSize: '2rem', fill: '#1255FF' }}/>
 				</Box>
 			</Box>
-			<Box sx= {{ 
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'center',
-				px: 10,
-				py: 8,
-				minWidth: '100%',
-				height: 'auto',
+			<Box 
+				sx= {{ 
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					px: { xs: 2, md: 8 },
+					py: { xs: 2, md: 8 },
 				}}	
 			>
 				<Box
 					sx = {{ 
 						display: 'flex',
-						flexDirection: 'row',
+						flexDirection: { xs: 'column', md: 'row' },
 						alignItems: 'center',
-						justifyContent: 'flex-start',
+						justifyContent: 'center',
 						gap: 5,
 						pb: 10
 					}}
 				>
-					<img alt='placeholder' height='400' width='500' src={ placeholder }/>
-					<Box sx={{ pt: 5 }}>
-						<div>
-							<Box sx={{ 
-								width: '150px',
-								height: '4px',
-								background: 'linear-gradient(90deg, rgba(18,85,255,1) 0%, rgba(0,0,0,0.8) 100%)'
-								}}
-							/>
+					<img alt='placeholder' style={{ maxWidth: '50%', height: 'auto', paddingLe: 0, margin: 0 }} src={ placeholder }/>
+					<Box 
+						sx={{ 
+							display: 'flex', 
+							flexDirection: 'column', 
+							width: { xs: '100%', md: '70%' },
+							px: 2
+						}} 
+					>
+						<Box sx={{ 
+							width: '150px',
+							height: '4px',
+							background: 'linear-gradient(90deg, rgba(18,85,255,1) 0%, rgba(0,0,0,0.8) 100%)'
+							}}
+						/>
 							<Typography
 								variant="body"
 								sx={{
@@ -146,17 +151,14 @@ export default function Home () {
 									fontWeight: 700,
 									color: 'inherit',
 									textDecoration: 'none',
-									fontSize: 36,
+									fontSize: { xs: 20, md: 34 }
 								}}
 							>
 								You're in good hands
 							</Typography>
-						</div>
-						<div style={{ width: '40%' }}>
 							<Typography variant='body'>
 								Torquatos nostros? quos dolores eos, qui dolorem ipsum per se texit, ne ferae quidem se repellere, idque instituit docere sic: omne animal, simul atque integre iudicante itaque aiunt hanc quasi involuta aperiri, altera occulta quaedam et voluptatem accusantium doloremque.
 							</Typography>
-						</div>
 						<Button sx={{ 
 							fontSize: '1.1rem',
 							fontFamily: 'monospace',
@@ -169,6 +171,7 @@ export default function Home () {
 							borderRadius: 0, 
 							borderTopRightRadius: 15,
 							textTransform: 'none',
+							width: { xs: '50%', md: '70%' },
 							}}
 						>
 							Learn more
@@ -194,15 +197,16 @@ export default function Home () {
 								fontWeight: 700,
 								color: 'inherit',
 								textDecoration: 'none',
-								fontSize: 36,
+								fontSize: { xs: 20, md: 34 },
 							}}
 						>
 							Find your next place to live
 						</Typography>
 					</Box>
-					<Box
+					{/* <Box
 						sx={{
 							display: 'flex',
+							flexDirection: { xs: 'column', md: 'row' },
 							px: 2,
 							py: 1,
 							gap: 4
@@ -216,7 +220,7 @@ export default function Home () {
 										alignItems: 'center', 
 										borderRight: '1px solid rgba(151, 151, 151, 0.4)',
 										py: 4,
-										pr: 10
+										pr: { xs: 0, md: 6 }
 										}} 
 										id={i}
 									>
@@ -238,29 +242,32 @@ export default function Home () {
 									)
 								})
 						}
-					</Box>
+					</Box> */}
 					<Box
 						sx={{
 							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
 							flexWrap: 'wrap',
-							gap: '20px 80px'
+							gap: { xs: 2, md: '20px 80px' },
 						}}
 					>
 						{
 							card.map((item, i) => {
 								return (
-									<Card sx={{ width: '25%'}}>
+									<Card sx={{ width: { xs: '100%', sm: '45%', md: '25%' } }} >
 										<CardActionArea>
-											<CardMedia component="img" height="250" image={smallPlaceholder} alt="house" />
+											<CardMedia component="img" height="200" image={smallPlaceholder} alt="house" />
 											<CardContent sx={{ p: 0 }}>
 												<Typography 
 													variant="h5" 
 													component="div" 
 													sx={{
 														borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
-														px: 3,
-														py: 4,
-														fontWeight: 600
+														px: { xs: 2, sm: 1, md: 4 }, 
+														py: { xs: 1, sm: 1, md: 2 },
+														fontWeight: 600,
+														fontSize: { xs: 20 }
 														}}
 												>
 													Placeholder {i + 1}
@@ -268,7 +275,8 @@ export default function Home () {
 												<Box 
 													sx={{
 														display: 'flex',
-														justifyContent: 'center'
+														justifyContent: 'center',
+														alignItems: 'center'
 													}}
 													>
 													<Typography 
@@ -281,7 +289,6 @@ export default function Home () {
 															gap: 1,
 															borderRight: '1px solid rgba(151, 151, 151, 0.4)',
 															width: '33%',
-															py: 2,
 														}}
 													>
 														<BedIcon />
@@ -293,11 +300,10 @@ export default function Home () {
 														sx={{
 															display: 'flex', 
 															alignItems: 'center',
+															justifyContent: 'center',
 															borderRight: '1px solid rgba(151, 151, 151, 0.4)',
 															width: '33%',
 															gap: 1,
-															py: 2,
-															pl: 6
 														}}
 													>
 														<BathtubIcon />
@@ -309,10 +315,9 @@ export default function Home () {
 														sx={{
 															display: 'flex', 
 															alignItems: 'center',
+															justifyContent: 'center',
 															width: '33%',
 															gap: 1,
-															py: 2,
-															pl: 6
 														}}
 													>
 														<GarageIcon />

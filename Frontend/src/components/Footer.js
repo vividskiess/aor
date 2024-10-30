@@ -25,47 +25,50 @@ export default function Footer() {
         minWidth: '100%'
       }}
     >
-    <Box sx= {{ 
-      display: 'flex', 
-      width: '100%', 
-      justifyContent: 'flex-start', 
-      alignItems: 'center',
-      pb: 3,
-      borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-      borderOpacity: 0.5
-      }}
-      >
-      <Typography
-        variant="h4"
-        noWrap
-        sx={{
-          mr: 2,
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          color: 'inherit',
-          textDecoration: 'none',
+      <Box sx= {{ 
+        display: 'flex', 
+        width: '100%', 
+        justifyContent: 'flex-start', 
+        alignItems: 'center',
+        pb: 3,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        borderOpacity: 0.5
         }}
-      >
-        Make your dreams a
-      </Typography>
-      <Typography
-        variant="h4"
-        noWrap
-        sx={{
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          color: 'inherit',
-          letterSpacing: '-1px',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundImage: 'linear-gradient(34deg, rgba(18,85,255,1) 0%, rgba(36,161,200,1) 100%)'
+        >
+        <Typography
+          variant="h4"
+          noWrap
+          sx={{
+            mr: 1,
+            display: 'flex',
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            color: 'inherit',
+            textDecoration: 'none',
+            fontSize: { xs: 16, sm: 26, md: 30, lg: 40 },
+            letterSpacing: -0.2
           }}
-      >
-        reality
-      </Typography>
-    </Box>
+        >
+          Make your dreams a
+        </Typography>
+        <Typography
+          variant="h4"
+          noWrap
+          sx={{
+            display: 'flex',
+            fontFamily: 'monospace',
+            fontWeight: 800,
+            color: 'inherit',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundImage: 'linear-gradient(34deg, rgba(18,85,255,1) 0%, rgba(36,161,200,1) 100%)',
+            fontSize: { xs: 16, sm: 26, md: 30, lg: 40 },
+            letterSpacing: -0.2
+          }}
+        >
+          reality
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
