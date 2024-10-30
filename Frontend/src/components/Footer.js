@@ -8,8 +8,16 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
+import { Button } from '@mui/material';
 
 export default function Footer() {
+  const pages = [
+		{ name: 'Home', link: '/' },
+		{ name: 'Infographics', link: '/Infographics'},
+		{ name: 'Property', link: '/Property' },
+		{ name: 'Suburb Analytics',  link: '/SuburbAnalytics' },
+	]
+
   return (
     <Container
       sx={{
@@ -25,47 +33,50 @@ export default function Footer() {
         minWidth: '100%'
       }}
     >
-    <Box sx= {{ 
-      display: 'flex', 
-      width: '100%', 
-      justifyContent: 'flex-start', 
-      alignItems: 'center',
-      pb: 3,
-      borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-      borderOpacity: 0.5
-      }}
-      >
-      <Typography
-        variant="h4"
-        noWrap
-        sx={{
-          mr: 2,
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          color: 'inherit',
-          textDecoration: 'none',
+      <Box sx= {{ 
+        display: 'flex', 
+        width: '100%', 
+        justifyContent: 'flex-start', 
+        alignItems: 'center',
+        pb: 3,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        borderOpacity: 0.5
         }}
-      >
-        Make your dreams a
-      </Typography>
-      <Typography
-        variant="h4"
-        noWrap
-        sx={{
-          display: { xs: 'none', md: 'flex' },
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          color: 'inherit',
-          letterSpacing: '-1px',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundImage: 'linear-gradient(34deg, rgba(18,85,255,1) 0%, rgba(36,161,200,1) 100%)'
+        >
+        <Typography
+          variant="h4"
+          noWrap
+          sx={{
+            mr: 1,
+            display: 'flex',
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            color: 'inherit',
+            textDecoration: 'none',
+            fontSize: { xs: 16, sm: 26, md: 30, lg: 40 },
+            letterSpacing: -0.2
           }}
-      >
-        reality
-      </Typography>
-    </Box>
+        >
+          Make your dreams a
+        </Typography>
+        <Typography
+          variant="h4"
+          noWrap
+          sx={{
+            display: 'flex',
+            fontFamily: 'monospace',
+            fontWeight: 800,
+            color: 'inherit',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundImage: 'linear-gradient(34deg, rgba(18,85,255,1) 0%, rgba(36,161,200,1) 100%)',
+            fontSize: { xs: 16, sm: 26, md: 30, lg: 40 },
+            letterSpacing: -0.2
+          }}
+        >
+          reality
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -127,64 +138,15 @@ export default function Footer() {
           }}
         >
           <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
-            Product
+            Pages
           </Typography>
-          <Link color="inherit" variant="body2" href="#">
-            Features
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Testimonials
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Highlights
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Pricing
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            FAQs
-          </Link>
+					{pages.map((page) => (
+						<Link style={{ textDecoration: 'underline', color: 'inherit' }} href={page.link}>
+              { page.name }
+						</Link>
+					))}
         </Box>
-        <Box
-          sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
-            Company
-          </Typography>
-          <Link color="inherit" variant="body2" href="#">
-            About us
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Careers
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Press
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
-            Legal
-          </Typography>
-          <Link color="inherit" variant="body2" href="#">
-            Terms
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Privacy
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Contact
-          </Link>
-        </Box>
+
       </Box>
     </Container>
   );
