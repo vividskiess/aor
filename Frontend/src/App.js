@@ -7,11 +7,8 @@ import Home from './pages/Home.js'
 import Infographics from './pages/Infographics.js'
 import Property from './pages/Property.js'
 import SuburbAnalytics from './pages/SuburbAnalytics.js'
-import SuburbProfile from './pages/SuburbProfile.js'
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -27,7 +24,6 @@ function App() {
         <Route path='Infographics' element={ <Infographics /> } />
         <Route path='Property' element={ <Property /> } />
         <Route path='SuburbAnalytics' element={ <SuburbAnalytics /> } />
-        <Route path='SuburbProfile' element={ <SuburbProfile /> } />
       </Routes>
       <Footer />
     </Box>

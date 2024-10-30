@@ -11,7 +11,6 @@ export default function Navbar() {
 		{ name: 'Infographics', link: '/Infographics'},
 		{ name: 'Property', link: '/Property' },
 		{ name: 'Suburb Analytics',  link: '/SuburbAnalytics' },
-		{ name: 'Suburb Profile', link: '/SuburbProfile' }, 
 	]
 
 	const handleOpenNavMenu = (event) => {

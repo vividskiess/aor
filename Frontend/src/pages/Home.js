@@ -3,14 +3,12 @@ import { Container, Box, Typography, Button, Card, CardActionArea, CardMedia, Ca
 import banner from "../assets/landingPageBanner.png"
 import placeholder from '../assets/placeholder.png'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BedIcon from '@mui/icons-material/Bed';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import GarageIcon from '@mui/icons-material/Garage';
 import smallPlaceholder from '../assets/smallPlaceholder.png'
 
 export default function Home () {
-	const findYourNextPlaceToLive = [ 'Looking for', 'Location', 'Property Type', 'Price' ]
 	const card = [
 		{
 			bedrooms: 4, 
@@ -43,7 +41,6 @@ export default function Home () {
 			carSpaces: 2
 		},
 	]
-	
 	return (
 		<Container disableGutters sx = {{ flexGrow: 1, m: 0, minWidth: '100%' }}>
 			<Box
@@ -203,46 +200,6 @@ export default function Home () {
 							Find your next place to live
 						</Typography>
 					</Box>
-					{/* <Box
-						sx={{
-							display: 'flex',
-							flexDirection: { xs: 'column', md: 'row' },
-							px: 2,
-							py: 1,
-							gap: 4
-						}}
-					>
-						{
-							findYourNextPlaceToLive.map((item, i) => {
-								return (
-									<Box sx={{ 
-										display: 'flex', 
-										alignItems: 'center', 
-										borderRight: '1px solid rgba(151, 151, 151, 0.4)',
-										py: 4,
-										pr: { xs: 0, md: 6 }
-										}} 
-										id={i}
-									>
-										<Typography
-											variant="body"
-											sx={{
-												fontFamily: 'monospace',
-												fontWeight: 700,
-												color: 'black',
-												textDecoration: 'none',
-												fontSize: 16,
-												mr: 1
-											}}
-										>
-											{item}
-										</Typography>
-										<ExpandMoreIcon />
-									</Box>
-									)
-								})
-						}
-					</Box> */}
 					<Box
 						sx={{
 							display: 'flex',

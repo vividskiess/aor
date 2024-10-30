@@ -8,8 +8,16 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
+import { Button } from '@mui/material';
 
 export default function Footer() {
+  const pages = [
+		{ name: 'Home', link: '/' },
+		{ name: 'Infographics', link: '/Infographics'},
+		{ name: 'Property', link: '/Property' },
+		{ name: 'Suburb Analytics',  link: '/SuburbAnalytics' },
+	]
+
   return (
     <Container
       sx={{
@@ -130,64 +138,15 @@ export default function Footer() {
           }}
         >
           <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
-            Product
+            Pages
           </Typography>
-          <Link color="inherit" variant="body2" href="#">
-            Features
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Testimonials
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Highlights
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Pricing
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            FAQs
-          </Link>
+					{pages.map((page) => (
+						<Link style={{ textDecoration: 'underline', color: 'inherit' }} href={page.link}>
+              { page.name }
+						</Link>
+					))}
         </Box>
-        <Box
-          sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
-            Company
-          </Typography>
-          <Link color="inherit" variant="body2" href="#">
-            About us
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Careers
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Press
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
-            Legal
-          </Typography>
-          <Link color="inherit" variant="body2" href="#">
-            Terms
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Privacy
-          </Link>
-          <Link color="inherit" variant="body2" href="#">
-            Contact
-          </Link>
-        </Box>
+
       </Box>
     </Container>
   );
