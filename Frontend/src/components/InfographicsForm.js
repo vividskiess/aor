@@ -21,6 +21,15 @@ export default function InfographicsForm() {
 	}
 	return (
 		<>
+    {/* 
+      chart 1
+      Postcode chart
+
+      chart 2
+      Historical Price Trends:
+      A line chart showing historical price trends in the selected area alongside 
+      predicted future prices, giving users context for their investment decisions.
+    */}
 			<h2>Form</h2>
 			<form onSubmit={handleSubmit} action={<Link to="/login" />}>
 				<Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
@@ -81,19 +90,6 @@ export default function InfographicsForm() {
 				<Button variant="outlined" color="secondary" type="submit">Register</Button>
 			</form>
 			<small>Already have an account? <Link to="/login">Login Here</Link></small>
-			<Plot
-        data={[
-          {
-            x: [1, 2, 3],
-            y: [2, 6, 3],
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: {color: 'red'},
-          },
-          {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
-        ]}
-        layout={ {width: 320, height: 240, title: 'A Fancy Plot'} }
-      />
 		</>
 	)
 }

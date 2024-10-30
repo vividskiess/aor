@@ -1,23 +1,22 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import Plot from 'react-plotly.js';
 
-export default class BedroomChart extends React.Component {
-	state = {
+export default function BedroomChart() {
+  const state = {
 		x: [1, 5, 4, 6, 11, 5, 5, 11, 3, 7, 8], // Bedroom
 		y: [5, 7, 4, 2, 11, 4, 6, 7, 8, 11, 2], // Price
 	}
 		
-	componentDidMount() {
-		// TEST CODE CHANGE
-		axios.get('http://127.0.0.1:8000/SuburbAnalytics/3084')
-		  	.then(response => {
-				console.log(response.data)
-			}
-		)
-	}
+	// componentDidMount() {
+	// 	// TEST CODE CHANGE
+	// 	axios.get('http://127.0.0.1:8000/SuburbAnalytics/3084')
+	// 	  	.then(response => {
+	// 			console.log(response.data)
+	// 		}
+	// 	)
+	// }
 
-	render() {	
 		return (
 			<Plot
 				data={[
@@ -55,4 +54,3 @@ export default class BedroomChart extends React.Component {
 			/>
 		);
 	}
-}
