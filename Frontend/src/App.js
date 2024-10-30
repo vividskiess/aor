@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import api from './Api'
 import { Box } from '@mui/material'
 import { Routes, Route } from "react-router-dom"
 import Navbar from './components/Navbar.js'
@@ -17,8 +16,7 @@ function App() {
     <Box sx={{ 
       display: 'flex', 
       flexDirection: 'column', 
-      minHeight: '100vh', 
-      mt: '68.5px'
+      width: '100%'
       // bgcolor: darkMode ? 'grey.900' : 'background.default', 
       // color: darkMode ? 'common.white' : 'common.black' 
       }}
