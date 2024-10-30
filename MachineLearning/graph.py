@@ -5,7 +5,7 @@ import seaborn as sns
 import pandas as pd  
 
 # Associates a variable with the processed data. 
-df = pd.read_csv('datasets/processed/processed_housing_market.csv')
+df = pd.read_csv('MachineLearning/datasets/processed/processed_housing_market.csv')
 
 # Adds styling to the plot. 
 plt.rcParams['figure.figsize'] = (14,4)

@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd  
 
 # Associates a variable with the processed data. 
-df = pd.read_csv('datasets/processed/processed_housing_market.csv')
+df = pd.read_csv('MachineLearning/datasets/processed/processed_housing_market.csv')
 
 # Trains distance and price on a linear regression model so that the relation between them can be understood. 
 def train_distance_price():

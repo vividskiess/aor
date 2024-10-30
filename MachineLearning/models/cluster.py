@@ -3,7 +3,7 @@ from sklearn.cluster import KMeans
 import pandas as pd  
 
 # Associates a variable with the processed data. 
-df = pd.read_csv('datasets/processed/processed_housing_market.csv')
+df = pd.read_csv('MachineLearning/datasets/processed/processed_housing_market.csv')
 
 # Trains the data using the land size of an area, to cluster groups of houses with similar land sizes.
 def train_landsize_cluster():

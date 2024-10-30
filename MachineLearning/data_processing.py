@@ -1,9 +1,9 @@
 import pandas as pd  
 
 # Reads data from the three CSV files and puts it into these variables.
-first_housing_dataset = pd.read_csv('datasets/raw/housing_market_1.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
-second_housing_dataset = pd.read_csv('datasets/raw/housing_market_2.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
-school_dataset = pd.read_csv('datasets/raw/victoria-schools-2018.csv', usecols=['Address_Postcode'])
+first_housing_dataset = pd.read_csv('MachineLearning/datasets/raw/housing_market_1.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
+second_housing_dataset = pd.read_csv('MachineLearning/datasets/raw/housing_market_2.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
+school_dataset = pd.read_csv('MachineLearning/datasets/raw/victoria-schools-2018.csv', usecols=['Address_Postcode'])
 
 # Combines both datasets into one data frame variable. 
 df = pd.concat([first_housing_dataset, second_housing_dataset])
