@@ -1,9 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Typography, Box, Paper, IconButton, InputBase, Button } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from 'react-router-dom';
 import suburbBirdEye from '../assets/suburbBirdsEye.jpg'
 
 export default function SuburbAnalytics() {
+	const [Postcode, setPostcode] = useState(''); // State for postcode
+	const navigate = useNavigate(); // Use the useNavigate hook
+
+	const handleSearch = (e) => {
+		e.preventDefault(); // Prevent default form submission
+		if (Postcode) {
+			navigate(`/SuburbAnalytics/${Postcode}`); // Redirect to the specified URL
+		}
+	};
+	
+
 	return (
 		<>
 			<Box sx={{ py: 6, px: 20}}>
@@ -11,9 +23,9 @@ export default function SuburbAnalytics() {
 					sx={{
 						display: 'flex',
 						justifyContent: 'center',
-						gap: 5,
+						gap: 10,
 						backgroundColor: 'rgba(223, 223, 223, 1)',
-						px: 6,
+						px: 8,
 						pt: 6,
 						pb: 10,
 						borderRadius: '34px',
@@ -22,7 +34,7 @@ export default function SuburbAnalytics() {
 					<Box sx={{ 
 						display: 'flex', 
 						flexDirection: 'column', 
-						width: '50%',
+						maxWidth: '35%',
 						gap: 2
 						}}
 					>
@@ -78,7 +90,7 @@ export default function SuburbAnalytics() {
 						</Box>
 					</Box>
 					<Box>
-						<img style={{ borderRadius: '20px', height: '250px' }} src={suburbBirdEye} alt="suburb birds eye view" />
+						<img style={{ borderRadius: '20px' }} src={suburbBirdEye} alt="suburb birds eye view" />
 					</Box>
 				</Box>
 			</Box>
