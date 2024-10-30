@@ -3,24 +3,25 @@ from sqlalchemy import Column, Integer, String, Float
 from typing import Dict, Union, List, Optional
 from pydantic import BaseModel, Field
     
+# Define a pydantic model for property filtering criteria
 class PropertyFilter(BaseModel):
     Postcode: Optional[int] = Field(None, ge=3000, le=3999)
     Type: Optional[str] = Field(None, pattern="^[htu]$", description="Property type: 'h' for house, 't' for townhouse, 'u' for unit")
     min_price: Optional[int] = Field(None, gt=0)
     max_price: Optional[int] = Field(None, gt=0)
 
+# Class for loading and analyzing housing data
 class HousingDataAnalyzer:
     def __init__(self, csv_file: str):
         # Load the CSV file data
         try:
             self.data = pd.read_csv(csv_file)
-            print("Loaded columns:", self.data.columns)
-            print("Data types:\n", self.data.dtypes)
         except Exception as e:
+            # Print and raise error if file fails to load
             print(f"Failed to load data from {csv_file}: {str(e)}")
             raise ValueError(f"Failed to load data from {csv_file}: {str(e)}")
         
-    
+    # Method for getting min, max and average price based on postcode
     def get_suburb_analytics(self, Postcode: int) -> Union[Dict[str, float], str]:
         try:
             # Filter the data for the specified postcode
@@ -29,13 +30,14 @@ class HousingDataAnalyzer:
             if filtered_data.empty:
                 return f"No data available for postcode {Postcode}."
             
-            # Calculate analytics
+            # Calculate min, max and average 
             try:
                 min_price = filtered_data['Price'].min()
                 max_price = filtered_data['Price'].max()
                 avg_price = filtered_data['Price'].mean()
             except Exception as e:
-                print(f"Error calculating analytics: {str(e)}")  # Debugging line
+                # Print and raise error if fail to calculate analytics
+                print(f"Error calculating analytics: {str(e)}") 
                 return "Error calculating analytics."
 
             # Return the analytics as a dictionary
@@ -81,4 +83,24 @@ class HousingDataAnalyzer:
             ]
         except Exception as e:
             print(f"Error in filtering properties: {e}")  # Log error details
+            #
             return "Error filtering properties"
+        
+
+
+
+    def predict_monthly_prices(self, year: int) -> Union[Dict[str, float], str]:
+        if not hasattr(self, "YearModel") or not self.YearModel:
+            return "Prediction model not loaded."
+        
+        try:
+            monthly_predictions = {}
+            for month in range(1, 13):
+                prediction = self.YearModel.predict(year, month)
+                monthly_predictions[f"{year}-{month:02}"] = round(prediction, 2)
+            
+            return monthly_predictions
+
+        except Exception as e:
+            print(f"Error in monthly predictions: {e}")
+            return "Error generating monthly predictions."
