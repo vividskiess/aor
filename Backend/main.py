@@ -28,7 +28,7 @@ async def root():
 
 #initialise model below
 #model = modelName() #replace modelName
-YearModel = modelName()
+# YearModel = modelName()
 
 
 # Endpoint for returning analytic data based on postcode
@@ -75,27 +75,39 @@ async def filter_properties(filter: PropertyFilter):
 @app.get("/Infographics/{year}")
 async def predict_property_prices(year: int):
     if year < 2016 or year > 2100:  
-        raise HTTPException(status_code=400, detail="Year must be between 2020 and 2050.")
+        raise HTTPException(status_code=400, detail="Year must be between 2016 and 2100.")
+    
     try:
         predictions = analyzer.predict_monthly_prices(year)
         
+        # If no data found, return a 404 error
         if isinstance(predictions, str): 
-            raise HTTPException(status_code=500, detail=predictions)
+            raise HTTPException(status_code=404, detail=predictions)
 
         return {"year": year, "monthly_predictions": predictions}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
+# Endpoint for getting the predicted price of a house based on the amount of bedroom
+@app.get("/Infographics/Bedroom/{postcode}/{bedroom}")
+async def predict_property_prices(postcode: int, bedroom: int):
+    if bedroom < 1 or bedroom > 10: 
+        raise HTTPException(status_code=400, detail="Bedroom amount must be between 1 and 10.")
 
+    try:
+        # Gets the prediected price from the analyzer based on the given postcode and bedrrom 
+        predictions = analyzer.get_prices_by_bedroom(postcode, bedroom)
+        
+        # If no data found, return a 404 error
+        if isinstance(predictions, str): 
+            raise HTTPException(status_code=404, detail=predictions)
 
+        return predictions
 
-
-
-
-
-
-
+    except Exception as e:
+        # Return a 500 status code with error details with any unexpected errors
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 #class PredictionInput(BaseModel):
 #    land_size: int = Field(...,gt=0, description=":and size of property")

@@ -1,8 +1,11 @@
+import sys
+sys.path.append('..')
 import pandas as pd
 from sqlalchemy import Column, Integer, String, Float
 from typing import Dict, Union, List, Optional
 from pydantic import BaseModel, Field
-    
+from MachineLearning.models.regression import RegressionModel
+
 # Define a pydantic model for property filtering criteria
 class PropertyFilter(BaseModel):
     Postcode: Optional[int] = Field(None, ge=3000, le=3999)
@@ -13,9 +16,11 @@ class PropertyFilter(BaseModel):
 # Class for loading and analyzing housing data
 class HousingDataAnalyzer:
     def __init__(self, csv_file: str):
-        # Load the CSV file data
+        # Loads the data from the CSV file and creates a linear regression model with the CSV file
         try:
             self.data = pd.read_csv(csv_file)
+            self.regression_model = RegressionModel(csv_file)
+
         except Exception as e:
             # Print and raise error if file fails to load
             print(f"Failed to load data from {csv_file}: {str(e)}")
@@ -87,8 +92,6 @@ class HousingDataAnalyzer:
             return "Error filtering properties"
         
 
-
-
     def predict_monthly_prices(self, year: int) -> Union[Dict[str, float], str]:
         if not hasattr(self, "YearModel") or not self.YearModel:
             return "Prediction model not loaded."
@@ -104,3 +107,21 @@ class HousingDataAnalyzer:
         except Exception as e:
             print(f"Error in monthly predictions: {e}")
             return "Error generating monthly predictions."
+
+
+
+    def get_prices_by_bedroom(self, Postcode: int, Bedroom: int) -> Union[Dict[str, float], str]:
+        try:
+            # Gets the predicted price from the linear regression model using postcode and bedroom
+            predicted_price = self.regression_model.predict_price_by_room(Postcode, Bedroom)
+
+            # Returns the relavant information
+            return {
+                "price": predicted_price
+            }
+        
+        except KeyError as e:
+            return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
+        
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
