@@ -1,8 +1,8 @@
 import pandas as pd  
 
 # Reads data from the three CSV files and puts it into these variables.
-first_housing_dataset = pd.read_csv('MachineLearning/datasets/raw/housing_market_1.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
-second_housing_dataset = pd.read_csv('MachineLearning/datasets/raw/housing_market_2.csv', usecols=['Suburb', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
+first_housing_dataset = pd.read_csv('MachineLearning/datasets/raw/housing_market_1.csv', usecols=['Suburb', 'Address', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
+second_housing_dataset = pd.read_csv('MachineLearning/datasets/raw/housing_market_2.csv', usecols=['Suburb', 'Address', 'Rooms', 'Price', 'Distance', 'Postcode', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude', 'Regionname'])
 school_dataset = pd.read_csv('MachineLearning/datasets/raw/victoria-schools-2018.csv', usecols=['Address_Postcode'])
 
 # Combines both datasets into one data frame variable. 
@@ -43,5 +43,5 @@ df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = 
 df.drop(df[(df['Rooms'] > 10)].index, inplace = True)
 
 # Converts processed data to a CSV File
-df.to_csv('datasets/processed/processed_housing_market.csv', index=False)
+df.to_csv('MachineLearning/datasets/processed/processed_housing_market.csv', index=False)
 
