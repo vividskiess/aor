@@ -82,6 +82,28 @@ class HousingDataAnalyzer:
         except Exception as e:
             return f"An error occurred: {str(e)}"
         
+    def get_rooms_vs_prices(self, Postcode: Optional[int] = None) -> Union[Dict[str, List[float]], str]:
+        try:
+            # Filter data by postcode if provided
+            data = self.data[self.data['Postcode'] == Postcode] if Postcode else self.data
+            
+            # Check if data is available
+            if data.empty:
+                return "No data available for the specified criteria."
+
+            # Extract rooms and prices for plotting
+            rooms = data['Rooms'].tolist()
+            prices = data['Price'].tolist()
+
+            return {
+                "rooms": rooms,
+                "prices": prices
+            }
+        except KeyError as e:
+            return f"Key error: {str(e)} - Check if 'Rooms' and 'Price' columns exist in the dataset."
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
+        
     # Method to get all property data
     def get_all_properties(self) -> pd.DataFrame:
         return self.data

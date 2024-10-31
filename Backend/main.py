@@ -42,7 +42,16 @@ async def suburb_analytics(Postcode: int):
         if isinstance(analytics, str):
             raise HTTPException(status_code=404, detail=analytics)
         
-        return analytics
+        # Get rooms vs prices data for the specified postcode
+        rooms_vs_prices = analyzer.get_rooms_vs_prices(Postcode)
+        
+        # If rooms_vs_prices returns an error string, handle it appropriately
+        if isinstance(rooms_vs_prices, str):
+            rooms_vs_prices = {"error": rooms_vs_prices}
+        return {
+            "analytics": analytics,
+            "rooms_vs_prices": rooms_vs_prices
+        }
     
     except Exception as e:
         # Return a 500 status code with error details with any unexpected errors

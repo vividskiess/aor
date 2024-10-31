@@ -2,7 +2,7 @@ import React from 'react'
 import InfographicsForm from '../components/InfographicsForm'
 import { Container } from '@mui/material'
 import Plot from 'react-plotly.js';
-import PriceTrendChart from '../components/PriceTrendChart'
+import PriceTrendChart from '../components/charts/PriceTrendChart'
 
 export default function Infographics() {
     // Sample usage

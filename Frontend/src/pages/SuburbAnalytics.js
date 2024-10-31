@@ -5,10 +5,12 @@ import suburbBirdEye from '../assets/suburbBirdsEye.jpg'
 import infographicsBanner from '../assets/InfographicsBanner.png'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import chartPlaceholder from '../assets/chartPlaceholder.png'
+import RoomsVSPricesChart from '../components/charts/RoomVSPricesChart'
 import axios from 'axios'
 
 export default function SuburbAnalytics() {
 	const [suburbData, setSuburbData] = useState(null);
+	const [roomsVSPrices, setRoomsVSPrices] = useState({ rooms: [], prices: [] });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [searchTerm, setSearchTerm] = useState(3000);
@@ -27,7 +29,8 @@ export default function SuburbAnalytics() {
 		try {
 			const response = await axios.get(`http://localhost:8000/SuburbAnalytics/${postcode}`); // Replace with your actual API endpoint
 			console.log(response.data)
-			setSuburbData(response.data);
+			setSuburbData(response.data.analytics);
+			setRoomsVSPrices(response.data.rooms_vs_prices);
 		} catch (err) {
 			setError('Failed to fetch data. Please try again.');
 		} finally {
@@ -244,8 +247,21 @@ export default function SuburbAnalytics() {
 							</Typography>
 							<InfoOutlinedIcon />
 						</Box>
-						<Box sx={{ p: 1.5 }}>
-							<img style={{ maxWidth: '100%', height: 'auto', padding: 0, margin: 0 }} src={chartPlaceholder} alt="chart" />
+						<Box 
+							sx={{ 
+								py: 1,
+								display: 'flex',
+								justifyContent: { xs: 'center', md: 'flex-start' },
+								alignItems: 'center'
+							}}
+						>
+							{roomsVSPrices.rooms.length > 0 && roomsVSPrices.prices.length > 0 ? (
+								<RoomsVSPricesChart rooms={roomsVSPrices.rooms} prices={roomsVSPrices.prices} />
+                ) : ( 
+									<img style={{ maxWidth: '100%', height: 'auto', padding: 0, margin: 0 }} src={chartPlaceholder} alt="chart" />
+									)
+							}
+							
 						</Box>
 						<Typography
 							variant="body"
