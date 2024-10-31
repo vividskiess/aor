@@ -100,6 +100,7 @@ async def predict_property_prices(postcode: int, bedroom: int):
     if bedroom < 1 or bedroom > 10: 
         raise HTTPException(status_code=400, detail="Bedroom amount must be between 1 and 10.")
 
+
     try:
         # Gets the prediected price from the analyzer based on the given postcode and bedrrom 
         predictions = analyzer.get_prices_by_bedroom(postcode, bedroom)
@@ -114,6 +115,27 @@ async def predict_property_prices(postcode: int, bedroom: int):
         # Return a 500 status code with error details with any unexpected errors
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
+# Endpoint for getting the predicted price of a house based on the landsize
+@app.get("Infographics/Landsize/{postcode}/{landsize}")
+async def predict_prices_landsize(postcode: int, landsize: int):
+    if landsize < 10 or landsize > 10000:
+        raise HTTPException(status_code=400, detail="Landsize value must be between 10 and 10000.")
+
+    try: 
+        # Gets the predicted price from analyzer based on given landsize
+        predict = analyzer.get_prices_by_landsize(postcode, landsize)
+
+        # If no data found, return a 404 error
+        if isinstance(predict, str):
+            raise HTTPException(status_code=404, detail=predict)
+        
+        return predict
+    except Exception as e:
+        # Return a 500 status code with error details with any unexpected errors
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+
+# Endpoint for getting random properties
 @app.get("/properties/random-properties")
 async def get_random_properties():
     try:
@@ -132,25 +154,6 @@ async def get_random_properties():
     except Exception as e:
         # Handle unexpected errors
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-
-#class PredictionInput(BaseModel):
-#    land_size: int = Field(...,gt=0, description=":and size of property")
-#    bedroom: int = Field(..., ge=1, le=10, description="Number of bedrooms")
-#    postcode: int = Field(..., ge=3000, le=3999, description="Postcode of property")
-
-
-#@app.get("/infographics/{land_size}/{bedroom}/{Postcode}")
-#async def predict_price(land_size: int, bedroom: int, Postcode: int):
-#    price = model.predict(land_size, bedroom, Postcode)[0]
-#    return {"predicted_price": round(price, 2)}
-
-#@app.post("/infographics")
-#async def predict_price(input: PredictionInput):
-#    try:
-#        price = model.predict(input.land_size, input.bedroom, input.Postcode)[0]
-#        return {"predicted_price": round(price, 2)}
-#    except Exception as e:
-#        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 
 # Run the FastAPI application if the script is executed directly
