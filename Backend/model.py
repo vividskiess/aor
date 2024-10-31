@@ -165,9 +165,25 @@ class HousingDataAnalyzer:
             # Gets the predicted price from the linear regression model using postcode and bedroom
             predicted_price = self.regression_model.predict_price_by_room(Postcode, Bedroom)
 
-            # Returns the relavant information
+            # Returns the relevant information
             return {
                 "price": predicted_price
+            }
+        
+        except KeyError as e:
+            return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
+        
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
+
+
+    def get_prices_by_landsize(self, Postcode: int, Landsize: int) -> Union[Dict[str, float], str]:
+        try:
+            # Gets the predicted price from the linear regression model using postcode and landsize
+            predicted_price_landsize = self.regression_model.predict_price_by_landsize(Postcode, Landsize)
+            # Returns the relevant information
+            return {
+                "price": predicted_price_landsize
             }
         
         except KeyError as e:
