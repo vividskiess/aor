@@ -4,8 +4,8 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd  
 
 class RegressionModel: 
+    # Intialises a variable with the processed data and creates a new linear regression model. 
     def __init__(self, data):
-        # Associates a variable with the processed data and creates a new linear regression model. 
         self.df = pd.read_csv(data)
         self.model = LinearRegression()
 
@@ -79,13 +79,15 @@ class RegressionModel:
         return round(self.model.predict([[landsize]])[0], 3)
 
     # Evaluates the regression model using Mean Squared Error and R^2 Score. 
-    # Mean Squared Error: Calculates the average squared difference between actual and predicted values
-    # R^2 Score: Measures the relationship between linear model and the dependent variables. A score closer to 1 suggest that model explain most of its variances.
     def evaluate_regression(self):
         x_test, y_test, y_prediction = self.train_distance_price()
 
         print('Evaluating Linear Regression of Distance vs Price')
+
+        # Mean Squared Error: Calculates the average squared difference between actual and predicted values
         print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
+
+        # R^2 Score: Measures the relationship between linear model and the dependent variables. A score closer to 1 suggest that model explain most of its variances.
         print('- R^2 Score: %.2f\n' % r2_score(y_test, y_prediction))
 
         x_test, y_test, y_prediction = self.train_room_price()
@@ -95,8 +97,12 @@ class RegressionModel:
         print('- R^2 Score: %.2f' % r2_score(y_test, y_prediction))
 
 # This part is run when the user runs this python file.
-if __name__ == "__main__":
+if __name__ == '__main__':
     model = RegressionModel('MachineLearning/datasets/processed/processed_housing_market.csv')
 
     # To evaluate the linear regression, uncomment the code below:
-    model.evaluate_regression()
+    # model.evaluate_regression()
+
+    print("1911: ", model.predict_price_by_year_built(3084, 1911))
+    print("1951: ", model.predict_price_by_year_built(3084, 1951))
+    print("2011: ", model.predict_price_by_year_built(3084, 2011))
