@@ -12,20 +12,38 @@ import axios from 'axios'
 export default function Home () {
 	const [properties, setProperties] = useState([]);
 
-		// Fetch data when component mounts
-		useEffect(() => {
-			const fetchProperties = async () => {
-				try {
-					const response = await axios.get('http://localhost:8000/properties/random-properties');
-					console.log(response.data)
-					setProperties(response.data); // Assume the response returns an array of property objects
-				} catch (error) {
-					console.error("Error fetching properties:", error);
-				}
-			};
-			fetchProperties();
-		}, []);
+	// Fetch data when component mounts
+	useEffect(() => {
+		const fetchProperties = async () => {
+			try {
+				const response = await axios.get('http://localhost:8000/properties/random-properties');
+				const propertiesWithImages =
+					await Promise.all(response.data.map(async (property) => {
+						try {
+							console.log(response.data)
+							const image = await getStreetViewImage(property.Lattitude, property.Longtitude) 
+							return { ...property, image: image || smallPlaceholder } // Return property with its associated image
+						} catch (error) {
+							console.error("Error fetching image for property:", error)
+							 // Use the placeholder image in case of an error
+								return { ...property, image: smallPlaceholder }
+						}
+						
+					}))
+				setProperties(propertiesWithImages); // Assume the response returns an array of property objects
+			} catch (error) {
+				console.error("Error fetching properties:", error);
+			}
+		};
+		fetchProperties();
+	}, []);
 
+
+	const getStreetViewImage = (lat, lng) => {
+		const APIKEY = process.env.REACT_APP_GOOGLE_API_KEY;
+		const STREET_VIEW_API_URL = `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${APIKEY}`;
+		return STREET_VIEW_API_URL;
+	};
 	return (
 		<Container disableGutters sx = {{ flexGrow: 1, m: 0, minWidth: '100%' }}>
 			<Box
@@ -185,7 +203,7 @@ export default function Home () {
 								fontSize: { xs: 20, md: 34 },
 							}}
 						>
-							Find your next place to live
+							View Properties Sold
 						</Typography>
 					</Box>
 					<Box
@@ -202,7 +220,7 @@ export default function Home () {
 								return (
 									<Card sx={{ width: { xs: '100%', sm: '45%', md: '25%' } }} key={i} >
 										<CardActionArea>
-											<CardMedia component="img" height="200" image={smallPlaceholder} alt="house" />
+											<CardMedia component="img" height="200" image={item.image} alt="house" />
 											<CardContent sx={{ p: 0 }}>
 												<Typography 
 													variant="h5" 
@@ -212,10 +230,23 @@ export default function Home () {
 														px: { xs: 2, sm: 1, md: 4 }, 
 														py: { xs: 1, sm: 1, md: 2 },
 														fontWeight: 600,
-														fontSize: { xs: 20 }
+														fontSize: { xs: 15, md: 20 }
 														}}
 												>
-													Placeholder {i + 1}
+													Address: {item.Address}, {item.Postcode}
+												</Typography>
+												<Typography 
+													variant="h5" 
+													component="div" 
+													sx={{
+														borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
+														px: { xs: 2, sm: 1, md: 4 }, 
+														py: { xs: 1, sm: 1, md: 2 },
+														fontWeight: 600,
+														fontSize: { xs: 15, md: 20 }
+														}}
+												>
+													Sale Price: ${item.Price} 
 												</Typography>
 												<Box 
 													sx={{
@@ -234,6 +265,7 @@ export default function Home () {
 															gap: 1,
 															borderRight: '1px solid rgba(151, 151, 151, 0.4)',
 															width: '33%',
+															p: 0.5
 														}}
 													>
 														<BedIcon />
