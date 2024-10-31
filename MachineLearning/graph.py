@@ -1,12 +1,14 @@
 from models.cluster import train_landsize_cluster, train_school_cluster
 from models.regression import RegressionModel
+from models.cluster import ClusterModel
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd  
 
 # Associates a variable with the processed data. 
 df = pd.read_csv('MachineLearning/datasets/processed/processed_housing_market.csv')
-model = RegressionModel('MachineLearning/datasets/processed/processed_housing_market.csv')
+regression_model = RegressionModel('MachineLearning/datasets/processed/processed_housing_market.csv')
+cluster_model = ClusterModel('MachineLearning/datasets/processed/processed_housing_market.csv')
 
 # Adds styling to the plot. 
 plt.rcParams['figure.figsize'] = (14,4)
@@ -54,7 +56,7 @@ def correlation_data():
 
 # Creates a scatter plot, that clusters groups of houses that have similar landsizes.
 def scatter_landsize_location(): 
-    x = train_landsize_cluster()
+    x = cluster_model.train_landsize_cluster()
     
 	# Creates a scatter plot that shows the location of houses, along with a color that shows the grouping of each house. 
     plt.figure(figsize=(10, 6))
@@ -76,7 +78,7 @@ def scatter_landsize_location():
 
 # Creates a scatter plot, that clusters groups of houses based on the amount of schools.
 def scatter_school_location():
-    x = train_school_cluster()
+    x = cluster_model.train_school_cluster()
 
     # Creates a scatter plot that shows the location of houses, along with a color that shows the grouping of each house. 
     plt.figure(figsize=(10, 6))
@@ -90,7 +92,7 @@ def scatter_school_location():
 
 # Creates a graph that shows prices to distance from the CBD. It uses a model to predict the trajectory of the prices.
 def scatter_distance_price():
-	x_test, y_test, y_prediction = model.train_distance_price()
+	x_test, y_test, y_prediction = regression_model.train_distance_price()
 
     # Shows the scatter plot and the regression. 
 	plt.figure()
@@ -104,7 +106,7 @@ def scatter_distance_price():
 
 # Creates a scatter plot that shows the house prices based on the average room amount.
 def scatter_room_price():
-	x_test, y_test, y_predicition = model.train_room_price()
+	x_test, y_test, y_predicition = regression_model.train_room_price()
 
 	# Shows the scatter plot using the new prediciton values.
 	plt.figure(figsize=(12, 10))
@@ -122,7 +124,7 @@ def scatter_room_price():
 # distrubution_house_prices()
 # bar_house_region()
 # correlation_data()
-# scatter_landsize_location()
-# scatter_school_location()
-scatter_distance_price()
-scatter_room_price()
+scatter_landsize_location()
+scatter_school_location()
+# scatter_distance_price()
+# scatter_room_price()
