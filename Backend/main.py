@@ -68,10 +68,6 @@ async def filter_properties(filter: PropertyFilter):
         # Return a 500 status code with error details with any unexpected errors
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-
-
-
-
 @app.get("/Infographics/{year}")
 async def predict_property_prices(year: int):
     if year < 2016 or year > 2100:  
@@ -107,6 +103,25 @@ async def predict_property_prices(postcode: int, bedroom: int):
 
     except Exception as e:
         # Return a 500 status code with error details with any unexpected errors
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    
+@app.get("/properties/random-properties")
+async def get_random_properties():
+    try:
+        # Fetch all property data from the analyzer
+        all_properties = analyzer.get_all_properties()
+        
+        # Check if there are enough properties in the dataset
+        if len(all_properties) < 6:
+            raise HTTPException(status_code=404, detail="Not enough properties in the dataset.")
+
+        # Select six random properties from the dataset
+        random_properties = all_properties.sample(6).to_dict(orient="records")
+
+        return random_properties
+
+    except Exception as e:
+        # Handle unexpected errors
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 #class PredictionInput(BaseModel):

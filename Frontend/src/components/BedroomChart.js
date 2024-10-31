@@ -12,24 +12,21 @@ export default function BedroomChart() {
 	// Fetches the price of the house
 	useEffect(() => {
 		const fetchPrices = async () => {
-            try {
+			try {
 				// Maps over each room and fetches the predicted price for each room 
-                const newPrices = await Promise.all(bedrooms.map(async (room) => {
-                    const response = await axios.get(`http://127.0.0.1:8000/Infographics/Bedroom/${suburb}/${room}`);
-                    return response.data.price;
-                }));
-
-                // Updates the state with the array of the predicted prices
-                setPrices(newPrices);
-            } 
-			
+				const newPrices = await Promise.all(bedrooms.map(async (room) => {
+					const response = await axios.get(`http://127.0.0.1:8000/Infographics/Bedroom/${suburb}/${room}`);
+					return response.data.price;
+			}));
+				// Updates the state with the array of the predicted prices
+				setPrices(newPrices);
+			} 
 			// TODO: The code below is placeholder code. Need to implement proper error checking.
 			catch (error) {
-                console.error("Error fetching prices:", error);
-            }
-        };
-
-        fetchPrices();
+				console.error("Error fetching prices:", error);
+			}
+		};
+			fetchPrices()
     }, [bedrooms]); 
 
 	return (
@@ -46,7 +43,6 @@ export default function BedroomChart() {
 					}
 				}
 			]}
-
 			layout = {{
 				title: {
 					text:'Prediction of House Prices based on Bedrooms and Suburb',

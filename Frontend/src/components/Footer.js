@@ -140,8 +140,8 @@ export default function Footer() {
           <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
             Pages
           </Typography>
-					{pages.map((page) => (
-						<Link style={{ textDecoration: 'underline', color: 'inherit' }} href={page.link}>
+					{pages.map((page, i) => (
+						<Link key={i} style={{ textDecoration: 'underline', color: 'inherit' }} href={page.link}>
               { page.name }
 						</Link>
 					))}

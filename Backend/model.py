@@ -57,6 +57,9 @@ class HousingDataAnalyzer:
         except Exception as e:
             return f"An error occurred: {str(e)}"
         
+    # Method to get all property data
+    def get_all_properties(self) -> pd.DataFrame:
+        return self.data
 
     def get_filtered_properties(self, Postcode: int = None, Type: str = None, Price_range: tuple = None) -> Union[List[Dict[str, Union[str, float]]], str]:
         try:

@@ -1,46 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Box, Typography, Button, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
 import banner from "../assets/landingPageBanner.png"
-import placeholder from '../assets/placeholder.png'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import BedIcon from '@mui/icons-material/Bed';
 import BathtubIcon from '@mui/icons-material/Bathtub';
-import GarageIcon from '@mui/icons-material/Garage';
+import GrassIcon from '@mui/icons-material/Grass';
 import smallPlaceholder from '../assets/smallPlaceholder.png'
+import landingPagePhoto from '../assets/landingPagePhoto.jpg'
+import axios from 'axios'
 
 export default function Home () {
-	const card = [
-		{
-			bedrooms: 4, 
-			bathrooms: 1, 
-			carSpaces: 2
-		},
-		{
-			bedrooms: 4, 
-			bathrooms: 1, 
-			carSpaces: 2
-		},
-		{
-			bedrooms: 4, 
-			bathrooms: 1, 
-			carSpaces: 2
-		},
-		{
-			bedrooms: 4, 
-			bathrooms: 1, 
-			carSpaces: 2
-		},
-		{
-			bedrooms: 4, 
-			bathrooms: 1, 
-			carSpaces: 2
-		},
-		{
-			bedrooms: 4, 
-			bathrooms: 1, 
-			carSpaces: 2
-		},
-	]
+	const [properties, setProperties] = useState([]);
+
+		// Fetch data when component mounts
+		useEffect(() => {
+			const fetchProperties = async () => {
+				try {
+					const response = await axios.get('http://localhost:8000/properties/random-properties');
+					console.log(response.data)
+					setProperties(response.data); // Assume the response returns an array of property objects
+				} catch (error) {
+					console.error("Error fetching properties:", error);
+				}
+			};
+			fetchProperties();
+		}, []);
+
 	return (
 		<Container disableGutters sx = {{ flexGrow: 1, m: 0, minWidth: '100%' }}>
 			<Box
@@ -80,16 +65,19 @@ export default function Home () {
 						In oculis quidem se esse admonere interesse enim maxime placeat, facere possimus, omnis. Et quidem faciunt, ut labore et accurate disserendum et harum quidem exercitus quid.
 					</Typography>
 				</Box>
-				<Box 
+				<Button
+					href="/Infographics"
 					sx= {{ 
+						borderRadius: 0,
 						display: 'flex', 
+						justifyContent: 'flex-start',
 						alignItems: 'center',
 						backgroundColor: 'white',
 						height: 40,
 						py: 5,
 						px: 3,
 						width: '100%'
-						}}
+					}}
 				>
 					<Typography
 						variant="body"
@@ -102,10 +90,10 @@ export default function Home () {
 							mr: 1
 						}}
 					>
-						See all listings 
+						View our Infographics Section
 					</Typography>
 					<ArrowRightAltIcon sx={{ fontSize: '2rem', fill: '#1255FF' }}/>
-				</Box>
+				</Button>
 			</Box>
 			<Box 
 				sx= {{ 
@@ -126,7 +114,7 @@ export default function Home () {
 						pb: 10
 					}}
 				>
-					<img alt='placeholder' style={{ maxWidth: '50%', height: 'auto', paddingLe: 0, margin: 0 }} src={ placeholder }/>
+					<img alt='placeholder' style={{ maxWidth: '50%', height: 'auto', paddingLe: 0, margin: 0, borderRadius: '15px', border: '1px solid rgba(0,0,0, 0.5'}} src={ landingPagePhoto }/>
 					<Box 
 						sx={{ 
 							display: 'flex', 
@@ -154,7 +142,7 @@ export default function Home () {
 								You're in good hands
 							</Typography>
 							<Typography variant='body'>
-								Torquatos nostros? quos dolores eos, qui dolorem ipsum per se texit, ne ferae quidem se repellere, idque instituit docere sic: omne animal, simul atque integre iudicante itaque aiunt hanc quasi involuta aperiri, altera occulta quaedam et voluptatem accusantium doloremque.
+							Navigating the real estate market can be complex, but with us, you’ll feel secure every step of the way. Whether you're buying, selling, or investing, our team is dedicated to making your experience smooth, successful, and tailored to your goals. With years of experience and a deep understanding of the market, we're here to guide you confidently toward your real estate dreams.
 							</Typography>
 						<Button sx={{ 
 							fontSize: '1.1rem',
@@ -168,10 +156,10 @@ export default function Home () {
 							borderRadius: 0, 
 							borderTopRightRadius: 15,
 							textTransform: 'none',
-							width: { xs: '50%', md: '70%' },
+							width: { xs: '100%', md: '70%' },
 							}}
 						>
-							Learn more
+							Suburb Analytics
 							<ArrowRightAltIcon sx= {{ ml: 2, fontSize: '2.5rem', fill: '#1255FF' }}/>
 						</Button>
 					</Box>
@@ -210,9 +198,9 @@ export default function Home () {
 						}}
 					>
 						{
-							card.map((item, i) => {
+							properties.map((item, i) => {
 								return (
-									<Card sx={{ width: { xs: '100%', sm: '45%', md: '25%' } }} >
+									<Card sx={{ width: { xs: '100%', sm: '45%', md: '25%' } }} key={i} >
 										<CardActionArea>
 											<CardMedia component="img" height="200" image={smallPlaceholder} alt="house" />
 											<CardContent sx={{ p: 0 }}>
@@ -249,7 +237,7 @@ export default function Home () {
 														}}
 													>
 														<BedIcon />
-														{item.bedrooms}
+														{item.Rooms}
 													</Typography>
 													<Typography 
 														variant="h6" 
@@ -264,7 +252,7 @@ export default function Home () {
 														}}
 													>
 														<BathtubIcon />
-														{item.bathrooms}
+														{item.Bathroom}
 													</Typography>
 													<Typography 
 														variant="h6" 
@@ -277,8 +265,8 @@ export default function Home () {
 															gap: 1,
 														}}
 													>
-														<GarageIcon />
-														{item.carSpaces}
+														<GrassIcon />
+														{item.Landsize}m&sup2;
 													</Typography>
 												</Box>
 											</CardContent>

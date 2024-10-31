@@ -74,8 +74,8 @@ return (
 						onClose={handleCloseNavMenu}
 						sx={{ display: { xs: 'block', md: 'none' } }}
 					>
-						{pages.map((page) => (
-							<MenuItem  key={page.name} onClick={handleCloseNavMenu}>
+						{pages.map((page, i) => (
+							<MenuItem  key={i} onClick={handleCloseNavMenu}>
 								<Link style={{ textDecoration: 'none' }} to={page.link}>
 									<Typography sx={{ textAlign: 'center' }}>{ page.name }</Typography>
 								</Link>
@@ -84,10 +84,9 @@ return (
 					</Menu>
 				</Box>
 				<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
-					{pages.map((page) => (
-						<Link style={{ textDecoration: 'none' }} to={page.link}>
+					{pages.map((page, i) => (
+						<Link style={{ textDecoration: 'none' }} to={page.link} key={i}>
 							<Button
-								key={page.name}
 								onClick={handleCloseNavMenu}
 								sx={{ 
 									my: 2, 

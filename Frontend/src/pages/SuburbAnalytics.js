@@ -1,10 +1,18 @@
 import React from 'react'
 import { Typography, Box, Paper, IconButton, InputBase, Button, Container } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 import suburbBirdEye from '../assets/suburbBirdsEye.jpg'
 import infographicsBanner from '../assets/InfographicsBanner.png'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import chartPlaceholder from '../assets/chartPlaceholder.png'
 
 export default function SuburbAnalytics() {
+	const marketInsights = [ 
+		{ metric: 'houses', val: 123 },
+		{ metric: 'sold', val: 999 },
+		{ metric: 'days', val: 30 },
+		{ metric: '%', val: 3 },
+	]
 	return (
 		<Container 
 			disableGutters 
@@ -117,7 +125,7 @@ export default function SuburbAnalytics() {
 					</Box>
 				</Box>
 			</Box>
-			<Box sx={{ width: '100%', px: { xs: 2, sm: 2, md: 15, lg: 25 }}}>
+			<Box sx={{ width: '100%', px: { xs: 2, sm: 2, md: 15, lg: 25 }, pb: 2 }}>
 				<Box 
 					sx={{
 						borderRadius: '20px',
@@ -154,7 +162,7 @@ export default function SuburbAnalytics() {
 								fontFamily: 'monospace',
 								color: 'inherit',
 								textDecoration: 'none',
-								fontSize: 16,
+								fontSize: { xs: 12, md: 16 },
 								letterSpacing: -1
 							}}
 						>
@@ -182,19 +190,24 @@ export default function SuburbAnalytics() {
 						>
 							Median Price
 						</Typography>
-						<Typography
-							variant="body"
-							sx={{
-								fontFamily: 'monospace',
-								color: 'inherit',
-								textDecoration: 'none',
-								fontSize: 16,
-								letterSpacing: -1
-							}}
-						>
-							$123,456
-						</Typography>
-
+						<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+							<Typography
+								variant="body"
+								sx={{
+									fontFamily: 'monospace',
+									color: 'inherit',
+									textDecoration: 'none',
+									fontSize: 16,
+									letterSpacing: -1
+								}}
+							>
+								$123,456
+							</Typography>
+							<InfoOutlinedIcon />
+						</Box>
+						<Box sx={{ p: 1.5 }}>
+							<img style={{ maxWidth: '100%', height: 'auto', padding: 0, margin: 0 }} src={chartPlaceholder} alt="chart" />
+						</Box>
 						<Typography
 							variant="body"
 							sx={{
@@ -202,12 +215,34 @@ export default function SuburbAnalytics() {
 								fontWeight: 700,
 								color: 'inherit',
 								textDecoration: 'none',
-								fontSize: { xs: 18, md: 20 },
-								letterSpacing: -1.2
+								fontSize: { xs: 15, md: 20 },
+								letterSpacing: -0.8
 							}}
 						>
 							Market Insights for properties
 						</Typography>
+						<Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, mt: 1.5, pb: 2 }}>
+							{ marketInsights.map((item) => {
+									return (
+										<Box 
+											sx={{ 
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems: 'center',
+												background: 'white', 
+												color: 'black', 
+												py: 1, 
+												px: { xs: 0, md: 2 }, 
+												borderRadius: '5px',
+												fontWeight: 'bold',
+												fontSize: { xs: 14, md: 20 }
+											}}
+										>
+											{item.val} { item.metric }
+										</Box>
+									)
+							})}
+						</Box>
 					</Box>
 				</Box>
 			</Box>
