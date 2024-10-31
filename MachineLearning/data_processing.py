@@ -43,5 +43,5 @@ df.drop(df[(df['Price'] <= 100000) | (df['Price'] >= 7000000)].index, inplace = 
 df.drop(df[(df['Rooms'] > 10)].index, inplace = True)
 
 # Converts processed data to a CSV File
-df.to_csv('datasets/processed/processed_housing_market.csv', index=False)
+df.to_csv('MachineLearning/datasets/processed/processed_housing_market.csv', index=False)
 
