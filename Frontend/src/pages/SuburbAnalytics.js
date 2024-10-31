@@ -1,18 +1,51 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Typography, Box, Paper, IconButton, InputBase, Button, Container } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import suburbBirdEye from '../assets/suburbBirdsEye.jpg'
 import infographicsBanner from '../assets/InfographicsBanner.png'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import chartPlaceholder from '../assets/chartPlaceholder.png'
+import axios from 'axios'
 
 export default function SuburbAnalytics() {
-	const marketInsights = [ 
-		{ metric: 'houses', val: 123 },
-		{ metric: 'sold', val: 999 },
-		{ metric: 'days', val: 30 },
-		{ metric: '%', val: 3 },
-	]
+	const [suburbData, setSuburbData] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
+	const [searchTerm, setSearchTerm] = useState(3000);
+
+	const marketInsights = suburbData ? [
+		{ metric: 'avg price', val: `$${Math.round(suburbData.avg_price).toLocaleString('en')}` || null },
+		{ metric: 'max price', val: `$${Math.round(suburbData.max_price).toLocaleString('en')}` || null },
+		{ metric: 'avg landsize', val: `${Math.round(suburbData.avg_land_size)}sqm` || null },
+		{ metric: 'max landsize', val: `${Math.round(suburbData.max_land_size)}sqm` || null },
+		{ metric: 'schools', val: suburbData.school_count || null },
+	] : [];
+
+	const fetchSuburbData = async (postcode) => {
+		setLoading(true);
+		setError('');
+		try {
+			const response = await axios.get(`http://localhost:8000/SuburbAnalytics/${postcode}`); // Replace with your actual API endpoint
+			console.log(response.data)
+			setSuburbData(response.data);
+		} catch (err) {
+			setError('Failed to fetch data. Please try again.');
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleSearch = () => {
+		if (searchTerm) {
+			fetchSuburbData(searchTerm);
+		}
+	};
+
+	useEffect(() => {
+		// Fetch data for the default postcode 3000 on mount
+		fetchSuburbData(3000);
+	}, []);
+
 	return (
 		<Container 
 			disableGutters 
@@ -102,8 +135,10 @@ export default function SuburbAnalytics() {
 									sx={{ ml: 1, flex: 1 }}
 									placeholder="Search Suburbs"
 									inputProps={{ 'aria-label': 'search suburbs' }}
+									value={searchTerm}
+									onChange={(e) => setSearchTerm(e.target.value)}
 								/>
-								<IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+								<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
 									<SearchIcon />
 								</IconButton>
 							</Paper>
@@ -115,6 +150,7 @@ export default function SuburbAnalytics() {
 									py: 1.5
 								}} 
 								variant="contained"
+								onClick={handleSearch}
 							>
 								Search Suburb Profile
 							</Button>
@@ -125,6 +161,8 @@ export default function SuburbAnalytics() {
 					</Box>
 				</Box>
 			</Box>
+			{loading && <Typography>Loading...</Typography>}
+			{error && <Typography color="error">{error}</Typography>}
 			<Box sx={{ width: '100%', px: { xs: 2, sm: 2, md: 15, lg: 25 }, pb: 2 }}>
 				<Box 
 					sx={{
@@ -154,7 +192,7 @@ export default function SuburbAnalytics() {
 								letterSpacing: -1.2
 							}}
 						>
-							Fitzroy
+							{suburbData ? suburbData.suburb : 'N/A'}
 						</Typography>
 						<Typography
 							variant="body"
@@ -166,7 +204,8 @@ export default function SuburbAnalytics() {
 								letterSpacing: -1
 							}}
 						>
-							Melbourne - Northern Region, VIC 3073
+						{/* Melbourne - Northern Region, VIC 3073 */}
+							{suburbData ? `Melbourne - ${suburbData.region_name}, VIC, ${suburbData.postcode}` : 'N/A'}
 						</Typography>
 					</Box>
 					<Box
@@ -201,7 +240,7 @@ export default function SuburbAnalytics() {
 									letterSpacing: -1
 								}}
 							>
-								$123,456
+								{suburbData ? `$${suburbData.median_price.toLocaleString('en')}` : 'N/A'}
 							</Typography>
 							<InfoOutlinedIcon />
 						</Box>
@@ -219,29 +258,31 @@ export default function SuburbAnalytics() {
 								letterSpacing: -0.8
 							}}
 						>
-							Market Insights for properties
+							Market Insights for {suburbData ? `${suburbData.suburb}` : 'properties'}
 						</Typography>
 						<Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, mt: 1.5, pb: 2 }}>
-							{ marketInsights.map((item) => {
-									return (
-										<Box 
-											sx={{ 
-												display: 'flex',
-												justifyContent: 'center',
-												alignItems: 'center',
-												background: 'white', 
-												color: 'black', 
-												py: 1, 
-												px: { xs: 0, md: 2 }, 
-												borderRadius: '5px',
-												fontWeight: 'bold',
-												fontSize: { xs: 14, md: 20 }
-											}}
-										>
-											{item.val} { item.metric }
-										</Box>
-									)
-							})}
+						{ marketInsights.map((item, i) => {
+							return (
+								<Box 
+									key={i}
+									sx={{ 
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+										background: 'white', 
+										color: 'black', 
+										py: 1, 
+										px: { xs: 0, md: 2 }, 
+										borderRadius: '5px',
+										fontWeight: 'bold',
+										fontSize: { xs: 14, md: 20 }
+									}}
+								>
+								
+									{item.val} { item.metric }
+								</Box>
+							)
+						})}
 						</Box>
 					</Box>
 				</Box>

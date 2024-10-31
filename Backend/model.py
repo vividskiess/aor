@@ -35,11 +35,29 @@ class HousingDataAnalyzer:
             if filtered_data.empty:
                 return f"No data available for postcode {Postcode}."
             
-            # Calculate min, max and average 
+
             try:
+                # Calculate min, max and average 
                 min_price = filtered_data['Price'].min()
                 max_price = filtered_data['Price'].max()
                 avg_price = filtered_data['Price'].mean()
+                median_price = filtered_data['Price'].median()
+                
+                # Calculate land size statistics
+                min_land_size = filtered_data['Landsize'].min()
+                max_land_size = filtered_data['Landsize'].max()
+                avg_land_size = filtered_data['Landsize'].mean()
+                
+                # Calculate room statistics
+                min_rooms = filtered_data['Rooms'].min()
+                max_rooms = filtered_data['Rooms'].max()
+                avg_rooms = filtered_data['Rooms'].mean()
+                
+                # Get suburb name, region name, and school count (if available)
+                suburb_name = filtered_data['Suburb'].iloc[0] if 'Suburb' in filtered_data else None
+                region_name = filtered_data['Regionname'].iloc[0] if 'Regionname' in filtered_data else None
+                school_count = filtered_data['SchoolCount'].iloc[0] if 'SchoolCount' in filtered_data else 0
+
             except Exception as e:
                 # Print and raise error if fail to calculate analytics
                 print(f"Error calculating analytics: {str(e)}") 
@@ -50,7 +68,14 @@ class HousingDataAnalyzer:
                 "postcode": Postcode,
                 "min_price": round(min_price, 2),
                 "max_price": round(max_price, 2),
-                "avg_price": round(avg_price, 2)
+                "avg_price": round(avg_price, 2),
+                "median_price": round(median_price, 2),
+                "min_land_size": round(min_land_size, 2) if min_land_size is not None else None,
+                "max_land_size": round(max_land_size, 2) if max_land_size is not None else None,
+                "avg_land_size": round(avg_land_size, 2) if avg_land_size is not None else None,
+                "suburb": suburb_name,
+                "region_name": region_name,
+                "school_count": school_count,
             }
         except KeyError as e:
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
