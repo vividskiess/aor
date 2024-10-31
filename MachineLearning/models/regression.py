@@ -58,8 +58,25 @@ class RegressionModel:
         # Fits a linear model to the test data so that values can be predicted from the model
         self.model.fit(x_test, y_test)
 
-        # The linear predicts then price of house based on the bedroom provided and returns the price
+        # The linear predicts then price of house based on the bedroom provided and returns the rounded price
         return round(self.model.predict([[bedroom]])[0], 3)
+
+    # This function predicts the price of a house based on the post code and the landsize
+    def predict_price_by_landsize(self, postcode, landsize): 
+        # Set a variable that stores the housing market data of the postcode provided
+        data = self.df.loc[(self.df['Postcode'] == postcode)]
+                
+        x = data[['Landsize']]
+        y = data['Price']
+
+        # Splits the data so that 80% of the data is used to train the model, while the other 20% is used to test the model 
+        x_train, x_test, y_train, y_test = train_test_split(x.to_numpy(), y, train_size=0.8, test_size=0.2, random_state=0)
+
+        # Fits a linear model to the test data so that values can be predicted from the model
+        self.model.fit(x_test, y_test)
+    
+        # The linear predicts then price of house based on the landsize provided and returns the rounded price
+        return round(self.model.predict([[landsize]])[0], 3)
 
     # Evaluates the regression model using Mean Squared Error and R^2 Score. 
     # Mean Squared Error: Calculates the average squared difference between actual and predicted values
@@ -77,5 +94,9 @@ class RegressionModel:
         print('- Mean Squared Error: %.2f' % mean_squared_error(y_test, y_prediction))
         print('- R^2 Score: %.2f' % r2_score(y_test, y_prediction))
 
-# To evaluate the linear regression, uncomment the code below:
-# evaluate_regression()
+# This part is run when the user runs this python file.
+if __name__ == "__main__":
+    model = RegressionModel('MachineLearning/datasets/processed/processed_housing_market.csv')
+
+    # To evaluate the linear regression, uncomment the code below:
+    model.evaluate_regression()
