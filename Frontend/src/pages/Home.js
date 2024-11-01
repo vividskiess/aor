@@ -1,46 +1,48 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Box, Typography, Button, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
+import { Container, Box, Typography, Button } from '@mui/material'
 import banner from "../assets/landingPageBanner.png"
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import BedIcon from '@mui/icons-material/Bed';
-import BathtubIcon from '@mui/icons-material/Bathtub';
-import GrassIcon from '@mui/icons-material/Grass';
 import smallPlaceholder from '../assets/smallPlaceholder.png'
 import landingPagePhoto from '../assets/landingPagePhoto.jpg'
 import axios from 'axios'
 import PropertyCard from '../components/PropertyCard';
 
 export default function Home () {
+	// holds data returned from api call
 	const [properties, setProperties] = useState([]);
 
 	// Fetch data when component mounts
 	useEffect(() => {
-		const fetchProperties = async () => {
-			try {
-				const response = await axios.get('http://localhost:8000/properties/random-properties');
-				const propertiesWithImages =
-					await Promise.all(response.data.map(async (property) => {
-						try {
-							console.log(response.data)
-							const image = await getStreetViewImage(property.Lattitude, property.Longtitude) 
-							return { ...property, image: image || smallPlaceholder } // Return property with its associated image
-						} catch (error) {
-							console.error("Error fetching image for property:", error)
-							 // Use the placeholder image in case of an error
-								return { ...property, image: smallPlaceholder }
-						}
-						
-					}))
-				setProperties(propertiesWithImages); // Assume the response returns an array of property objects
-			} catch (error) {
-				console.error("Error fetching properties:", error);
-			}
-		};
-		fetchProperties();
-	}, []);
+		fetchProperties()
+	}, [])
 
+	// API request that returns 6 random sales records
+	const fetchProperties = async () => {
+		try {
+			// fetch 6 sales records
+			const response = await axios.get('http://localhost:8000/properties/random-properties');
+			// use Google Maps API to fetch street view images, and adds URL to the data
+			const propertiesWithImages =
+				await Promise.all(response.data.map(async (property) => {
+					try {
+						const image = await getStreetViewImage(property.Lattitude, property.Longtitude) 
+						return { ...property, image: image || smallPlaceholder } // Return property with its associated image
+					} catch (error) {
+						console.error("Error fetching image for property:", error)
+						 // Use the placeholder image in case of an error
+							return { ...property, image: smallPlaceholder }
+					}
+					
+				}))
+			setProperties(propertiesWithImages)
+		} catch (error) {
+			console.error("Error fetching properties:", error)
+		}
+	}
 
+	// helper function that gets image from Google Maps API
 	const getStreetViewImage = (lat, lng) => {
+		// API key is stored in a .env file for security
 		const APIKEY = process.env.REACT_APP_GOOGLE_API_KEY
 		const STREET_VIEW_API_URL = `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${APIKEY}`;
 		return STREET_VIEW_API_URL;
@@ -218,10 +220,11 @@ export default function Home () {
 							gap: { xs: 2, md: '20px 80px' },
 						}}
 					>
+          	{/* renders PropertyCard /> component where each data point in the array is passed down as props */}
 						{
 							properties.map((item, i) => {
 								return (
-									<PropertyCard property={item} key={i} />
+									<PropertyCard property={item} key={i}/>
 							)})
 						}
 					</Box>

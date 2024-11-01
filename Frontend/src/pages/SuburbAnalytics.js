@@ -9,12 +9,17 @@ import RoomsVSPricesChart from '../components/charts/RoomVSPricesChart'
 import axios from 'axios'
 
 export default function SuburbAnalytics() {
+
+	// holds data returned from API call
 	const [suburbData, setSuburbData] = useState(null);
+
+
 	const [roomsVSPrices, setRoomsVSPrices] = useState({ rooms: [], prices: [] });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [searchTerm, setSearchTerm] = useState(3000);
 
+	// holds an array of objects that are used for rendering each market insight entry point
 	const marketInsights = suburbData ? [
 		{ metric: 'avg price', val: `$${Math.round(suburbData.avg_price).toLocaleString('en')}` || null },
 		{ metric: 'max price', val: `$${Math.round(suburbData.max_price).toLocaleString('en')}` || null },
@@ -23,6 +28,14 @@ export default function SuburbAnalytics() {
 		{ metric: 'schools', val: suburbData.school_count || null },
 	] : [];
 
+	useEffect(() => {
+		// Fetch data for the default postcode 3000 on mount
+		fetchSuburbData(3000);
+	}, []);
+
+	// API request that returns two different data points
+	// analytics: contains data related with the suburb
+	// roomsvsprices: contains rooms and price of each property with the given postcode
 	const fetchSuburbData = async (postcode) => {
 		setLoading(true);
 		setError('');
@@ -44,10 +57,7 @@ export default function SuburbAnalytics() {
 		}
 	};
 
-	useEffect(() => {
-		// Fetch data for the default postcode 3000 on mount
-		fetchSuburbData(3000);
-	}, []);
+
 
 	return (
 		<Container 
@@ -134,6 +144,7 @@ export default function SuburbAnalytics() {
 								component="form"
 								sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
 							>
+							{/* input that handles postcode */}
 								<InputBase
 									sx={{ ml: 1, flex: 1 }}
 									placeholder="Search Suburbs"
@@ -145,6 +156,7 @@ export default function SuburbAnalytics() {
 									<SearchIcon />
 								</IconButton>
 							</Paper>
+							{/* when clicked it will call fetchSuburbData() for the API request */}
 							<Button 
 								sx={{ 
 									borderRadius: '10px', 
@@ -207,7 +219,6 @@ export default function SuburbAnalytics() {
 								letterSpacing: -1
 							}}
 						>
-						{/* Melbourne - Northern Region, VIC 3073 */}
 							{suburbData ? `Melbourne - ${suburbData.region_name}, VIC, ${suburbData.postcode}` : 'N/A'}
 						</Typography>
 					</Box>
@@ -294,7 +305,6 @@ export default function SuburbAnalytics() {
 										fontSize: { xs: 14, md: 20 }
 									}}
 								>
-								
 									{item.val} { item.metric }
 								</Box>
 							)

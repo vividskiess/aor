@@ -5,17 +5,29 @@ import PropertyCard from '../components/PropertyCard'
 import smallPlaceholder from '../assets/smallPlaceholder.png'
 
 export default function PropertySales() {
+  // holds data from API call
   const [properties, setProperties] = useState([])
+  // handles if code should show loading 
   const [loading, setLoading] = useState(false)
+  // error handler
   const [error, setError] = useState('')
+  // pagination handler
   const [page, setPage] = useState(1)
+  // declare how many <PropertyCard /> is shown on one page at anytime
   const pageSize = 64;
+  // holds the amount of data entries in CSV
   const [totalPages, setTotalPages] = useState(0)
 
+  // Fetch data when component mounts
   useEffect(() => {
     fetchProperties(page)
   }, [page])
 
+  // function that works similarly to the fetch reqeust in Home.js
+  // API responds with two different data points: 
+    // data.total (returns in integer of the total amount of entries in the .csv)
+    // data.items (the actual data records )
+  // these are then stored in their respective useState variables.
   const fetchProperties = async (page) => {
     setLoading(true)
     setError('')
@@ -26,29 +38,32 @@ export default function PropertySales() {
         console.log("API Response:", response.data)
         console.log("Total Pages:", response.data.total)
         const propertiesWithImages = await Promise.all(
-            response.data.items.map(async (property) => {
-                try {
-                    const image = await getStreetViewImage(property.Lattitude, property.Longtitude);
-                    return { ...property, image: image || smallPlaceholder };
-                } catch (error) {
-                    console.error("Error fetching image for property:", error)
-                    return { ...property, image: smallPlaceholder };
-                }
-            })
-        );
-        setProperties(propertiesWithImages);
+          response.data.items.map(async (property) => {
+            try {
+                const image = await getStreetViewImage(property.Lattitude, property.Longtitude);
+                return { ...property, image: image || smallPlaceholder }
+            } catch (error) {
+                console.error("Error fetching image for property:", error)
+                return { ...property, image: smallPlaceholder }
+            }
+          })
+        )
+        setProperties(propertiesWithImages)
+
+        // divide total amount of entries / 64 to get number of pages
         setTotalPages(Math.round(response.data.total / 64))
     } catch (err) {
         setError('Failed to load properties. Please try again.')
     } finally {
         setLoading(false)
     }
-};
+}
 
   const handlePageChange = (event, value) => {
       setPage(value)
   }
 
+  // helper function that uses Google Maps API to fetch street view images
   const getStreetViewImage = (lat, lng) => {
     const APIKEY = process.env.REACT_APP_GOOGLE_API_KEY
     const STREET_VIEW_API_URL = `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${APIKEY}`;
@@ -100,6 +115,7 @@ export default function PropertySales() {
 							gap: { xs: 2, md: '20px 80px', lg: '20px, 60px' },
 						}}
 					>
+            {/* renders PropertyCard /> component where each data point in the array is passed down as props */}
 						{
 							properties.map((item, i) => {
 								return (
