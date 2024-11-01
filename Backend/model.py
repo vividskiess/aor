@@ -84,6 +84,27 @@ class HousingDataAnalyzer:
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
         except Exception as e:
             return f"An error occurred: {str(e)}"
+    
+    def get_paginated_data(self, page: int = 1, page_size: int = 64) -> Dict[str, Union[List[Dict[str, Union[str, float]]], int, int]]:
+        
+        # Fetch paginated data from the dataset
+        # Returns all fields for each property.
+        start = (page - 1) * page_size
+        end = start + page_size
+
+        # Get a slice of the data for the requested page
+        paginated_data = self.data.iloc[start:end]
+
+        # Convert to a list of dictionaries including all columns
+        items = paginated_data.to_dict(orient="records")
+
+        # Return the paginated response
+        return {
+            "items": items,
+            "total": len(self.data),
+            "page": page,
+            "page_size": page_size
+        }
         
     def get_rooms_vs_prices(self, Postcode: Optional[int] = None) -> Union[Dict[str, List[float]], str]:
         try:

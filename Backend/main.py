@@ -77,6 +77,24 @@ async def filter_properties(filter: PropertyFilter):
         # Return a 500 status code with error details with any unexpected errors
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
+# Endpoint to get paginated properties
+@app.get("/properties")
+async def get_properties(page: int = 1, page_size: int = 64):
+    # Fetch a paginated list of properties. If no properties are found, a 404 error is raised.
+    try:
+        # Get paginated data using the analyzer instance
+        response = analyzer.get_paginated_data(page=page, page_size=page_size)
+
+        # Check if the response has no items, and return 404 error if empty
+        if not response["items"]:
+            raise HTTPException(status_code=404, detail="No properties found.")
+
+        return response
+
+    except Exception as e:
+        # Handle unexpected errors with a 500 status code
+        raise HTTPException(status_code=500, detail="Internal server error")
+    
 @app.get("/Infographics/{year}")
 async def predict_property_prices(year: int):
     if year < 2016 or year > 2100:  
