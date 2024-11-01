@@ -190,8 +190,6 @@ class HousingDataAnalyzer:
             print(f"Error in monthly predictions: {e}")
             return "Error generating monthly predictions."
 
-
-
     def get_prices_by_bedroom(self, Postcode: int, Bedroom: int) -> Union[Dict[str, float], str]:
         try:
             # Gets the predicted price from the linear regression model using postcode and bedroom
@@ -213,6 +211,7 @@ class HousingDataAnalyzer:
         try:
             # Gets the predicted price from the linear regression model using postcode and landsize
             predicted_price_landsize = self.regression_model.predict_price_by_landsize(Postcode, Landsize)
+            
             # Returns the relevant information
             return {
                 "price": predicted_price_landsize
@@ -231,7 +230,7 @@ class HousingDataAnalyzer:
             clusters = list(self.cluster_model.cluster_year_built(Postcode)['Cluster'])
             year_built = list(self.cluster_model.cluster_year_built(Postcode)['YearBuilt'])
 
-            # Returns the relevant information
+            # Returns the clusters and the years of the house being built
             return {
                 "clusters": clusters,
                 "year_built": year_built

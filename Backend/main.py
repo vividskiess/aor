@@ -153,7 +153,7 @@ async def predict_prices_landsize(request: LandSizePredictionRequest):
         # Return a 500 status code with error details with any unexpected errors
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
-# ! TEST CODE
+# Endpoint for getting the years and clusters of a house sold based on the postcode
 @app.get("/Infographics/YearBuilt/{postcode}")
 async def predict_prices_landsize(postcode: int):
     try: 

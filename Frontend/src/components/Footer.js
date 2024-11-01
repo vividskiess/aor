@@ -52,8 +52,7 @@ export default function Footer() {
             fontWeight: 700,
             color: 'inherit',
             textDecoration: 'none',
-            fontSize: { xs: 16, sm: 26, md: 30, lg: 40 },
-            letterSpacing: -0.2
+            fontSize: { xs: 16, sm: 26, md: 30, lg: 40 }
           }}
         >
           Make your dreams a
@@ -70,7 +69,7 @@ export default function Footer() {
             WebkitTextFillColor: 'transparent',
             backgroundImage: 'linear-gradient(34deg, rgba(18,85,255,1) 0%, rgba(36,161,200,1) 100%)',
             fontSize: { xs: 16, sm: 26, md: 30, lg: 40 },
-            letterSpacing: -0.2
+            letterSpacing: -0.2,
           }}
         >
           reality

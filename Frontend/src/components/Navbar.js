@@ -83,7 +83,7 @@ return (
 						))}
 					</Menu>
 				</Box>
-				<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
+				<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'}, justifyContent: {md: 'flex-end'} }}>
 					{pages.map((page, i) => (
 						<Link style={{ textDecoration: 'none' }} to={page.link} key={i}>
 							<Button

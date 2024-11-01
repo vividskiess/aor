@@ -163,7 +163,7 @@ export default function Home () {
 								You're in good hands
 							</Typography>
 							<Typography variant='body'>
-							Navigating the real estate market can be complex, but with us, you’ll feel secure every step of the way. Whether you're buying, selling, or investing, our team is dedicated to making your experience smooth, successful, and tailored to your goals. With years of experience and a deep understanding of the market, we're here to guide you confidently toward your real estate dreams.
+								Navigating the real estate market can be complex, but with us, you'll feel secure every step of the way. Whether you're buying, selling, or investing, our team is dedicated to making your experience smooth, successful, and tailored to your goals. With years of experience and a deep understanding of the market, we're here to guide you confidently toward your real estate dreams.
 							</Typography>
 						<Button 
 							href="/SuburbAnalytics"
@@ -217,7 +217,7 @@ export default function Home () {
 							justifyContent: 'center',
 							alignItems: 'center',
 							flexWrap: 'wrap',
-							gap: { xs: 2, md: '20px 80px' },
+							gap: { xs: 2, md: '40px 80px' }
 						}}
 					>
           	{/* renders PropertyCard /> component where each data point in the array is passed down as props */}

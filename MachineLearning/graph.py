@@ -124,6 +124,6 @@ def scatter_room_price():
 # bar_house_region()
 # correlation_data()
 # scatter_landsize_location()
-scatter_school_location()
+# scatter_school_location()
 # scatter_distance_price()
 # scatter_room_price()

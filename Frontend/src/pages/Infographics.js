@@ -110,8 +110,50 @@ export default function Infographics() {
 	}
 
 	return (
-		<Container disableGutters sx={{ p: 5 }}>
-			<h2>Predict prices of houses in your chosen suburb</h2>
+		<Container disableGutters sx={{ py: { xs: 2, md: 4, lg: 6 }, px: { xs: 2, md: 4, lg: 4 } }}>
+			<Box>
+				<Box sx={{
+					mb: 1, 
+					width: '150px',
+					height: '4px',
+					background: 'linear-gradient(90deg, rgba(18,85,255,1) 0%, rgba(0,0,0,0.8) 100%)'
+					}}
+				/>
+			</Box>
+			<Stack direction="column" sx={{marginBottom: 4}}>
+				<Typography
+					variant="body"
+					sx={{
+						fontFamily: 'monospace',
+						fontWeight: 700,
+						fontSize: { xs: 20, md: 34 },
+					}}
+				>
+					Infographics
+				</Typography>
+
+				<Typography
+					variant="p"
+					sx={{
+						fontFamily: 'monospace',
+						fontWeight: 400,
+						fontSize: { xs: 14, md: 20 },
+					}}
+				>
+					Understand and predict the future trends of the housing market  
+				</Typography>
+			</Stack>
+
+			<Typography
+				variant="h6"
+				sx={{
+					fontWeight: 700,
+					fontSize: { xs: 16, md: 23 },
+					marginBottom: '0.5em'
+				}}
+			>
+				Predict prices of houses in your chosen suburb
+			</Typography>
 
 			<Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
 				<TextField

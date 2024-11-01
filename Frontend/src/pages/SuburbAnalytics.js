@@ -21,11 +21,11 @@ export default function SuburbAnalytics() {
 
 	// holds an array of objects that are used for rendering each market insight entry point
 	const marketInsights = suburbData ? [
-		{ metric: 'avg price', val: `$${Math.round(suburbData.avg_price).toLocaleString('en')}` || null },
-		{ metric: 'max price', val: `$${Math.round(suburbData.max_price).toLocaleString('en')}` || null },
-		{ metric: 'avg landsize', val: `${Math.round(suburbData.avg_land_size)}sqm` || null },
-		{ metric: 'max landsize', val: `${Math.round(suburbData.max_land_size)}sqm` || null },
-		{ metric: 'schools', val: suburbData.school_count || null },
+		{ metric: 'Average Price:', val: `$${Math.round(suburbData.avg_price).toLocaleString('en')}` || null },
+		{ metric: 'Max Price:', val: `$${Math.round(suburbData.max_price).toLocaleString('en')}` || null },
+		{ metric: 'Average Landsize:', val: `${Math.round(suburbData.avg_land_size)}sqm` || null },
+		{ metric: 'Max Landsize:', val: `${Math.round(suburbData.max_land_size)}sqm` || null },
+		{ metric: 'Schools:', val: suburbData.school_count || null },
 	] : [];
 
 	useEffect(() => {
@@ -118,7 +118,7 @@ export default function SuburbAnalytics() {
 								letterSpacing: -1.2
 							}}
 						>
-							Beautiful homes made for you
+							Find your place, on your own terms
 						</Typography>
 						<Typography
 							variant="body"
@@ -178,7 +178,8 @@ export default function SuburbAnalytics() {
 			</Box>
 			{loading && <Typography>Loading...</Typography>}
 			{error && <Typography color="error">{error}</Typography>}
-			<Box sx={{ width: '100%', px: { xs: 2, sm: 2, md: 15, lg: 25 }, pb: 2 }}>
+
+			<Box sx={{ width: '100%', px: { xs: 1, sm: 0, md: 10, lg: 20 }, pb: 2, pt: 2 }}>
 				<Box 
 					sx={{
 						borderRadius: '20px',
@@ -305,7 +306,7 @@ export default function SuburbAnalytics() {
 										fontSize: { xs: 14, md: 20 }
 									}}
 								>
-									{item.val} { item.metric }
+									{ item.metric } {item.val}
 								</Box>
 							)
 						})}

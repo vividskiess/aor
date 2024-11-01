@@ -36,6 +36,7 @@ class ClusterModel:
 		# Returns the the school count and cluster column.
 		return school_count_X
 
+	# Trains the data so that houses can be grouped into similar groups.  
 	def cluster_year_built(self, postcode):
 		x = self.df.loc[(self.df["Postcode"] == postcode), ["YearBuilt"]]
 
@@ -43,7 +44,7 @@ class ClusterModel:
 		model = KMeans(n_clusters=5, random_state=10)
 		model.fit(x)
 
-		# Clusters the houses into groups based on the land size of the house. 
+		# Clusters the houses into groups based on the year built of the house. 
 		x["Cluster"] = model.predict(x)
 
 		return x

@@ -21,7 +21,7 @@ const PropertyCard = ({ property }) => {
 							component="div"
 							sx={{
 									borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
-									px: { xs: 2, sm: 1, md: 4 },
+									px: { xs: 2, sm: 1, md: 2 },
 									py: { xs: 1, sm: 1, md: 2 },
 									fontWeight: 600,
 									fontSize: { xs: 15, md: 20 },
@@ -34,7 +34,7 @@ const PropertyCard = ({ property }) => {
 								component="div"
 								sx={{
 										borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
-										px: { xs: 2, sm: 1, md: 4 },
+										px: { xs: 2, sm: 1, md: 2 },
 										py: { xs: 1, sm: 1, md: 2 },
 										fontWeight: 600,
 										fontSize: { xs: 15, md: 20 },
@@ -60,9 +60,13 @@ const PropertyCard = ({ property }) => {
 									borderRight: '1px solid rgba(151, 151, 151, 0.4)',
 									width: '33%',
 									p: 0.5,
+									fontSize: '1.2em'
 								}}
 							>
-								<BedIcon />
+								<BedIcon
+									fontSize='inherit'
+								>
+								</BedIcon>
 								{property.Rooms}
 							</Typography>
 							<Typography
@@ -75,9 +79,13 @@ const PropertyCard = ({ property }) => {
 									borderRight: '1px solid rgba(151, 151, 151, 0.4)',
 									width: '33%',
 									gap: 1,
+									fontSize: '1.2em'
 								}}
 							>
-								<BathtubIcon />
+								<BathtubIcon
+									fontSize='inherit'
+								>
+								</BathtubIcon>
 								{property.Bathroom}
 							</Typography>
 							<Typography
@@ -89,9 +97,13 @@ const PropertyCard = ({ property }) => {
 									justifyContent: 'center',
 									width: '33%',
 									gap: 1,
+									fontSize: '1.2em'
 								}}
 							>
-								<GrassIcon />
+								<GrassIcon
+									fontSize='inherit'
+								>
+								</GrassIcon>
 								{property.Landsize}m&sup2;
 							</Typography>
 						</Box>

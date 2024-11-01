@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { Container, Pagination, Typography, Box, CircularProgress } from '@mui/material'
+import { Stack, Container, Pagination, Typography, Box, CircularProgress } from '@mui/material'
 import axios from 'axios'
 import PropertyCard from '../components/PropertyCard'
 import smallPlaceholder from '../assets/smallPlaceholder.png'
@@ -71,7 +71,7 @@ export default function PropertySales() {
 }
 
   return (
-    <Container disableGutters sx={{ py: { xs: 1, md: 4, lg: 6 }, px: { xs: 1, md: 2, lg: 4 }}}>
+    <Container disableGutters sx={{ py: { xs: 2, md: 4, lg: 6 }, px: { xs: 2, md: 4, lg: 4 } }}>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       <Box>
@@ -85,18 +85,29 @@ export default function PropertySales() {
 								}}
 							/>
 						</Box>
-						<Typography
-							variant="body"
-							sx={{
-								fontFamily: 'monospace',
-								fontWeight: 700,
-								color: 'inherit',
-								textDecoration: 'none',
-								fontSize: { xs: 20, md: 34 },
-							}}
-						>
-							View Properties Sold
-						</Typography>
+            <Stack direction="column" sx={{marginBottom: 4}}>
+              <Typography
+                variant="body"
+                sx={{
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  fontSize: { xs: 20, md: 34 },
+                }}
+              >
+                Sold Properties
+              </Typography>
+
+              <Typography
+                variant="p"
+                sx={{
+                  fontFamily: 'monospace',
+                  fontWeight: 400,
+                  fontSize: { xs: 14, md: 20 },
+                }}
+              >
+                Search for houses that were recently sold  
+              </Typography>
+            </Stack>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
               <Pagination
                   count={totalPages}
