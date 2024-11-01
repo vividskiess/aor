@@ -83,7 +83,7 @@ export default function Home () {
 					</Typography>
 				</div>
 					<Typography variant="body">
-						In oculis quidem se esse admonere interesse enim maxime placeat, facere possimus, omnis. Et quidem faciunt, ut labore et accurate disserendum et harum quidem exercitus quid.
+						Welcome to Alpha Omega Realtors! Discover and understand trends of the housing market with ease. 
 					</Typography>
 				</Box>
 				<Button
@@ -208,13 +208,13 @@ export default function Home () {
 								fontSize: { xs: 20, md: 34 },
 							}}
 						>
-							View Properties Sold
+							Sold Properties
 						</Typography>
 					</Box>
 					<Box
 						sx={{
 							display: 'flex',
-							justifyContent: 'center',
+							justifyContent: 'space-between',
 							alignItems: 'center',
 							flexWrap: 'wrap',
 							gap: { xs: 2, md: '40px 80px' }

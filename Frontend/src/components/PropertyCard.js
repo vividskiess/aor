@@ -7,14 +7,14 @@ import GrassIcon from '@mui/icons-material/Grass';
 
 const PropertyCard = ({ property }) => {
 	return (
-		<Card sx={{ width: { xs: '100%', sm: '45%', md: '25%' } }}>
-				<CardActionArea>
-					<CardMedia
-						component="img"
-						height="200"
-						image={property.image} // Assuming there's an image property in your data
-						alt="house"
-					/>
+		<Card sx={{ width: { xs: '100%', sm: '45%', md: '28%' } }}>
+			<CardActionArea>
+				<CardMedia
+					component="img"
+					height="200"
+					image={property.image} // Assuming there's an image property in your data
+					alt="house"
+				/>
 					<CardContent sx={{ p: 0 }}>
 						<Typography
 							variant="h5"
@@ -27,7 +27,7 @@ const PropertyCard = ({ property }) => {
 									fontSize: { xs: 15, md: 20 },
 							}}
 						>
-								Address: {property.Address}, {property.Postcode}
+								{property.Address}, {property.Postcode}
 						</Typography>
 						<Typography
 								variant="h5"
@@ -36,8 +36,8 @@ const PropertyCard = ({ property }) => {
 										borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
 										px: { xs: 2, sm: 1, md: 2 },
 										py: { xs: 1, sm: 1, md: 2 },
-										fontWeight: 600,
-										fontSize: { xs: 15, md: 20 },
+										fontWeight: 400,
+										fontSize: { xs: 13, md: 18 },
 								}}
 						>
 							Sale Price: ${property.Price.toLocaleString('en')}

@@ -140,20 +140,9 @@ export default function Infographics() {
 						fontSize: { xs: 14, md: 20 },
 					}}
 				>
-					Understand and predict the future trends of the housing market  
+					Predict and understand the trends of the housing market in your chosen suburb
 				</Typography>
 			</Stack>
-
-			<Typography
-				variant="h6"
-				sx={{
-					fontWeight: 700,
-					fontSize: { xs: 16, md: 23 },
-					marginBottom: '0.5em'
-				}}
-			>
-				Predict prices of houses in your chosen suburb
-			</Typography>
 
 			<Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
 				<TextField

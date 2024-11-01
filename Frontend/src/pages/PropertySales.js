@@ -14,7 +14,7 @@ export default function PropertySales() {
   // pagination handler
   const [page, setPage] = useState(1)
   // declare how many <PropertyCard /> is shown on one page at anytime
-  const pageSize = 64;
+  const pageSize = 63;
   // holds the amount of data entries in CSV
   const [totalPages, setTotalPages] = useState(0)
 
@@ -120,7 +120,7 @@ export default function PropertySales() {
 					<Box
 						sx={{
 							display: 'flex',
-							justifyContent: 'center',
+							justifyContent: 'space-between',
 							alignItems: 'center',
 							flexWrap: 'wrap',
 							gap: { xs: 2, md: '20px 80px', lg: '20px, 60px' },
