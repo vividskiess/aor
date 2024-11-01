@@ -13,6 +13,14 @@ class PropertyFilter(BaseModel):
     min_price: Optional[int] = Field(None, gt=0)
     max_price: Optional[int] = Field(None, gt=0)
 
+class LandSizePredictionRequest(BaseModel):
+    postcode: int
+    landsize: int
+
+class BedroomPredictRequest(BaseModel):
+    postcode: int
+    bedroom: int
+
 # Class for loading and analyzing housing data
 class HousingDataAnalyzer:
     def __init__(self, csv_file: str):

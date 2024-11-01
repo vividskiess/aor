@@ -18,26 +18,28 @@ export default function InfographicsForm() {
 		setRoomsPrices([])
 		setLandsizePrices([])
 
-		rooms.map(async (room) => {
-			await axios.get(`http://127.0.0.1:8000/Infographics/Bedroom/${postcode}/${room}`)
-			.then((response) => {
+		rooms.map(async (bedroom) => {
+			try {
+				const response = await axios.post(`http://127.0.0.1:8000/Infographics/Bedroom`, {
+					postcode: postcode,
+					bedroom: bedroom
+				});
 				setRoomsPrices(prevPrices => [...prevPrices || [], response.data.price])
-			})
-
-			.catch((error) => {
-				throw Error("Error encountered: ", error);
-			})
+			} catch (error) {
+				console.error("Error encountered while fetching bedroom prices: ", error);
+			}
 		})
 
 		landsizes.map(async (landsize) => {
-			await axios.get(`http://127.0.0.1:8000/Infographics/Landsize/${postcode}/${landsize}`)
-			.then((response) => {
-				setLandsizePrices(prevPrices => [...prevPrices || [], response.data.price])
-			})
-
-			.catch((error) => {
-				throw Error("Error encountered: ", error);
-			})
+			try {
+				const response = await axios.post(`http://127.0.0.1:8000/Infographics/Landsize`, {
+					postcode: postcode,
+					landsize: landsize
+				});
+				setLandsizePrices((prevPrices) => [...prevPrices, response.data.price]);
+			} catch (error) {
+				console.error("Error encountered while fetching landsize prices: ", error);
+			}
 		})
 	}
 
