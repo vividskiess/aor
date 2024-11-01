@@ -18,22 +18,31 @@ export default function LandsizeChart({prices, landsizes}) {
 
 			layout = {{
 				title: {
-					text:`Predicted Prices of Houses, Based on Land Size`,
+					text:`Predicted Prices of Houses Within the Postcode, Based on Land Size`,
 				}, 
 
 				xaxis: {
-					dtick: 100,
 					title: {
 						text:'Land Size'
 					}, 
 				},
 
 				yaxis: {
+					dtick: 50000,
 					title: {
 						text:'Price'
 					}
 				}
-			}}		
+			}}	
+
+			useResizeHandler = {
+				true
+			}
+
+			style = {{
+				width: '100%', 
+				height: '100%'
+			}}
 		/>
 	);
 }
