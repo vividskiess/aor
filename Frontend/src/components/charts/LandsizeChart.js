@@ -1,7 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-export default function LandsizeChart({prices, landsizes}) {
+export default function LandsizeChart({postcode, prices, landsizes}) {
 	return (
 		<Plot
 			data={[
@@ -10,22 +10,21 @@ export default function LandsizeChart({prices, landsizes}) {
 					y: prices,
 					type: 'bar',
 					mode: 'markers',
-					name: 'House Price',
 					marker: {
 						color: 'rgba(18,85,255,1)',
 					}
 				}
 			]}
+
 			layout = {{
 				title: {
-					text:'Predicted Prices of Houses in Postcode subrub baseed on landsize',
-					// text:'Prediction of House Prices based on Landsize',
+					text:`Prices of Houses in ${postcode}, Based on Land Size`,
 				}, 
 
 				xaxis: {
-					// dtick: 1,
+					dtick: 100,
 					title: {
-						text:'Landsize'
+						text:'Land Size'
 					}, 
 				},
 
