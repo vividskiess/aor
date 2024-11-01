@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from pydantic import BaseModel
 import matplotlib.pyplot as plt
-from model import HousingDataAnalyzer, PropertyFilter
+from model import HousingDataAnalyzer, PropertyFilter, LandSizePredictionRequest, BedroomPredictRequest
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -113,15 +113,15 @@ async def predict_property_prices(year: int):
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 # Endpoint for getting the predicted price of a house based on the amount of bedroom
-@app.get("/Infographics/Bedroom/{postcode}/{bedroom}")
-async def predict_property_prices(postcode: int, bedroom: int):
-    if bedroom < 1 or bedroom > 10: 
+@app.post("/Infographics/Bedroom")
+async def predict_property_prices(request: BedroomPredictRequest):
+    if request.bedroom < 1 or request.bedroom > 10: 
         raise HTTPException(status_code=400, detail="Bedroom amount must be between 1 and 10.")
 
 
     try:
         # Gets the prediected price from the analyzer based on the given postcode and bedrrom 
-        predictions = analyzer.get_prices_by_bedroom(postcode, bedroom)
+        predictions = analyzer.get_prices_by_bedroom(request.postcode, request.bedroom)
         
         # If no data found, return a 404 error
         if isinstance(predictions, str): 
@@ -134,19 +134,19 @@ async def predict_property_prices(postcode: int, bedroom: int):
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
 # Endpoint for getting the predicted price of a house based on the landsize
-@app.get("/Infographics/Landsize/{postcode}/{landsize}")
-async def predict_prices_landsize(postcode: int, landsize: int):
-    if landsize < 10 or landsize > 10000:
+@app.post("/Infographics/Landsize")
+async def predict_prices_landsize(request: LandSizePredictionRequest):
+    if request.landsize < 10 or request.landsize > 10000:
         raise HTTPException(status_code=400, detail="Landsize value must be between 10 and 10000.")
 
-    try: 
-        # Gets the predicted price from analyzer based on given landsize
-        predict = analyzer.get_prices_by_landsize(postcode, landsize)
+    try:
+        # Gets the predicted price from analyzer based on given landsize and postcode from the request body
+        predict = analyzer.get_prices_by_landsize(request.postcode, request.landsize)
 
         # If no data found, return a 404 error
         if isinstance(predict, str):
             raise HTTPException(status_code=404, detail=predict)
-        
+
         return predict
     
     except Exception as e:
