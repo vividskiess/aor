@@ -15,6 +15,7 @@ export default function BedroomChart({prices, bedrooms}) {
 					}
 				}
 			]}
+			
 			layout = {{
 				title: {
 					text: `Predicted Prices of Houses, Based on Bedrooms`,

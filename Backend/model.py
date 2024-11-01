@@ -1,10 +1,12 @@
 import sys
+
 sys.path.append('..')
 import pandas as pd
 from sqlalchemy import Column, Integer, String, Float
 from typing import Dict, Union, List, Optional
 from pydantic import BaseModel, Field
 from MachineLearning.models.regression import RegressionModel
+from MachineLearning.models.cluster import ClusterModel
 
 # Define a pydantic model for property filtering criteria
 class PropertyFilter(BaseModel):
@@ -20,6 +22,7 @@ class HousingDataAnalyzer:
         try:
             self.data = pd.read_csv(csv_file)
             self.regression_model = RegressionModel(csv_file)
+            self.cluster_model = ClusterModel(csv_file)
 
         except Exception as e:
             # Print and raise error if file fails to load
@@ -184,6 +187,25 @@ class HousingDataAnalyzer:
             # Returns the relevant information
             return {
                 "price": predicted_price_landsize
+            }
+        
+        except KeyError as e:
+            return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
+        
+        except Exception as e:
+            return f"An error occurred: {str(e)}"
+        
+
+    def get_clusters_of_years(self, Postcode: int): 
+        try:
+            # Gets the predicted price from the linear regression model using postcode and bedroom
+            clusters = list(self.cluster_model.cluster_year_built(Postcode)['Cluster'])
+            year_built = list(self.cluster_model.cluster_year_built(Postcode)['YearBuilt'])
+
+            # Returns the relevant information
+            return {
+                "clusters": clusters,
+                "year_built": year_built
             }
         
         except KeyError as e:

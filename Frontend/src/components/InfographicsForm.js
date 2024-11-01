@@ -3,6 +3,7 @@ import { TextField, Button, Container, Stack } from '@mui/material';
 import BedroomChart from '../components/charts/BedroomChart'
 import axios from 'axios';
 import LandsizeChart from './charts/LandsizeChart';
+import YearBuiltChart from './charts/YearBuiltChart';
 
 export default function InfographicsForm() {
 	const [postcode, setPostcode] = useState('')
@@ -12,6 +13,9 @@ export default function InfographicsForm() {
 
 	const [landsizes] = useState([100, 200, 300, 400, 500, 600, 700, 800, 900])
 	const [landsizePrices, setLandsizePrices] = useState([]);
+
+	const [yearBuilt, setYearBuilt] = useState([])
+	const [yearBuiltCluster, setYearBuiltCluster] = useState([])
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -39,6 +43,12 @@ export default function InfographicsForm() {
 				throw Error("Error encountered: ", error);
 			})
 		})
+
+		await axios.get(`http://127.0.0.1:8000/Infographics/YearBuilt/${postcode}`)
+		.then((response) => {
+			setYearBuilt([...response.data.year_built])
+			setYearBuiltCluster([...response.data.clusters])
+		})
 	}
 
 	return (
@@ -62,6 +72,7 @@ export default function InfographicsForm() {
 				<Button variant="outlined" color="secondary" type="submit">Submit</Button>
 			</form>
 
+			<YearBuiltChart yearBuilt={yearBuilt} clusters={yearBuiltCluster}/>
 			<BedroomChart prices={roomsPrices} bedrooms={rooms}/>
 			<LandsizeChart prices={landsizePrices} landsizes={landsizes}/>
 		</Container>

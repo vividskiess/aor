@@ -36,6 +36,18 @@ class ClusterModel:
 		# Returns the the school count and cluster column.
 		return school_count_X
 
+	def cluster_year_built(self, postcode):
+		x = self.df.loc[(self.df["Postcode"] == postcode), ["YearBuilt"]]
+
+		# Creates a KMeans model that groups data. 
+		model = KMeans(n_clusters=5, random_state=10)
+		model.fit(x)
+
+		# Clusters the houses into groups based on the land size of the house. 
+		x["Cluster"] = model.predict(x)
+
+		return x
+
 	# Evaluates the KMeans Model using Silhouette Score + V-Measure Score.
 	def evaluate_kmeans(self):
 		x = self.train_landsize_cluster()
