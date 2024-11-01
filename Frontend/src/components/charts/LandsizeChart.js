@@ -1,7 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-export default function LandsizeChart({postcode, prices, landsizes}) {
+export default function LandsizeChart({prices, landsizes}) {
 	return (
 		<Plot
 			data={[
@@ -18,7 +18,7 @@ export default function LandsizeChart({postcode, prices, landsizes}) {
 
 			layout = {{
 				title: {
-					text:`Prices of Houses in ${postcode}, Based on Land Size`,
+					text:`Predicted Prices of Houses, Based on Land Size`,
 				}, 
 
 				xaxis: {

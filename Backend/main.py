@@ -116,7 +116,7 @@ async def predict_property_prices(postcode: int, bedroom: int):
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
 # Endpoint for getting the predicted price of a house based on the landsize
-@app.get("Infographics/Landsize/{postcode}/{landsize}")
+@app.get("/Infographics/Landsize/{postcode}/{landsize}")
 async def predict_prices_landsize(postcode: int, landsize: int):
     if landsize < 10 or landsize > 10000:
         raise HTTPException(status_code=400, detail="Landsize value must be between 10 and 10000.")

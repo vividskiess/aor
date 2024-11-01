@@ -61,6 +61,6 @@ if __name__ == "__main__":
 	model = ClusterModel('MachineLearning/datasets/processed/processed_housing_market.csv')
 
 	# To evaluate the KMeans, uncomment the code below:
-	# model.evaluate_kmeans()
+	model.evaluate_kmeans()
 
 	

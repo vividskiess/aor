@@ -1,7 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-export default function BedroomChart({postcode, prices, bedrooms}) {
+export default function BedroomChart({prices, bedrooms}) {
 	return (
 		<Plot
 			data={[
@@ -17,7 +17,7 @@ export default function BedroomChart({postcode, prices, bedrooms}) {
 			]}
 			layout = {{
 				title: {
-					text: `Predicted Prices of Houses in ${postcode}, Based on Bedrooms`,
+					text: `Predicted Prices of Houses, Based on Bedrooms`,
 				}, 
 
 				xaxis: {
