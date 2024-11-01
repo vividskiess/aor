@@ -10,7 +10,6 @@ export default function BedroomChart({prices, bedrooms}) {
 					y: prices,
 					type: 'bar',
 					mode: 'markers',
-					name: 'House Price',
 					marker: {
 						color: 'rgba(18,85,255,1)',
 					}
@@ -18,19 +17,19 @@ export default function BedroomChart({prices, bedrooms}) {
 			]}
 			layout = {{
 				title: {
-					text:'Prediction of House Prices based on Bedrooms and Suburb',
+					text: `Predicted Prices of Houses, Based on Bedrooms`,
 				}, 
 
 				xaxis: {
 					dtick: 1,
 					title: {
-						text:'Bedrooms'
+						text: 'Amount of Bedrooms'
 					}, 
 				},
 
 				yaxis: {
 					title: {
-						text:'Price'
+						text: 'Price'
 					}
 				}
 			}}		

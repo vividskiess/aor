@@ -10,16 +10,13 @@ export default function InfographicsForm() {
 	const [rooms] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 	const [roomsPrices, setRoomsPrices] = useState([]);
 
-	// TODO: Implement once jack's code has been implemented.
-	// const [landsizes] = useState([100, 200, 300, 400, 500, 600, 700, 800, 900])
-	// const [landsizePrices, setLandsizePrices] = useState([]);
+	const [landsizes] = useState([100, 200, 300, 400, 500, 600, 700, 800, 900])
+	const [landsizePrices, setLandsizePrices] = useState([]);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setRoomsPrices([])
-
-		// TODO: Implement once jack's code has been implemented.
-		// setLandsizePrices([])
+		setLandsizePrices([])
 
 		rooms.map(async (room) => {
 			await axios.get(`http://127.0.0.1:8000/Infographics/Bedroom/${postcode}/${room}`)
@@ -32,17 +29,16 @@ export default function InfographicsForm() {
 			})
 		})
 
-		// TODO: Implement once jack's code has been implemented.
-		// landsizes.map(async (landsize) => {
-		// 	await axios.get(`http://127.0.0.1:8000/Infographics/Bedroom/${postcode}/${landsize}`)
-		// 	.then((response) => {
-		// 		setLandsizePrices(prevPrices => [...prevPrices || [], response.data.price])
-		// 	})
+		landsizes.map(async (landsize) => {
+			await axios.get(`http://127.0.0.1:8000/Infographics/Landsize/${postcode}/${landsize}`)
+			.then((response) => {
+				setLandsizePrices(prevPrices => [...prevPrices || [], response.data.price])
+			})
 
-		// 	.catch((error) => {
-		// 		throw Error("Error encountered: ", error);
-		// 	})
-		// })
+			.catch((error) => {
+				throw Error("Error encountered: ", error);
+			})
+		})
 	}
 
 	return (
@@ -67,11 +63,7 @@ export default function InfographicsForm() {
 			</form>
 
 			<BedroomChart prices={roomsPrices} bedrooms={rooms}/>
-
-			{
-				// TODO: Implement once jack's code has been implemented.
-				/* <LandsizeChart prices={landsizePrices} landsizes={landsizes}/> */
-			}
+			<LandsizeChart prices={landsizePrices} landsizes={landsizes}/>
 		</Container>
 	)
 }

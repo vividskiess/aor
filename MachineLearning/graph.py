@@ -1,4 +1,3 @@
-from models.cluster import train_landsize_cluster, train_school_cluster
 from models.regression import RegressionModel
 from models.cluster import ClusterModel
 import matplotlib.pyplot as plt
@@ -124,7 +123,7 @@ def scatter_room_price():
 # distrubution_house_prices()
 # bar_house_region()
 # correlation_data()
-scatter_landsize_location()
+# scatter_landsize_location()
 scatter_school_location()
 # scatter_distance_price()
 # scatter_room_price()

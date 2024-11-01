@@ -16,7 +16,7 @@ class ClusterModel:
 		model = KMeans(n_clusters=10, random_state=10)
 		model.fit(landsize_x)
 
-		# Clusters the houses into 8 groups based on the land size of the house. 
+		# Clusters the houses into 10 groups based on the land size of the house. 
 		landsize_x["Cluster"] = model.predict(landsize_x)
 
 		# Returns the the landsize count and cluster column.
@@ -30,7 +30,7 @@ class ClusterModel:
 		model = KMeans(n_clusters=10, random_state=10)
 		model.fit(school_count_X)
 
-		# Clusters the houses into 8 groups based on the land size of the house. 
+		# Clusters the houses into 10 groups based on the land size of the house. 
 		school_count_X["Cluster"] = model.predict(school_count_X)
 		
 		# Returns the the school count and cluster column.
@@ -61,6 +61,6 @@ if __name__ == "__main__":
 	model = ClusterModel('MachineLearning/datasets/processed/processed_housing_market.csv')
 
 	# To evaluate the KMeans, uncomment the code below:
-	# model.evaluate_kmeans()
+	model.evaluate_kmeans()
 
-	model.cluster_year_built()
+	

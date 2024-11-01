@@ -98,11 +98,7 @@ class RegressionModel:
 
 # This part is run when the user runs this python file.
 if __name__ == '__main__':
-    model = RegressionModel('MachineLearning/datasets/processed/processed_housing_market.csv')
+    model = RegressionModel('../MachineLearning/datasets/processed/processed_housing_market.csv')
 
     # To evaluate the linear regression, uncomment the code below:
-    # model.evaluate_regression()
-
-    print("1911: ", model.predict_price_by_year_built(3084, 1911))
-    print("1951: ", model.predict_price_by_year_built(3084, 1951))
-    print("2011: ", model.predict_price_by_year_built(3084, 2011))
+    model.evaluate_regression()
