@@ -32,7 +32,7 @@ export default function SuburbAnalytics() {
 			setSuburbData(response.data.analytics);
 			setRoomsVSPrices(response.data.rooms_vs_prices);
 		} catch (err) {
-			setError('Failed to fetch data. Please try again.');
+			setError('Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode.');
 		} finally {
 			setLoading(false);
 		}

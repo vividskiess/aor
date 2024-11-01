@@ -8,6 +8,7 @@ import GrassIcon from '@mui/icons-material/Grass';
 import smallPlaceholder from '../assets/smallPlaceholder.png'
 import landingPagePhoto from '../assets/landingPagePhoto.jpg'
 import axios from 'axios'
+import PropertyCard from '../components/PropertyCard';
 
 export default function Home () {
 	const [properties, setProperties] = useState([]);
@@ -40,7 +41,7 @@ export default function Home () {
 
 
 	const getStreetViewImage = (lat, lng) => {
-		const APIKEY = process.env.REACT_APP_GOOGLE_API_KEY;
+		const APIKEY = process.env.REACT_APP_GOOGLE_API_KEY
 		const STREET_VIEW_API_URL = `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${lat},${lng}&key=${APIKEY}`;
 		return STREET_VIEW_API_URL;
 	};
@@ -162,19 +163,21 @@ export default function Home () {
 							<Typography variant='body'>
 							Navigating the real estate market can be complex, but with us, you’ll feel secure every step of the way. Whether you're buying, selling, or investing, our team is dedicated to making your experience smooth, successful, and tailored to your goals. With years of experience and a deep understanding of the market, we're here to guide you confidently toward your real estate dreams.
 							</Typography>
-						<Button sx={{ 
-							fontSize: '1.1rem',
-							fontFamily: 'monospace',
-							fontWeight: 700,
-							color: 'white',
-							mt: 3, 
-							backgroundColor: 'black', 
-							px: 4, 
-							py: 1.8, 
-							borderRadius: 0, 
-							borderTopRightRadius: 15,
-							textTransform: 'none',
-							width: { xs: '100%', md: '70%' },
+						<Button 
+							href="/SuburbAnalytics"
+							sx={{ 
+								fontSize: '1.1rem',
+								fontFamily: 'monospace',
+								fontWeight: 700,
+								color: 'white',
+								mt: 3, 
+								backgroundColor: 'black', 
+								px: 4, 
+								py: 1.8, 
+								borderRadius: 0, 
+								borderTopRightRadius: 15,
+								textTransform: 'none',
+								width: { xs: '100%', md: '70%' },
 							}}
 						>
 							Suburb Analytics
@@ -218,94 +221,8 @@ export default function Home () {
 						{
 							properties.map((item, i) => {
 								return (
-									<Card sx={{ width: { xs: '100%', sm: '45%', md: '25%' } }} key={i} >
-										<CardActionArea>
-											<CardMedia component="img" height="200" image={item.image} alt="house" />
-											<CardContent sx={{ p: 0 }}>
-												<Typography 
-													variant="h5" 
-													component="div" 
-													sx={{
-														borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
-														px: { xs: 2, sm: 1, md: 4 }, 
-														py: { xs: 1, sm: 1, md: 2 },
-														fontWeight: 600,
-														fontSize: { xs: 15, md: 20 }
-														}}
-												>
-													Address: {item.Address}, {item.Postcode}
-												</Typography>
-												<Typography 
-													variant="h5" 
-													component="div" 
-													sx={{
-														borderBottom: '1px solid rgba(151, 151, 151, 0.4)',
-														px: { xs: 2, sm: 1, md: 4 }, 
-														py: { xs: 1, sm: 1, md: 2 },
-														fontWeight: 600,
-														fontSize: { xs: 15, md: 20 }
-														}}
-												>
-													Sale Price: ${item.Price} 
-												</Typography>
-												<Box 
-													sx={{
-														display: 'flex',
-														justifyContent: 'center',
-														alignItems: 'center'
-													}}
-													>
-													<Typography 
-														variant="h6" 
-														component="div" 
-														sx={{
-															display: 'flex',
-															justifyContent: 'center',
-															alignItems: 'center',
-															gap: 1,
-															borderRight: '1px solid rgba(151, 151, 151, 0.4)',
-															width: '33%',
-															p: 0.5
-														}}
-													>
-														<BedIcon />
-														{item.Rooms}
-													</Typography>
-													<Typography 
-														variant="h6" 
-														component="div" 
-														sx={{
-															display: 'flex', 
-															alignItems: 'center',
-															justifyContent: 'center',
-															borderRight: '1px solid rgba(151, 151, 151, 0.4)',
-															width: '33%',
-															gap: 1,
-														}}
-													>
-														<BathtubIcon />
-														{item.Bathroom}
-													</Typography>
-													<Typography 
-														variant="h6" 
-														component="div" 
-														sx={{
-															display: 'flex', 
-															alignItems: 'center',
-															justifyContent: 'center',
-															width: '33%',
-															gap: 1,
-														}}
-													>
-														<GrassIcon />
-														{item.Landsize}m&sup2;
-													</Typography>
-												</Box>
-											</CardContent>
-										</CardActionArea>
-									</Card>
-								)
-							})
+									<PropertyCard property={item} key={i} />
+							)})
 						}
 					</Box>
 				</Box>
