@@ -108,7 +108,7 @@ async def predict_prices_landsize(request: LandSizePredictionRequest):
     
 # Endpoint for getting the years and clusters of a house sold based on the postcode
 @app.get("/Infographics/YearBuilt/{postcode}")
-async def predict_prices_landsize(postcode: int):
+async def predict_year_built_clusters(postcode: int):
     try: 
         predict = analyzer.get_clusters_of_years(postcode)
 

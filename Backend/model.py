@@ -21,7 +21,8 @@ class HousingDataAnalyzer:
         try:
             # Load data to DataFrame
             self.data = pd.read_csv(csv_file)
-            # Initialise regression model 
+
+            # Initialise regression model and cluster model
             self.regression_model = RegressionModel(csv_file)
             self.cluster_model = ClusterModel(csv_file)
 
@@ -29,7 +30,7 @@ class HousingDataAnalyzer:
             # Print and raise error if file fails to load
             print(f"Failed to load data from {csv_file}: {str(e)}")
             raise ValueError(f"Failed to load data from {csv_file}: {str(e)}")
-        
+            
     # Method for getting min, max and average price based on postcode
     def get_suburb_analytics(self, Postcode: int) -> Union[Dict[str, float], str]:
         try:
