@@ -20,7 +20,6 @@ export default function Infographics() {
 	const [error, setError] = useState(false)
 	const [errorMessage, setErrorMessage] = useState('false')
 
-
 	// This function fetches the data required for the <BedroomChart> graph
 	const fetchRoomsData = async () => {
 		setRoomsPrices([])
@@ -39,10 +38,8 @@ export default function Infographics() {
 			} 
 			
 			catch (error) {
-				// Sends the error messages to the console and front-end 
-				setError(true)
-				setErrorMessage("Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode.")
-				console.error("Error encountered while fetching bedroom prices: ", error);
+				setErrorInfo(`Failed to fetch room and price data: ${error.message}`)
+				console.error("Error encountered while fetching room and price data: ", error);
 			}
 		})
 	}
@@ -64,10 +61,8 @@ export default function Infographics() {
 			} 
 			
 			catch (error) {
-				// Sends the error messages to the console and front-end 
-				setError(true)
-				setErrorMessage("Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode.")
-				console.error("Error encountered while fetching landsize prices: ", error);
+				setErrorInfo(`Failed to fetch landsize and price data: ${error.message}`)
+				console.error("Error encountered while fetching landsize and price data: ", error);
 			}
 		})
 	}
@@ -87,13 +82,32 @@ export default function Infographics() {
 		}
 
 		catch (error) {
-				// Sends the error messages to the console and front-end 
-				setError(true)
-				setErrorMessage("Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode.")
-				console.error("Error encountered while fetching landsize prices: ", error);
+			setErrorInfo(`Failed to fetch year built and clusters data: ${error.message}`)
+			console.error("Error encountered while fetching year built and clusters data: ", error);
 		}
 	}
 
+	// This functions sends the error messages to the console and front-end. 
+	const setErrorInfo = (message) => {
+		setError(true)
+		setErrorMessage(message)
+	}
+
+	// Fetches all of the data for the graphs, when the user presses the submit button.
+	const handleSubmit = () => {
+		setError(false)
+
+		if (postcode.match(/^[0-9]{4}$/)) {
+			fetchRoomsData()
+			fetchLandsizeData()
+			fetchYearBuiltData()
+		}
+
+		else {
+			setErrorInfo('error', `Failed to fetch the data. Postcodes can only have 4 numbers. Try postcodes such as '3754'.`)
+		}
+	}
+	
 	// Fetches all of the data for the graphs, for when the page begins.
 	useEffect(() => {
 		fetchRoomsData()
@@ -101,14 +115,6 @@ export default function Infographics() {
 		fetchYearBuiltData()
 	}, []);
 	
-	// Fetches all of the data for the graphs, when the user presses the submit button.
-	const handleSubmit = async () => {
-		setError(false)
-		fetchRoomsData()
-		fetchLandsizeData()
-		fetchYearBuiltData()
-	}
-
 	return (
 		<Container disableGutters sx={{ py: { xs: 2, md: 4, lg: 6 }, px: { xs: 2, md: 4, lg: 4 } }}>
 			<Box>
@@ -150,7 +156,7 @@ export default function Infographics() {
 					variant='outlined'
 					color='secondary'
 					label="Postcode"
-					pattern="[0-9]*"
+					pattern="^[0-9]{4}$"
 					onChange={e => setPostcode(e.target.value)}
 					value={postcode}
 					fullWidth
