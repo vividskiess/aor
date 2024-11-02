@@ -6,9 +6,9 @@ Develop a full-stack web application that integrates the AI model created in Ass
 
 ## Group Name: Alpha Omega Realtors (84)
 
-- [@Danny Cao](https://github.com/vividskiess) (ID: 103031155)
-- [@Bennett Matthew](https://github.com/bennettbijumathew) (ID: 104584883)
-- [@Jack Guo](https://github.com/jackgguo) (ID: 104829801)
+- @Danny Cao (ID: 103031155)
+- @Bennett Matthew(ID: 104584883)
+- @Jack Guo (ID: 104829801)
 
 
 ## Tech Stack
