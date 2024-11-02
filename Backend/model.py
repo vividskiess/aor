@@ -2,7 +2,6 @@ import sys
 
 sys.path.append('..')
 import pandas as pd
-from sqlalchemy import Column, Integer, String, Float
 from typing import Dict, Union, List, Optional
 from pydantic import BaseModel, Field
 from MachineLearning.models.regression import RegressionModel
