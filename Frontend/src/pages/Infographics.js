@@ -37,9 +37,9 @@ export default function Infographics() {
 				setRoomsPrices(prevPrices => [...prevPrices || [], response.data.price])
 			} 
 			
-			catch (error) {
-				setErrorInfo(`Failed to fetch room and price data: ${error.message}`)
-				console.error("Error encountered while fetching room and price data: ", error);
+			catch (err) {
+				setErrorInfo(`Failed to fetch room and price data: ${err.message}`)
+				console.error("Error encountered while fetching room and price data: ", err);
 			}
 		})
 	}
@@ -60,9 +60,9 @@ export default function Infographics() {
 				setLandsizePrices((prevPrices) => [...prevPrices, response.data.price]);
 			} 
 			
-			catch (error) {
-				setErrorInfo(`Failed to fetch landsize and price data: ${error.message}`)
-				console.error("Error encountered while fetching landsize and price data: ", error);
+			catch (err) {
+				setErrorInfo(`Failed to fetch landsize and price data: ${err.message}`)
+				console.error("Error encountered while fetching landsize and price data: ", err);
 			}
 		})
 	}
@@ -81,9 +81,9 @@ export default function Infographics() {
 			setYearBuiltCluster([...response.data.clusters])
 		}
 
-		catch (error) {
-			setErrorInfo(`Failed to fetch year built and clusters data: ${error.message}`)
-			console.error("Error encountered while fetching year built and clusters data: ", error);
+		catch (err) {
+			setErrorInfo(`Failed to fetch year built and clusters data: ${err.message}`)
+			console.error("Error encountered while fetching year built and clusters data: ", err);
 		}
 	}
 
