@@ -4,13 +4,6 @@ from typing import Dict, Union, List, Optional
 from MachineLearning.models.cluster import ClusterModel
 from MachineLearning.models.regression import RegressionModel
 
-# Define a pydantic model for property filtering criteria
-class PropertyFilter(BaseModel):
-    Postcode: Optional[int] = Field(None, ge=3000, le=3999)
-    Type: Optional[str] = Field(None, pattern="^[htu]$", description="Property type: 'h' for house, 't' for townhouse, 'u' for unit")
-    min_price: Optional[int] = Field(None, gt=0)
-    max_price: Optional[int] = Field(None, gt=0)
-
 # Define a pydantic model for predicting price based on postcode and landsize
 class LandSizePredictionRequest(BaseModel):
     postcode: int
