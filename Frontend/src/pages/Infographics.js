@@ -6,23 +6,23 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function Infographics() {
-	const [postcode, setPostcode] = useState(3000)
+	const [postcode, setPostcode] = useState(3084);
 
-	const [rooms] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+	const [rooms] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 	const [roomsPrices, setRoomsPrices] = useState([]);
 
-	const [landsizes] = useState([100, 200, 300, 400, 500, 600, 700, 800, 900])
+	const [landsizes] = useState([100, 200, 300, 400, 500, 600, 700, 800, 900]);
 	const [landsizePrices, setLandsizePrices] = useState([]);
 
-	const [yearBuilt, setYearBuilt] = useState([])
-	const [yearBuiltCluster, setYearBuiltCluster] = useState([])
+	const [yearBuilt, setYearBuilt] = useState([]);
+	const [yearBuiltCluster, setYearBuiltCluster] = useState([]);
 
-	const [error, setError] = useState(false)
-	const [errorMessage, setErrorMessage] = useState('false')
+	const [error, setError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('false');
 
 	// This function fetches the data required for the <BedroomChart> graph
 	const fetchRoomsData = async () => {
-		setRoomsPrices([])
+		setRoomsPrices([]);
 
 		// Takes each room number gets the predicted price for a house with those rooms
 		rooms.map(async (bedroom) => {
@@ -34,11 +34,11 @@ export default function Infographics() {
 				});
 
 				// The price of the current room is pushed onto the 'roomsPrice' array
-				setRoomsPrices(prevPrices => [...prevPrices || [], response.data.price])
+				setRoomsPrices(prevPrices => [...prevPrices || [], response.data.price]);
 			} 
 			
 			catch (err) {
-				setErrorInfo(`Failed to fetch room and price data: ${err.message}`)
+				setErrorInfo(`Failed to fetch room and price data: ${err.message}`);
 				console.error("Error encountered while fetching room and price data: ", err);
 			}
 		})
@@ -46,7 +46,7 @@ export default function Infographics() {
 
 	// This function fetches the data required for the <LandsizeChart> graph
 	const fetchLandsizeData = async () => {
-		setLandsizePrices([])
+		setLandsizePrices([]);
 
 		// Takes each landsize gets the predicted price for a house with those the size of the landsize
 		landsizes.map(async (landsize) => {
@@ -69,50 +69,50 @@ export default function Infographics() {
 
 	// This function fetches the data required for the <YearBuiltChart> graph
 	const fetchYearBuiltData = async () => {
-		setYearBuilt([])
-		setYearBuiltCluster([])
+		setYearBuilt([]);
+		setYearBuiltCluster([]);
 
 		try {
 			// Gets the clusters and the house build year from the API
-			const response = await axios.get(`http://127.0.0.1:8000/Infographics/YearBuilt/${postcode}`)
+			const response = await axios.get(`http://127.0.0.1:8000/Infographics/YearBuilt/${postcode}`);
 
 			// Sets the variables to hold the house build year and the clusters.
-			setYearBuilt([...response.data.year_built])
-			setYearBuiltCluster([...response.data.clusters])
+			setYearBuilt([...response.data.year_built]);
+			setYearBuiltCluster([...response.data.clusters]);
 		}
 
 		catch (err) {
-			setErrorInfo(`Failed to fetch year built and clusters data: ${err.message}`)
+			setErrorInfo(`Failed to fetch year built and clusters data: ${err.message}`);
 			console.error("Error encountered while fetching year built and clusters data: ", err);
 		}
 	}
 
 	// This functions sends the error messages to the console and front-end. 
 	const setErrorInfo = (message) => {
-		setError(true)
-		setErrorMessage(message)
+		setError(true);
+		setErrorMessage(message);
 	}
 
 	// Fetches all of the data for the graphs, when the user presses the submit button.
 	const handleSubmit = () => {
-		setError(false)
+		setError(false);
 
-		if (postcode.match(/^[0-9]{4}$/)) {
-			fetchRoomsData()
-			fetchLandsizeData()
-			fetchYearBuiltData()
+		if (postcode.toString().match(/^[0-9]{4}$/)) {
+			fetchRoomsData();
+			fetchLandsizeData();
+			fetchYearBuiltData();
 		}
 
 		else {
-			setErrorInfo('Failed to fetch the data. Postcodes can only have 4 numbers. Try postcodes such as "3754".')
+			setErrorInfo('Failed to fetch the data. Postcodes can only have 4 numbers. Try postcodes such as "3754".');
 		}
 	}
 	
 	// Fetches all of the data for the graphs, for when the page begins.
 	useEffect(() => {
-		fetchRoomsData()
-		fetchLandsizeData()
-		fetchYearBuiltData()
+		fetchRoomsData();
+		fetchLandsizeData();
+		fetchYearBuiltData();
 	}, []);
 	
 	return (
@@ -167,7 +167,7 @@ export default function Infographics() {
 			</Stack>
 
 			{		
-				error == false ?
+				error === false ?
 				<Box
 					sx={{
 						display: 'flex',
