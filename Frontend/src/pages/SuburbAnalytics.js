@@ -37,15 +37,15 @@ export default function SuburbAnalytics() {
 	// analytics: contains data related with the suburb
 	// roomsvsprices: contains rooms and price of each property with the given postcode
 	const fetchSuburbData = async (postcode) => {
-		setLoading(true);
-		setError('');
+		setLoading(true)
+		setError('')
 		try {
-			const response = await axios.get(`http://localhost:8000/SuburbAnalytics/${postcode}`); // Replace with your actual API endpoint
+			const response = await axios.get(`http://localhost:8000/SuburbAnalytics/${postcode}`)
 			console.log(response.data)
-			setSuburbData(response.data.analytics);
-			setRoomsVSPrices(response.data.rooms_vs_prices);
+			setSuburbData(response.data.analytics)
+			setRoomsVSPrices(response.data.rooms_vs_prices)
 		} catch (err) {
-			setError('Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode.');
+			setError('Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode. ');
 		} finally {
 			setLoading(false);
 		}
@@ -53,9 +53,16 @@ export default function SuburbAnalytics() {
 
 	const handleSearch = () => {
 		if (searchTerm) {
-			fetchSuburbData(searchTerm);
+			fetchSuburbData(searchTerm)
 		}
-	};
+	}
+
+	const handleInputChange = (e) => {
+		if(!isNaN(e)) {
+			if(e.length <= 4)
+			setSearchTerm(e);
+	}
+	}
 
 
 
@@ -147,10 +154,10 @@ export default function SuburbAnalytics() {
 							{/* input that handles postcode */}
 								<InputBase
 									sx={{ ml: 1, flex: 1 }}
-									placeholder="Search Suburbs"
+									placeholder="Enter Postcode"
 									inputProps={{ 'aria-label': 'search suburbs' }}
 									value={searchTerm}
-									onChange={(e) => setSearchTerm(e.target.value)}
+									onChange={(e) => handleInputChange(e.target.value)}
 								/>
 								<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
 									<SearchIcon />
