@@ -27,6 +27,7 @@ Develop a full-stack web application that integrates the AI model created in Ass
   cd Frontend/
   npm install
 ```
+Please ensure .env is located in the root directory on the Frontend/ to ensure the api key is accessible in the front end code. (By default the .env file should exist in the frontend already)
 
 #### Back-end installation:
 
