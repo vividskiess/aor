@@ -47,6 +47,7 @@ pip install scikit-learn
 pip install seaborn
 pip install matplotlib
 pip install numpy
+pip install fastapi uvicorn
 ```
 
 ## Running the project 
