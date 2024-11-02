@@ -217,7 +217,7 @@ export default function Home () {
 							justifyContent: 'space-between',
 							alignItems: 'center',
 							flexWrap: 'wrap',
-							gap: { xs: 2, md: '40px 80px' }
+							gap: { xs: 2 }
 						}}
 					>
           	{/* renders PropertyCard /> component where each data point in the array is passed down as props */}

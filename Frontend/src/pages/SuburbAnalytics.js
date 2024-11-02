@@ -61,10 +61,8 @@ export default function SuburbAnalytics() {
 		if(!isNaN(e)) {
 			if(e.length <= 4)
 			setSearchTerm(e);
+		}
 	}
-	}
-
-
 
 	return (
 		<Container 

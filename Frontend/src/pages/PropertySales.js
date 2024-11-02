@@ -123,7 +123,7 @@ export default function PropertySales() {
 							justifyContent: 'space-between',
 							alignItems: 'center',
 							flexWrap: 'wrap',
-							gap: { xs: 2, md: '20px 80px', lg: '20px, 60px' },
+							gap: { xs: 2 },
 						}}
 					>
             {/* renders PropertyCard /> component where each data point in the array is passed down as props */}
