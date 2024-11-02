@@ -7,7 +7,7 @@ Develop a full-stack web application that integrates the AI model created in Ass
 ## Group Name: Alpha Omega Realtors (84)
 
 - @Danny Cao (ID: 103031155)
-- @Bennett Matthew(ID: 104584883)
+- @Bennett Biju Matthew(ID: 104584883)
 - @Jack Guo (ID: 104829801)
 
 
@@ -39,13 +39,13 @@ Prerequisites
 
 #### Create the .conda enviroment in terminal
 ```python
-conda create --name <fill-env-name>
+conda create -p venv
 ```
 Press "y" to proceed. 
 
 #### Activate the .conda enviroment
 ```python
-conda activate <path-to-env-folder>
+conda activate <path-to-venv-folder>
 ```
 
 #### Install pip within .conda enviroment
