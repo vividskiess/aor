@@ -26,11 +26,6 @@ analyzer = HousingDataAnalyzer("../MachineLearning/datasets/processed/processed_
 async def root():
     return {"message": "Welcome to ROA API"}
 
-#initialise model below
-#model = modelName() #replace modelName
-# YearModel = modelName()
-
-
 # Endpoint for returning analytic data based on postcode
 @app.get("/SuburbAnalytics/{Postcode}")
 async def suburb_analytics(Postcode: int):
@@ -57,26 +52,6 @@ async def suburb_analytics(Postcode: int):
         # Return a 500 status code with error details with any unexpected errors
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-# Endpoint for filtering properties based on criteria specified
-@app.post("/property")
-async def filter_properties(filter: PropertyFilter):
-    try:
-        # Define price range tuple based on min and max price 
-        Price_range = (filter.min_price, filter.max_price) if filter.min_price is not None and filter.max_price is not None else None
-
-        # Get filtered properties from analyzer based on the criteria specified
-        properties = analyzer.get_filtered_properties(filter.Postcode, filter.Type, Price_range)
-        
-        # If no data found, return a 404 error
-        if isinstance(properties, str):
-            raise HTTPException(status_code=404, detail=properties)
-        
-        return properties  
-    
-    except Exception as e:
-        # Return a 500 status code with error details with any unexpected errors
-        raise HTTPException(status_code=500, detail="Internal Server Error")
-
 # Endpoint to get paginated properties
 @app.get("/properties")
 async def get_properties(page: int = 1, page_size: int = 64):
@@ -94,30 +69,12 @@ async def get_properties(page: int = 1, page_size: int = 64):
     except Exception as e:
         # Handle unexpected errors with a 500 status code
         raise HTTPException(status_code=500, detail="Internal server error")
-    
-@app.get("/Infographics/{year}")
-async def predict_property_prices(year: int):
-    if year < 2016 or year > 2100:  
-        raise HTTPException(status_code=400, detail="Year must be between 2016 and 2100.")
-    
-    try:
-        predictions = analyzer.predict_monthly_prices(year)
-        
-        # If no data found, return a 404 error
-        if isinstance(predictions, str): 
-            raise HTTPException(status_code=404, detail=predictions)
-
-        return {"year": year, "monthly_predictions": predictions}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 # Endpoint for getting the predicted price of a house based on the amount of bedroom
 @app.post("/Infographics/Bedroom")
 async def predict_property_prices(request: BedroomPredictRequest):
     if request.bedroom < 1 or request.bedroom > 10: 
         raise HTTPException(status_code=400, detail="Bedroom amount must be between 1 and 10.")
-
 
     try:
         # Gets the prediected price from the analyzer based on the given postcode and bedrrom 
