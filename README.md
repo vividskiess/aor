@@ -1,7 +1,7 @@
 
 # Assignment 3 - Computing Technology Innovation Project
 
-Develop a full-stack web application that integrates the AI model created in Assignment 2. Using React.js for the front end and FastAPI for the back end.
+Develop a full-stack web application that integrates the AI model created in Assignment 2. Using React.js for the front end and FastAPI for the back end paired wit the AI model.
 
 
 ## Group Name: Alpha Omega Realtors (84)
