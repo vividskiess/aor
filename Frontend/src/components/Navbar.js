@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
 import HouseIcon from '@mui/icons-material/House';
 import { AppBar, Toolbar, Typography, Container, Button, Box, IconButton, Menu, MenuItem } from '@mui/material';
-import { Link } from 'react-router-dom'
-import MenuIcon from '@mui/icons-material/Menu';
+
 export default function Navbar() {
 	const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -21,7 +22,6 @@ export default function Navbar() {
     setAnchorElNav(null);
   };
 
-	
 return (
 	<AppBar position="static" sx={{ background: 'linear-gradient(45deg, rgba(2,26,86,1) 0%, rgba(0,0,0,1) 55%)' }} >
 		<Container maxWidth="xl">

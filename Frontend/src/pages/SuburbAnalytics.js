@@ -1,12 +1,12 @@
+import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { Typography, Box, Paper, IconButton, InputBase, Button, Container } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import suburbBirdEye from '../assets/suburbBirdsEye.jpg'
-import infographicsBanner from '../assets/InfographicsBanner.png'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import chartPlaceholder from '../assets/chartPlaceholder.png'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import infographicsBanner from '../assets/InfographicsBanner.png'
 import RoomsVSPricesChart from '../components/charts/RoomVSPricesChart'
-import axios from 'axios'
+import { Typography, Box, Paper, IconButton, InputBase, Button, Container } from '@mui/material'
 
 export default function SuburbAnalytics() {
 

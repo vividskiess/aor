@@ -1,12 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
-import numpy as np
-from pydantic import BaseModel
-import matplotlib.pyplot as plt
-from model import HousingDataAnalyzer, PropertyFilter, LandSizePredictionRequest, BedroomPredictRequest
+from model import HousingDataAnalyzer, LandSizePredictionRequest, BedroomPredictRequest
 
-# Initialize FastAPI app
+# Initialize the FastAPI app
 app = FastAPI()
 
 # Add CORS middleware to allow requests from the frontend, specifically from localhost:3000
@@ -19,7 +15,7 @@ app.add_middleware(
 )
 
 # Initialize an instance of the housing data analyzer with processed housing market CSV file
-analyzer = HousingDataAnalyzer("../MachineLearning/datasets/processed/processed_housing_market.csv")
+analyzer = HousingDataAnalyzer("MachineLearning/datasets/processed/processed_housing_market.csv")
 
 # Root endpoint with basic API status check
 @app.get("/")

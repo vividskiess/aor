@@ -1,11 +1,8 @@
-import sys
-
-sys.path.append('..')
 import pandas as pd
-from typing import Dict, Union, List, Optional
 from pydantic import BaseModel, Field
-from MachineLearning.models.regression import RegressionModel
+from typing import Dict, Union, List, Optional
 from MachineLearning.models.cluster import ClusterModel
+from MachineLearning.models.regression import RegressionModel
 
 # Define a pydantic model for property filtering criteria
 class PropertyFilter(BaseModel):
@@ -45,11 +42,11 @@ class HousingDataAnalyzer:
         try:
             # Filter the data for the specified postcode
             filtered_data = self.data[self.data['Postcode'] == Postcode]
+
             # Check if there are any records for this postcode
             if filtered_data.empty:
                 return f"No data available for postcode {Postcode}."
             
-
             try:
                 # Calculate min, max and average 
                 min_price = filtered_data['Price'].min()
@@ -91,9 +88,11 @@ class HousingDataAnalyzer:
                 "region_name": region_name,
                 "school_count": school_count,
             }
+        
         except KeyError as e:
             # Return error if postcode and price does not exist in dataset
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
+        
         except Exception as e:
             # Return unexpected error
             return f"An error occurred: {str(e)}"
@@ -141,6 +140,7 @@ class HousingDataAnalyzer:
         except KeyError as e:
             # Return error if rooms and price does not exist in dataset
             return f"Key error: {str(e)} - Check if 'Rooms' and 'Price' columns exist in the dataset."
+        
         except Exception as e:
             # Return unexpected error
             return f"An error occurred: {str(e)}"
@@ -162,6 +162,7 @@ class HousingDataAnalyzer:
         except KeyError as e:
             # Return error if missing columns in dataset
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
+        
         except Exception as e:
             # Return unexpected error
             return f"An error occurred: {str(e)}"
@@ -180,6 +181,7 @@ class HousingDataAnalyzer:
         except KeyError as e:
             # Return error if missing columns in dataset
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
+        
         except Exception as e:
             # Return unexpected error
             return f"An error occurred: {str(e)}"

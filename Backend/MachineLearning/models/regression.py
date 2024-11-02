@@ -1,7 +1,7 @@
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 import pandas as pd  
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 
 class RegressionModel: 
     # Intialises a variable with the processed data and creates a new linear regression model. 
@@ -98,7 +98,7 @@ class RegressionModel:
 
 # This part is run when the user runs this python file.
 if __name__ == '__main__':
-    model = RegressionModel('../MachineLearning/datasets/processed/processed_housing_market.csv')
+    model = RegressionModel('Backend/MachineLearning/datasets/processed/processed_housing_market.csv')
 
     # To evaluate the linear regression, uncomment the code below:
     model.evaluate_regression()

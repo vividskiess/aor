@@ -1,9 +1,8 @@
-// PropertyCard.jsx
 import React from 'react';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, Box } from '@mui/material';
 import BedIcon from '@mui/icons-material/Bed';
-import BathtubIcon from '@mui/icons-material/Bathtub';
 import GrassIcon from '@mui/icons-material/Grass';
+import BathtubIcon from '@mui/icons-material/Bathtub';
+import { Card, CardActionArea, CardMedia, CardContent, Typography, Box } from '@mui/material';
 
 const PropertyCard = ({ property }) => {
 	return (

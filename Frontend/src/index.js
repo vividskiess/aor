@@ -1,9 +1,9 @@
+import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider, createTheme } from '@mui/material/styles';// Import MUI's ThemeProvider and createTheme for applying a theme
 import CssBaseline from '@mui/material/CssBaseline'; // CssBaseline for consistent baseline styles across browsers
-import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom'; 
+import { ThemeProvider, createTheme } from '@mui/material/styles';// Import MUI's ThemeProvider and createTheme for applying a theme
 
 const theme = createTheme();
 

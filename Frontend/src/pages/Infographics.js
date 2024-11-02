@@ -1,9 +1,9 @@
-import { TextField, Button, Container, Stack, Typography, Box } from '@mui/material';
-import YearBuiltChart from '../components/charts/YearBuiltChart';
-import LandsizeChart from '../components/charts/LandsizeChart';
-import BedroomChart from '../components/charts/BedroomChart'
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import BedroomChart from '../components/charts/BedroomChart'
+import LandsizeChart from '../components/charts/LandsizeChart';
+import YearBuiltChart from '../components/charts/YearBuiltChart';
+import { TextField, Button, Container, Stack, Typography, Box } from '@mui/material';
 
 export default function Infographics() {
 	const [postcode, setPostcode] = useState(3084);
