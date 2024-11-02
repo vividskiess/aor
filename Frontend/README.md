@@ -20,7 +20,7 @@ Develop a full-stack web application that integrates the AI model created in Ass
 
 ## Installation
 
-Front-end installation:
+#### Front-end installation:
 
 ```bash
   cd aor/
@@ -28,26 +28,38 @@ Front-end installation:
   npm install
 ```
 
-Back-end installation:
+#### Back-end installation:
 
+Prerequisites
+- Python 3.12
+- Anaconda
+
+#### Create the .conda enviroment
+```python
+conda create --name <fill-env-name>
+```
+Press "y" to proceed. 
+
+#### Install all of the dependencies
 ```bash
-test
+pip install pandas
+pip install scikit-learn
+pip install seaborn
+pip install matplotlib
+pip install numpy
 ```
 
-To run the project locally you must run two different instances of a command terminal (powershell, git bash ect) in order to both start the front end and back end respectively.
+## Running the project 
+To run the project locally you must run two different instances of the command terminal (bash, powershell ect)
 
-Front-end:
+### Front-end:
 ```bash
   cd Frontend/
   npm start
 ```
 
-Back-end:
+## Back-end (FastAPI):
 ```bash
    cd Backend/
    python -m uvicorn main:app --reload
 ```
-    
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
