@@ -15,8 +15,6 @@ function App() {
       display: 'flex', 
       flexDirection: 'column', 
       width: '100%'
-      // bgcolor: darkMode ? 'grey.900' : 'background.default', 
-      // color: darkMode ? 'common.white' : 'common.black' 
       }}
     >
       <Navbar />

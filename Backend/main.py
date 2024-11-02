@@ -105,6 +105,23 @@ async def predict_prices_landsize(request: LandSizePredictionRequest):
             raise HTTPException(status_code=404, detail=predict)
 
         return predict
+    
+    except Exception as e:
+        # Return a 500 status code with error details with any unexpected errors
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    
+# Endpoint for getting the years and clusters of a house sold based on the postcode
+@app.get("/Infographics/YearBuilt/{postcode}")
+async def predict_prices_landsize(postcode: int):
+    try: 
+        predict = analyzer.get_clusters_of_years(postcode)
+
+        # If no data found, return a 404 error
+        if isinstance(predict, str):
+            raise HTTPException(status_code=404, detail=predict)
+        
+        return predict
+    
     except Exception as e:
         # Return a 500 status code with error details with any unexpected errors
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")

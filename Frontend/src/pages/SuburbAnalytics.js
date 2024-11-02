@@ -9,30 +9,43 @@ import RoomsVSPricesChart from '../components/charts/RoomVSPricesChart'
 import axios from 'axios'
 
 export default function SuburbAnalytics() {
+
+	// holds data returned from API call
 	const [suburbData, setSuburbData] = useState(null);
+
+
 	const [roomsVSPrices, setRoomsVSPrices] = useState({ rooms: [], prices: [] });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [searchTerm, setSearchTerm] = useState(3000);
 
+	// holds an array of objects that are used for rendering each market insight entry point
 	const marketInsights = suburbData ? [
-		{ metric: 'avg price', val: `$${Math.round(suburbData.avg_price).toLocaleString('en')}` || null },
-		{ metric: 'max price', val: `$${Math.round(suburbData.max_price).toLocaleString('en')}` || null },
-		{ metric: 'avg landsize', val: `${Math.round(suburbData.avg_land_size)}sqm` || null },
-		{ metric: 'max landsize', val: `${Math.round(suburbData.max_land_size)}sqm` || null },
-		{ metric: 'schools', val: suburbData.school_count || null },
+		{ metric: 'Average Price:', val: `$${Math.round(suburbData.avg_price).toLocaleString('en')}` || null },
+		{ metric: 'Max Price:', val: `$${Math.round(suburbData.max_price).toLocaleString('en')}` || null },
+		{ metric: 'Average Landsize:', val: `${Math.round(suburbData.avg_land_size)}sqm` || null },
+		{ metric: 'Max Landsize:', val: `${Math.round(suburbData.max_land_size)}sqm` || null },
+		{ metric: 'Schools:', val: suburbData.school_count || null },
 	] : [];
 
+	useEffect(() => {
+		// Fetch data for the default postcode 3000 on mount
+		fetchSuburbData(3000);
+	}, []);
+
+	// API request that returns two different data points
+	// analytics: contains data related with the suburb
+	// roomsvsprices: contains rooms and price of each property with the given postcode
 	const fetchSuburbData = async (postcode) => {
-		setLoading(true);
-		setError('');
+		setLoading(true)
+		setError('')
 		try {
-			const response = await axios.get(`http://localhost:8000/SuburbAnalytics/${postcode}`); // Replace with your actual API endpoint
+			const response = await axios.get(`http://localhost:8000/SuburbAnalytics/${postcode}`)
 			console.log(response.data)
-			setSuburbData(response.data.analytics);
-			setRoomsVSPrices(response.data.rooms_vs_prices);
+			setSuburbData(response.data.analytics)
+			setRoomsVSPrices(response.data.rooms_vs_prices)
 		} catch (err) {
-			setError('Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode.');
+			setError('Failed to fetch data. Postcode does not exist in our data or you have entered an invalid Postcode. ');
 		} finally {
 			setLoading(false);
 		}
@@ -40,14 +53,16 @@ export default function SuburbAnalytics() {
 
 	const handleSearch = () => {
 		if (searchTerm) {
-			fetchSuburbData(searchTerm);
+			fetchSuburbData(searchTerm)
 		}
-	};
+	}
 
-	useEffect(() => {
-		// Fetch data for the default postcode 3000 on mount
-		fetchSuburbData(3000);
-	}, []);
+	const handleInputChange = (e) => {
+		if(!isNaN(e)) {
+			if(e.length <= 4)
+			setSearchTerm(e);
+		}
+	}
 
 	return (
 		<Container 
@@ -108,7 +123,7 @@ export default function SuburbAnalytics() {
 								letterSpacing: -1.2
 							}}
 						>
-							Beautiful homes made for you
+							Find your place, on your own terms
 						</Typography>
 						<Typography
 							variant="body"
@@ -134,17 +149,19 @@ export default function SuburbAnalytics() {
 								component="form"
 								sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
 							>
+							{/* input that handles postcode */}
 								<InputBase
 									sx={{ ml: 1, flex: 1 }}
-									placeholder="Search Suburbs"
+									placeholder="Enter Postcode"
 									inputProps={{ 'aria-label': 'search suburbs' }}
 									value={searchTerm}
-									onChange={(e) => setSearchTerm(e.target.value)}
+									onChange={(e) => handleInputChange(e.target.value)}
 								/>
 								<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
 									<SearchIcon />
 								</IconButton>
 							</Paper>
+							{/* when clicked it will call fetchSuburbData() for the API request */}
 							<Button 
 								sx={{ 
 									borderRadius: '10px', 
@@ -166,7 +183,8 @@ export default function SuburbAnalytics() {
 			</Box>
 			{loading && <Typography>Loading...</Typography>}
 			{error && <Typography color="error">{error}</Typography>}
-			<Box sx={{ width: '100%', px: { xs: 2, sm: 2, md: 15, lg: 25 }, pb: 2 }}>
+
+			<Box sx={{ width: '100%', px: { xs: 1, sm: 0, md: 10, lg: 20 }, pb: 2, pt: 2 }}>
 				<Box 
 					sx={{
 						borderRadius: '20px',
@@ -207,7 +225,6 @@ export default function SuburbAnalytics() {
 								letterSpacing: -1
 							}}
 						>
-						{/* Melbourne - Northern Region, VIC 3073 */}
 							{suburbData ? `Melbourne - ${suburbData.region_name}, VIC, ${suburbData.postcode}` : 'N/A'}
 						</Typography>
 					</Box>
@@ -294,8 +311,7 @@ export default function SuburbAnalytics() {
 										fontSize: { xs: 14, md: 20 }
 									}}
 								>
-								
-									{item.val} { item.metric }
+									{ item.metric } {item.val}
 								</Box>
 							)
 						})}

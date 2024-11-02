@@ -1,10 +1,10 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-export default function BedroomChart({prices, bedrooms}) {
+export default function BedroomChart({postcode, prices, bedrooms}) {
 	return (
 		<Plot
-			data={[
+			data = {[
 				{
 					x: bedrooms,
 					y: prices,
@@ -15,9 +15,10 @@ export default function BedroomChart({prices, bedrooms}) {
 					}
 				}
 			]}
-			layout = {{
+			
+			layout = {{				
 				title: {
-					text: `Predicted Prices of Houses, Based on Bedrooms`,
+					text: `Predicted Prices of Houses Within Postcode<br>Based on Bedrooms`,
 				}, 
 
 				xaxis: {
@@ -32,7 +33,16 @@ export default function BedroomChart({prices, bedrooms}) {
 						text: 'Price'
 					}
 				}
-			}}		
+			}}	
+			
+			useResizeHandler = {
+				true
+			}
+
+			style = {{
+				width:'100%', 
+				height: '100%'
+			}}
 		/>
 	);
 }
