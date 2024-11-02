@@ -104,7 +104,7 @@ export default function Infographics() {
 		}
 
 		else {
-			setErrorInfo('error', `Failed to fetch the data. Postcodes can only have 4 numbers. Try postcodes such as '3754'.`)
+			setErrorInfo('Failed to fetch the data. Postcodes can only have 4 numbers. Try postcodes such as "3754".')
 		}
 	}
 	
