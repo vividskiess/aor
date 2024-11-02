@@ -26,7 +26,6 @@ Prerequisites
 - node.js
 
 ```bash
-  cd aor/
   cd Frontend/
   npm install
 ```
@@ -38,11 +37,21 @@ Prerequisites
 - Python 3.12
 - Anaconda
 
-#### Create the .conda enviroment
+#### Create the .conda enviroment in terminal
 ```python
 conda create --name <fill-env-name>
 ```
 Press "y" to proceed. 
+
+#### Activate the .conda enviroment
+```python
+conda activate <path-to-env-folder>
+```
+
+#### Install pip within .conda enviroment
+```python
+conda install pip
+```
 
 #### Install all of the dependencies
 ```bash
@@ -56,6 +65,7 @@ pip install fastapi uvicorn
 
 ## Running the project 
 To run the project locally you must run two different instances of the command terminal (bash, powershell ect)
+You must ensure that .conda enviroment is activated before running the backend.
 
 ### Front-end:
 ```bash
