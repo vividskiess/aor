@@ -1,11 +1,11 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Container, Box, Typography, Button } from '@mui/material'
 import banner from "../assets/landingPageBanner.png"
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import PropertyCard from '../components/PropertyCard';
 import smallPlaceholder from '../assets/smallPlaceholder.png'
 import landingPagePhoto from '../assets/landingPagePhoto.jpg'
-import axios from 'axios'
-import PropertyCard from '../components/PropertyCard';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { Container, Box, Typography, Button } from '@mui/material'
 
 export default function Home () {
 	// holds data returned from api call

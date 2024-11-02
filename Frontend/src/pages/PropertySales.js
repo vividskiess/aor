@@ -1,8 +1,8 @@
-import React, { useState, useEffect} from 'react'
-import { Stack, Container, Pagination, Typography, Box, CircularProgress } from '@mui/material'
 import axios from 'axios'
+import React, { useState, useEffect} from 'react'
 import PropertyCard from '../components/PropertyCard'
 import smallPlaceholder from '../assets/smallPlaceholder.png'
+import { Stack, Container, Pagination, Typography, Box, CircularProgress } from '@mui/material'
 
 export default function PropertySales() {
   // holds data from API call

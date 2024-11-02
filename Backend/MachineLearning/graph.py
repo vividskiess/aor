@@ -1,13 +1,13 @@
-from models.regression import RegressionModel
-from models.cluster import ClusterModel
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd  
+import seaborn as sns
+import matplotlib.pyplot as plt
+from models.cluster import ClusterModel
+from models.regression import RegressionModel
 
 # Associates a variable with the processed data. 
-df = pd.read_csv('MachineLearning/datasets/processed/processed_housing_market.csv')
-regression_model = RegressionModel('MachineLearning/datasets/processed/processed_housing_market.csv')
-cluster_model = ClusterModel('MachineLearning/datasets/processed/processed_housing_market.csv')
+df = pd.read_csv('Backend/MachineLearning/datasets/processed/processed_housing_market.csv')
+regression_model = RegressionModel('Backend/MachineLearning/datasets/processed/processed_housing_market.csv')
+cluster_model = ClusterModel('Backend/MachineLearning/datasets/processed/processed_housing_market.csv')
 
 # Adds styling to the plot. 
 plt.rcParams['figure.figsize'] = (14,4)
@@ -120,10 +120,10 @@ def scatter_room_price():
 
 
 # To see the graphs, uncomment the code below:
-# distrubution_house_prices()
-# bar_house_region()
-# correlation_data()
-# scatter_landsize_location()
-# scatter_school_location()
-# scatter_distance_price()
-# scatter_room_price()
+distrubution_house_prices()
+bar_house_region()
+correlation_data()
+scatter_landsize_location()
+scatter_school_location()
+scatter_distance_price()
+scatter_room_price()

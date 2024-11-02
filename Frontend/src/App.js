@@ -1,13 +1,13 @@
 import React from 'react'
+import Home from './pages/Home.js'
 import { Box } from '@mui/material'
-import { Routes, Route } from "react-router-dom"
+import NotFound from './pages/NotFound.js'
 import Navbar from './components/Navbar.js'
 import Footer from './components/Footer.js'
-import Home from './pages/Home.js'
+import { Routes, Route } from 'react-router-dom'
 import Infographics from './pages/Infographics.js'
 import PropertySales from './pages/PropertySales.js'
 import SuburbAnalytics from './pages/SuburbAnalytics.js'
-import NotFound from './pages/NotFound.js'
 
 function App() {
   return (

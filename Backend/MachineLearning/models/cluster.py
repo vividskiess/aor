@@ -1,6 +1,6 @@
-from sklearn.metrics import silhouette_score, v_measure_score
-from sklearn.cluster import KMeans
 import pandas as pd  
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score, v_measure_score
 
 class ClusterModel:
 	# Intialises a variable with the processed data and creates a new Kmeans model. 
@@ -71,7 +71,7 @@ class ClusterModel:
 
 # This part is run when the user runs this python file.
 if __name__ == "__main__":
-	model = ClusterModel('MachineLearning/datasets/processed/processed_housing_market.csv')
+	model = ClusterModel('Backend/MachineLearning/datasets/processed/processed_housing_market.csv')
 
 	# To evaluate the KMeans, uncomment the code below:
 	model.evaluate_kmeans()
