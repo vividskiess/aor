@@ -13,10 +13,12 @@ class PropertyFilter(BaseModel):
     min_price: Optional[int] = Field(None, gt=0)
     max_price: Optional[int] = Field(None, gt=0)
 
+# Define a pydantic model for predicting price based on postcode and landsize
 class LandSizePredictionRequest(BaseModel):
     postcode: int
     landsize: int
 
+# Define a pydantic model for predicting price based on postcode and number of bedroom
 class BedroomPredictRequest(BaseModel):
     postcode: int
     bedroom: int
@@ -26,7 +28,9 @@ class HousingDataAnalyzer:
     def __init__(self, csv_file: str):
         # Loads the data from the CSV file and creates a linear regression model with the CSV file
         try:
+            # Load data to DataFrame
             self.data = pd.read_csv(csv_file)
+            # Initialise regression model 
             self.regression_model = RegressionModel(csv_file)
 
         except Exception as e:
@@ -86,14 +90,16 @@ class HousingDataAnalyzer:
                 "school_count": school_count,
             }
         except KeyError as e:
+            # Return error if postcode and price does not exist in dataset
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
         except Exception as e:
+            # Return unexpected error
             return f"An error occurred: {str(e)}"
     
+    # Method for paginated property data.
     def get_paginated_data(self, page: int = 1, page_size: int = 64) -> Dict[str, Union[List[Dict[str, Union[str, float]]], int, int]]:
         
-        # Fetch paginated data from the dataset
-        # Returns all fields for each property.
+        # Calculate indices for requested page
         start = (page - 1) * page_size
         end = start + page_size
 
@@ -111,6 +117,7 @@ class HousingDataAnalyzer:
             "page_size": page_size
         }
         
+    # Method for returning lists of bedroom count and corresponding prices. 
     def get_rooms_vs_prices(self, Postcode: Optional[int] = None) -> Union[Dict[str, List[float]], str]:
         try:
             # Filter data by postcode if provided
@@ -124,88 +131,41 @@ class HousingDataAnalyzer:
             rooms = data['Rooms'].tolist()
             prices = data['Price'].tolist()
 
+            # Return room and prices lists
             return {
                 "rooms": rooms,
                 "prices": prices
             }
         except KeyError as e:
+            # Return error if rooms and price does not exist in dataset
             return f"Key error: {str(e)} - Check if 'Rooms' and 'Price' columns exist in the dataset."
         except Exception as e:
+            # Return unexpected error
             return f"An error occurred: {str(e)}"
         
-    # Method to get all property data
+    # Method to get all property data in DataFrame formatting.
     def get_all_properties(self) -> pd.DataFrame:
         return self.data
 
-    def get_filtered_properties(self, Postcode: int = None, Type: str = None, Price_range: tuple = None) -> Union[List[Dict[str, Union[str, float]]], str]:
-        try:
-            filtered_data = self.data
-
-            if Postcode:
-                filtered_data = filtered_data[filtered_data['Postcode'] == Postcode]
-
-            if Type in ['h', 't', 'u']:
-                filtered_data = filtered_data[filtered_data['Type'] == Type]
-
-            if Price_range:
-                filtered_data = filtered_data[(filtered_data['Price'] >= Price_range[0]) & (filtered_data['Price'] <= Price_range[1])]
-
-            # Check if there are any records after filtering
-            if filtered_data.empty:
-                return "No properties found with the specified criteria."
-
-            # Limit to 6 properties and return relevant information
-            properties = filtered_data.head(6).to_dict(orient='records')
-            return [
-                {
-                    "Price": round(property['Price'], 2),
-                    "Bedroom": property['Rooms'],
-                    "Bathroom": property['Bathroom'],
-                    "LandSize": property['Landsize'],
-                }
-                for property in properties
-            ]
-        except Exception as e:
-            print(f"Error in filtering properties: {e}")  # Log error details
-            #
-            return "Error filtering properties"
-        
-
-    def predict_monthly_prices(self, year: int) -> Union[Dict[str, float], str]:
-        if not hasattr(self, "YearModel") or not self.YearModel:
-            return "Prediction model not loaded."
-        
-        try:
-            monthly_predictions = {}
-            for month in range(1, 13):
-                prediction = self.YearModel.predict(year, month)
-                monthly_predictions[f"{year}-{month:02}"] = round(prediction, 2)
-            
-            return monthly_predictions
-
-        except Exception as e:
-            print(f"Error in monthly predictions: {e}")
-            return "Error generating monthly predictions."
-
-
-
+    # Method to get predicted prices based on postcode and number of bedroom
     def get_prices_by_bedroom(self, Postcode: int, Bedroom: int) -> Union[Dict[str, float], str]:
         try:
             # Gets the predicted price from the linear regression model using postcode and bedroom
             predicted_price = self.regression_model.predict_price_by_room(Postcode, Bedroom)
 
-            # Returns the relevant information
+            # Returns predicted price
             return {
                 "price": predicted_price
             }
         
         except KeyError as e:
+            # Return error if missing columns in dataset
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
-        
         except Exception as e:
+            # Return unexpected error
             return f"An error occurred: {str(e)}"
 
-
+    # Method to get prices based on postcode and landsize
     def get_prices_by_landsize(self, Postcode: int, Landsize: int) -> Union[Dict[str, float], str]:
         try:
             # Gets the predicted price from the linear regression model using postcode and landsize
@@ -216,7 +176,8 @@ class HousingDataAnalyzer:
             }
         
         except KeyError as e:
+            # Return error if missing columns in dataset
             return f"Key error: {str(e)} - Check if 'postcode' and 'price' columns exist in the dataset."
-        
         except Exception as e:
+            # Return unexpected error
             return f"An error occurred: {str(e)}"
