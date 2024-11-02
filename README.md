@@ -15,7 +15,7 @@ Develop a full-stack web application that integrates the AI model created in Ass
 
 **Front-end:** React, React Router, Material UI, Axios, JavaScript
 
-**Backend:** FastAPI, Python
+**Backend:** FastAPI, Python, Pandas, Scikit-learn, Seaborn, Matplotlib, Numpy, Uvicorn
 
 
 ## Installation
