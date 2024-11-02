@@ -58,7 +58,7 @@ To run the project locally you must run two different instances of the command t
   npm start
 ```
 
-## Back-end (FastAPI):
+### Back-end (FastAPI):
 ```bash
    cd Backend/
    python -m uvicorn main:app --reload
