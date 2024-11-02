@@ -21,6 +21,9 @@ Develop a full-stack web application that integrates the AI model created in Ass
 ## Installation
 
 #### Front-end installation:
+Prerequisites
+- npm
+- node.js
 
 ```bash
   cd aor/
